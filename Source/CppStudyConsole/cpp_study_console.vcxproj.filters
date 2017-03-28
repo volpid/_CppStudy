@@ -1,0 +1,65 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="_Uncategorized">
+      <UniqueIdentifier>{a38358db-bea5-4756-808f-3f5a2141bb6d}</UniqueIdentifier>
+      <Extensions>cpp;h;</Extensions>
+    </Filter>
+    <Filter Include="ModernDesignCpp">
+      <UniqueIdentifier>{77afb481-f691-4c53-8045-07b04ab1659c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="TempleteMetaProgramming">
+      <UniqueIdentifier>{5df2f712-3240-4979-b2c9-d30e2e839698}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Etc">
+      <UniqueIdentifier>{93277b91-d601-41b4-a6a9-b55dc096b915}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Etc\check_momory_tracker_in_library.cpp">
+      <Filter>Etc</Filter>
+    </ClCompile>
+    <ClCompile Include="TempleteMetaProgramming\ch1_introduction.cpp">
+      <Filter>TempleteMetaProgramming</Filter>
+    </ClCompile>
+    <ClCompile Include="TempleteMetaProgramming\ch3_metafunctions.cpp">
+      <Filter>TempleteMetaProgramming</Filter>
+    </ClCompile>
+    <ClCompile Include="TempleteMetaProgramming\ch4_integral_type_wrappers.cpp">
+      <Filter>TempleteMetaProgramming</Filter>
+    </ClCompile>
+    <ClCompile Include="TempleteMetaProgramming\ch5_sequences_and_iterators.cpp">
+      <Filter>TempleteMetaProgramming</Filter>
+    </ClCompile>
+    <ClCompile Include="TempleteMetaProgramming\ch6_algorithms.cpp">
+      <Filter>TempleteMetaProgramming</Filter>
+    </ClCompile>
+    <ClCompile Include="TempleteMetaProgramming\ch7_view_and_iterator_adaptor.cpp">
+      <Filter>TempleteMetaProgramming</Filter>
+    </ClCompile>
+    <ClCompile Include="TempleteMetaProgramming\ch9_part1_for_each.cpp">
+      <Filter>TempleteMetaProgramming</Filter>
+    </ClCompile>
+    <ClCompile Include="TempleteMetaProgramming\ch9_part2_implementation_selection.cpp">
+      <Filter>TempleteMetaProgramming</Filter>
+    </ClCompile>
+    <ClCompile Include="TempleteMetaProgramming\ch9_part3+4_obj_gen_and_structure_selection.cpp">
+      <Filter>TempleteMetaProgramming</Filter>
+    </ClCompile>
+    <ClCompile Include="TempleteMetaProgramming\ch9_part5_class_composition.cpp">
+      <Filter>TempleteMetaProgramming</Filter>
+    </ClCompile>
+    <ClCompile Include="ModernDesignCpp\policy.cpp">
+      <Filter>ModernDesignCpp</Filter>
+    </ClCompile>
+    <ClCompile Include="ModernDesignCpp\technique.cpp">
+      <Filter>ModernDesignCpp</Filter>
+    </ClCompile>
+    <ClCompile Include="ModernDesignCpp\typelist.cpp">
+      <Filter>ModernDesignCpp</Filter>
+    </ClCompile>
+    <ClCompile Include="scratchpad.cpp" />
+    <ClCompile Include="main_code_templete.cpp" />
+    <ClCompile Include="main_process.cpp" />
+  </ItemGroup>
+</Project>

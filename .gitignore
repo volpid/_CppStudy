@@ -1,29 +1,18 @@
-# Compiled Object files
-*.slo
-*.lo
-*.o
-*.obj
 
-# Precompiled Headers
-*.gch
-*.pch
+#include symbolic link folder
+Include/boost
+Include/cppstudy
+Include/glew
+Include/glm
+Include/sdl2
 
-# Compiled Dynamic libraries
-*.so
-*.dylib
-*.dll
+#folder
+_ExternlLibrary/
+_Intermediate/
+Bin/
+Library/**/
 
-# Fortran module files
-*.mod
-*.smod
-
-# Compiled Static libraries
-*.lai
-*.la
-*.a
-*.lib
-
-# Executables
-*.exe
-*.out
-*.app
+#files
+*.opendb
+*.user
+*.VC.db

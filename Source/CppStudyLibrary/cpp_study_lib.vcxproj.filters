@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="_Uncategorized">
+      <UniqueIdentifier>{5e7106f5-eb4f-47c2-a720-b02ea2976ce1}</UniqueIdentifier>
+      <Extensions>cpp;h;</Extensions>
+    </Filter>
+    <Filter Include="InternalFiles">
+      <UniqueIdentifier>{17e4bbbb-61c9-4097-8d39-84b884b3ecc4}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="cpp_study_sample_internal.cpp">
+      <Filter>InternalFiles</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="cpp_study_sample_internal.h">
+      <Filter>InternalFiles</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

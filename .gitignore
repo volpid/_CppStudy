@@ -1,5 +1,5 @@
 
-#include symbolic link folder
+#ignore symbolic link folder
 Include/boost
 Include/cppstudy
 Include/glew

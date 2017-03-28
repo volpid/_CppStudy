@@ -12,8 +12,8 @@ static VerbosStruct obj2("global obj");
 
 void CppStudyLibTest(void)
 {
-    TestClass nanpid;
-    TestClass nanpid2(1);
+    TestClass test1;
+    TestClass test2(1);
 
     cout << "test function" << endl;
 

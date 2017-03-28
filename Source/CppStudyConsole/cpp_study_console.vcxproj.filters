@@ -61,5 +61,26 @@
     <ClCompile Include="scratchpad.cpp" />
     <ClCompile Include="main_code_templete.cpp" />
     <ClCompile Include="main_process.cpp" />
+    <ClCompile Include="TempleteMetaProgramming\ch9_part8_crtp.cpp">
+      <Filter>TempleteMetaProgramming</Filter>
+    </ClCompile>
+    <ClCompile Include="TempleteMetaProgramming\ch9_part7_type_erasure.cpp">
+      <Filter>TempleteMetaProgramming</Filter>
+    </ClCompile>
+    <ClCompile Include="TempleteMetaProgramming\ch9_part6_function_ptr_as_templete_arg.cpp">
+      <Filter>TempleteMetaProgramming</Filter>
+    </ClCompile>
+    <ClCompile Include="TempleteMetaProgramming\ch9_part9_explicitly_managing_overload_set.cpp">
+      <Filter>TempleteMetaProgramming</Filter>
+    </ClCompile>
+    <ClCompile Include="TempleteMetaProgramming\ch9_part10_sizeof_trick.cpp">
+      <Filter>TempleteMetaProgramming</Filter>
+    </ClCompile>
+    <ClCompile Include="TempleteMetaProgramming\ch10_part_expression_template.cpp">
+      <Filter>TempleteMetaProgramming</Filter>
+    </ClCompile>
+    <ClCompile Include="TempleteMetaProgramming\cp11_design_workthrough.cpp">
+      <Filter>TempleteMetaProgramming</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

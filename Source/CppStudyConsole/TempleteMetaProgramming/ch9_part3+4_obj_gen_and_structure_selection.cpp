@@ -31,12 +31,6 @@ private:
     _G g;
 };
 
-float input[5] = {0.0f, 0.1f, 0.2f, 0.3f, 0.4f};
-float output1[5];
-float output2[5];
-float output3[5];
-float output4[5];
-
 float sin_squared(float x)
 {
     return std::sin(std::sin(x));
@@ -176,6 +170,12 @@ public:
 
 static int _main(int argc, char** argv)
 {
+    float input[5] = {0.0f, 0.1f, 0.2f, 0.3f, 0.4f};
+    float output1[5];
+    float output2[5];
+    float output3[5];
+    float output4[5];
+
     for (float value : input)
     {
         cout << "input : " << value << endl;

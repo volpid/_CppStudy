@@ -1,11 +1,13 @@
 
 ### **include file folder**
 
-* create_symbolic_link.bat>
-<br/>
-심볼릭 링크를 사용해서 include 폴더를 만든다.
-    * boost
-    * cppstudy : 스터디용 static lib
+* create_symbolic_link.bat  
+심볼릭 링크를 사용해서 include 폴더를 만든다.  
+> boost  
+> cppstudy : 스터디용 static lib  
+> glew  
+> glm  
+> sdl2  
 
 ***
 

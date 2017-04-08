@@ -18,50 +18,11 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="Etc\check_load_library_simple.cpp" />
-    <ClCompile Include="Etc\check_momory_tracker_in_library.cpp" />
-    <ClCompile Include="Etc\check_load_library_tls.cpp" />
-    <ClCompile Include="Etc\simple_xor_encryp.cpp" />
-    <ClCompile Include="main_code_templete.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="main_process.cpp" />
-    <ClCompile Include="ModernCpp\c11_chrono.cpp" />
-    <ClCompile Include="ModernCpp\c11_function.cpp" />
-    <ClCompile Include="ModernCpp\c11_random.cpp" />
-    <ClCompile Include="ModernCpp\c11_thread.cpp" />
-    <ClCompile Include="ModernDesignCpp\policy.cpp" />
-    <ClCompile Include="ModernDesignCpp\technique.cpp" />
-    <ClCompile Include="ModernDesignCpp\typelist.cpp" />
-    <ClCompile Include="scratchpad.cpp" />
-    <ClCompile Include="Template\custom_type_trait.cpp" />
-    <ClCompile Include="TempleteMetaProgramming\ch10_part_expression_template.cpp" />
-    <ClCompile Include="TempleteMetaProgramming\ch1_introduction.cpp" />
-    <ClCompile Include="TempleteMetaProgramming\ch3_metafunctions.cpp" />
-    <ClCompile Include="TempleteMetaProgramming\ch4_integral_type_wrappers.cpp" />
-    <ClCompile Include="TempleteMetaProgramming\ch5_sequences_and_iterators.cpp" />
-    <ClCompile Include="TempleteMetaProgramming\ch6_algorithms.cpp" />
-    <ClCompile Include="TempleteMetaProgramming\ch7_view_and_iterator_adaptor.cpp" />
-    <ClCompile Include="TempleteMetaProgramming\ch9_part10_sizeof_trick.cpp" />
-    <ClCompile Include="TempleteMetaProgramming\ch9_part1_for_each.cpp" />
-    <ClCompile Include="TempleteMetaProgramming\ch9_part2_implementation_selection.cpp" />
-    <ClCompile Include="TempleteMetaProgramming\ch9_part3+4_obj_gen_and_structure_selection.cpp" />
-    <ClCompile Include="TempleteMetaProgramming\ch9_part5_class_composition.cpp" />
-    <ClCompile Include="TempleteMetaProgramming\ch9_part7_type_erasure.cpp" />
-    <ClCompile Include="TempleteMetaProgramming\ch9_part8_crtp.cpp" />
-    <ClCompile Include="TempleteMetaProgramming\ch9_part6_function_ptr_as_templete_arg.cpp" />
-    <ClCompile Include="TempleteMetaProgramming\ch9_part9_explicitly_managing_overload_set.cpp" />
-    <ClCompile Include="TempleteMetaProgramming\cp11_design_workthrough.cpp" />
-  </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{1E3862CB-B836-4700-829F-B691C69D0B6B}</ProjectGuid>
-    <RootNamespace>cpp_study</RootNamespace>
+    <ProjectGuid>{75D14981-4828-4044-81E4-7B38FC1740C4}</ProjectGuid>
+    <RootNamespace>cpp_study_window_app</RootNamespace>
     <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
-    <ProjectName>CppStudyConsole</ProjectName>
+    <ProjectName>CppStudyWindowsApp</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -108,47 +69,37 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <OutDir>$(SolutionDir)Bin\$(Configuration)_$(Platform)\</OutDir>
-    <IntDir>$(SolutionDir)_Intermediate\$(Configuration)_$(Platform)\$(ProjectName)\</IntDir>
-    <CodeAnalysisRuleSet>C:\Program Files (x86)\Microsoft Visual Studio 14.0\Team Tools\Static Analysis Tools\Rule Sets\NativeRecommendedRules.ruleset</CodeAnalysisRuleSet>
-    <RunCodeAnalysis>true</RunCodeAnalysis>
-    <TargetName>execute</TargetName>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <OutDir>$(SolutionDir)Bin\$(Configuration)_$(Platform)\</OutDir>
-    <IntDir>$(SolutionDir)_Intermediate\$(Configuration)_$(Platform)\$(ProjectName)\</IntDir>
-    <CodeAnalysisRuleSet>C:\Program Files (x86)\Microsoft Visual Studio 14.0\Team Tools\Static Analysis Tools\Rule Sets\NativeRecommendedRules.ruleset</CodeAnalysisRuleSet>
-    <RunCodeAnalysis>true</RunCodeAnalysis>
-    <TargetName>execute</TargetName>
-  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <OutDir>$(SolutionDir)Bin\$(Configuration)_$(Platform)\</OutDir>
     <IntDir>$(SolutionDir)_Intermediate\$(Configuration)_$(Platform)\$(ProjectName)\</IntDir>
-    <CodeAnalysisRuleSet>C:\Program Files (x86)\Microsoft Visual Studio 14.0\Team Tools\Static Analysis Tools\Rule Sets\NativeRecommendedRules.ruleset</CodeAnalysisRuleSet>
-    <RunCodeAnalysis>true</RunCodeAnalysis>
-    <TargetName>execute</TargetName>
+    <TargetName>win_execute</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <OutDir>$(SolutionDir)Bin\$(Configuration)_$(Platform)\</OutDir>
     <IntDir>$(SolutionDir)_Intermediate\$(Configuration)_$(Platform)\$(ProjectName)\</IntDir>
-    <CodeAnalysisRuleSet>C:\Program Files (x86)\Microsoft Visual Studio 14.0\Team Tools\Static Analysis Tools\Rule Sets\NativeRecommendedRules.ruleset</CodeAnalysisRuleSet>
-    <RunCodeAnalysis>true</RunCodeAnalysis>
-    <TargetName>execute</TargetName>
+    <TargetName>win_execute</TargetName>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <OutDir>$(SolutionDir)Bin\$(Configuration)_$(Platform)\</OutDir>
+    <IntDir>$(SolutionDir)_Intermediate\$(Configuration)_$(Platform)\$(ProjectName)\</IntDir>
+    <TargetName>win_execute</TargetName>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <OutDir>$(SolutionDir)Bin\$(Configuration)_$(Platform)\</OutDir>
+    <IntDir>$(SolutionDir)_Intermediate\$(Configuration)_$(Platform)\$(ProjectName)\</IntDir>
+    <TargetName>win_execute</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level4</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AssemblerOutput>AssemblyAndMachineCode</AssemblerOutput>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
-      <TreatWChar_tAsBuiltInType>false</TreatWChar_tAsBuiltInType>
-      <EnablePREfast>true</EnablePREfast>
+      <AssemblerOutput>AssemblyAndSourceCode</AssemblerOutput>
       <AdditionalIncludeDirectories>$(SolutionDir)Include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <SubSystem>Console</SubSystem>
+      <SubSystem>Windows</SubSystem>
       <AdditionalLibraryDirectories>$(SolutionDir)Library\$(Platform)\;$(SolutionDir)Library\$(Configuration)_$(Platform)\</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
@@ -157,15 +108,13 @@
       <WarningLevel>Level4</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AssemblerOutput>AssemblyAndMachineCode</AssemblerOutput>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
-      <TreatWChar_tAsBuiltInType>false</TreatWChar_tAsBuiltInType>
-      <EnablePREfast>true</EnablePREfast>
+      <AssemblerOutput>AssemblyAndSourceCode</AssemblerOutput>
       <AdditionalIncludeDirectories>$(SolutionDir)Include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
+      <SubSystem>Windows</SubSystem>
       <AdditionalLibraryDirectories>$(SolutionDir)Library\$(Platform)\;$(SolutionDir)Library\$(Configuration)_$(Platform)\</AdditionalLibraryDirectories>
-      <SubSystem>Console</SubSystem>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -175,16 +124,14 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <AssemblerOutput>AssemblyAndMachineCode</AssemblerOutput>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
-      <TreatWChar_tAsBuiltInType>false</TreatWChar_tAsBuiltInType>
-      <EnablePREfast>true</EnablePREfast>
+      <AssemblerOutput>AssemblyAndSourceCode</AssemblerOutput>
       <AdditionalIncludeDirectories>$(SolutionDir)Include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <SubSystem>Console</SubSystem>
+      <SubSystem>Windows</SubSystem>
       <AdditionalLibraryDirectories>$(SolutionDir)Library\$(Platform)\;$(SolutionDir)Library\$(Configuration)_$(Platform)\</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
@@ -195,19 +142,31 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <AssemblerOutput>AssemblyAndMachineCode</AssemblerOutput>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
-      <TreatWChar_tAsBuiltInType>false</TreatWChar_tAsBuiltInType>
-      <EnablePREfast>true</EnablePREfast>
+      <AssemblerOutput>AssemblyAndSourceCode</AssemblerOutput>
       <AdditionalIncludeDirectories>$(SolutionDir)Include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
+      <SubSystem>Windows</SubSystem>
       <AdditionalLibraryDirectories>$(SolutionDir)Library\$(Platform)\;$(SolutionDir)Library\$(Configuration)_$(Platform)\</AdditionalLibraryDirectories>
-      <SubSystem>Console</SubSystem>
     </Link>
   </ItemDefinitionGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Resource\windows_app.rc" />
+    <ClCompile Include="Controller\console_controller.cpp" />
+    <ClCompile Include="win_main.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Controller\console_controller.h" />
+    <ClInclude Include="Resource\resource.h" />
+    <ClInclude Include="Resource\targetver.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Resource\small.ico" />
+    <Image Include="Resource\windows_app.ico" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

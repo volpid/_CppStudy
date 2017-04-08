@@ -1,5 +1,5 @@
 
-#include <cppstudy/cpp_study_sample.h>
+#include <staticlib/cpp_study_sample.h>
 
 static int _main(int argc, char** argv)
 {

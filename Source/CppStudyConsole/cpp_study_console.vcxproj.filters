@@ -14,6 +14,12 @@
     <Filter Include="Etc">
       <UniqueIdentifier>{93277b91-d601-41b4-a6a9-b55dc096b915}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ModernCpp">
+      <UniqueIdentifier>{066ea93f-6249-44e1-b963-7a79604fd6fc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Template">
+      <UniqueIdentifier>{5eee3c67-c096-4845-bd26-f5f68a727d0f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Etc\check_momory_tracker_in_library.cpp">
@@ -81,6 +87,30 @@
     </ClCompile>
     <ClCompile Include="TempleteMetaProgramming\cp11_design_workthrough.cpp">
       <Filter>TempleteMetaProgramming</Filter>
+    </ClCompile>
+    <ClCompile Include="ModernCpp\c11_chrono.cpp">
+      <Filter>ModernCpp</Filter>
+    </ClCompile>
+    <ClCompile Include="ModernCpp\c11_random.cpp">
+      <Filter>ModernCpp</Filter>
+    </ClCompile>
+    <ClCompile Include="ModernCpp\c11_thread.cpp">
+      <Filter>ModernCpp</Filter>
+    </ClCompile>
+    <ClCompile Include="Etc\check_load_library_simple.cpp">
+      <Filter>Etc</Filter>
+    </ClCompile>
+    <ClCompile Include="Etc\check_load_library_tls.cpp">
+      <Filter>Etc</Filter>
+    </ClCompile>
+    <ClCompile Include="Template\custom_type_trait.cpp">
+      <Filter>Template</Filter>
+    </ClCompile>
+    <ClCompile Include="Etc\simple_xor_encryp.cpp">
+      <Filter>Etc</Filter>
+    </ClCompile>
+    <ClCompile Include="ModernCpp\c11_function.cpp">
+      <Filter>ModernCpp</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

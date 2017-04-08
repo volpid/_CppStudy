@@ -18,73 +18,34 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="Etc\check_load_library_simple.cpp" />
-    <ClCompile Include="Etc\check_momory_tracker_in_library.cpp" />
-    <ClCompile Include="Etc\check_load_library_tls.cpp" />
-    <ClCompile Include="Etc\simple_xor_encryp.cpp" />
-    <ClCompile Include="main_code_templete.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="main_process.cpp" />
-    <ClCompile Include="ModernCpp\c11_chrono.cpp" />
-    <ClCompile Include="ModernCpp\c11_function.cpp" />
-    <ClCompile Include="ModernCpp\c11_random.cpp" />
-    <ClCompile Include="ModernCpp\c11_thread.cpp" />
-    <ClCompile Include="ModernDesignCpp\policy.cpp" />
-    <ClCompile Include="ModernDesignCpp\technique.cpp" />
-    <ClCompile Include="ModernDesignCpp\typelist.cpp" />
-    <ClCompile Include="scratchpad.cpp" />
-    <ClCompile Include="Template\custom_type_trait.cpp" />
-    <ClCompile Include="TempleteMetaProgramming\ch10_part_expression_template.cpp" />
-    <ClCompile Include="TempleteMetaProgramming\ch1_introduction.cpp" />
-    <ClCompile Include="TempleteMetaProgramming\ch3_metafunctions.cpp" />
-    <ClCompile Include="TempleteMetaProgramming\ch4_integral_type_wrappers.cpp" />
-    <ClCompile Include="TempleteMetaProgramming\ch5_sequences_and_iterators.cpp" />
-    <ClCompile Include="TempleteMetaProgramming\ch6_algorithms.cpp" />
-    <ClCompile Include="TempleteMetaProgramming\ch7_view_and_iterator_adaptor.cpp" />
-    <ClCompile Include="TempleteMetaProgramming\ch9_part10_sizeof_trick.cpp" />
-    <ClCompile Include="TempleteMetaProgramming\ch9_part1_for_each.cpp" />
-    <ClCompile Include="TempleteMetaProgramming\ch9_part2_implementation_selection.cpp" />
-    <ClCompile Include="TempleteMetaProgramming\ch9_part3+4_obj_gen_and_structure_selection.cpp" />
-    <ClCompile Include="TempleteMetaProgramming\ch9_part5_class_composition.cpp" />
-    <ClCompile Include="TempleteMetaProgramming\ch9_part7_type_erasure.cpp" />
-    <ClCompile Include="TempleteMetaProgramming\ch9_part8_crtp.cpp" />
-    <ClCompile Include="TempleteMetaProgramming\ch9_part6_function_ptr_as_templete_arg.cpp" />
-    <ClCompile Include="TempleteMetaProgramming\ch9_part9_explicitly_managing_overload_set.cpp" />
-    <ClCompile Include="TempleteMetaProgramming\cp11_design_workthrough.cpp" />
-  </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{1E3862CB-B836-4700-829F-B691C69D0B6B}</ProjectGuid>
-    <RootNamespace>cpp_study</RootNamespace>
+    <ProjectGuid>{D8AA94DE-DC04-456A-B846-892EE7B75AB7}</ProjectGuid>
+    <RootNamespace>CppStudyDll</RootNamespace>
     <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
-    <ProjectName>CppStudyConsole</ProjectName>
+    <ProjectName>CppStudyDll</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v140</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v140</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v140</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v140</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
@@ -108,43 +69,33 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <OutDir>$(SolutionDir)Bin\$(Configuration)_$(Platform)\</OutDir>
-    <IntDir>$(SolutionDir)_Intermediate\$(Configuration)_$(Platform)\$(ProjectName)\</IntDir>
-    <CodeAnalysisRuleSet>C:\Program Files (x86)\Microsoft Visual Studio 14.0\Team Tools\Static Analysis Tools\Rule Sets\NativeRecommendedRules.ruleset</CodeAnalysisRuleSet>
-    <RunCodeAnalysis>true</RunCodeAnalysis>
-    <TargetName>execute</TargetName>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <OutDir>$(SolutionDir)Bin\$(Configuration)_$(Platform)\</OutDir>
-    <IntDir>$(SolutionDir)_Intermediate\$(Configuration)_$(Platform)\$(ProjectName)\</IntDir>
-    <CodeAnalysisRuleSet>C:\Program Files (x86)\Microsoft Visual Studio 14.0\Team Tools\Static Analysis Tools\Rule Sets\NativeRecommendedRules.ruleset</CodeAnalysisRuleSet>
-    <RunCodeAnalysis>true</RunCodeAnalysis>
-    <TargetName>execute</TargetName>
-  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <OutDir>$(SolutionDir)Bin\$(Configuration)_$(Platform)\</OutDir>
     <IntDir>$(SolutionDir)_Intermediate\$(Configuration)_$(Platform)\$(ProjectName)\</IntDir>
-    <CodeAnalysisRuleSet>C:\Program Files (x86)\Microsoft Visual Studio 14.0\Team Tools\Static Analysis Tools\Rule Sets\NativeRecommendedRules.ruleset</CodeAnalysisRuleSet>
-    <RunCodeAnalysis>true</RunCodeAnalysis>
-    <TargetName>execute</TargetName>
+    <TargetName>dynamic_library</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <OutDir>$(SolutionDir)Bin\$(Configuration)_$(Platform)\</OutDir>
     <IntDir>$(SolutionDir)_Intermediate\$(Configuration)_$(Platform)\$(ProjectName)\</IntDir>
-    <CodeAnalysisRuleSet>C:\Program Files (x86)\Microsoft Visual Studio 14.0\Team Tools\Static Analysis Tools\Rule Sets\NativeRecommendedRules.ruleset</CodeAnalysisRuleSet>
-    <RunCodeAnalysis>true</RunCodeAnalysis>
-    <TargetName>execute</TargetName>
+    <TargetName>dynamic_library</TargetName>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <OutDir>$(SolutionDir)Bin\$(Configuration)_$(Platform)\</OutDir>
+    <IntDir>$(SolutionDir)_Intermediate\$(Configuration)_$(Platform)\$(ProjectName)\</IntDir>
+    <TargetName>dynamic_library</TargetName>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <OutDir>$(SolutionDir)Bin\$(Configuration)_$(Platform)\</OutDir>
+    <IntDir>$(SolutionDir)_Intermediate\$(Configuration)_$(Platform)\$(ProjectName)\</IntDir>
+    <TargetName>dynamic_library</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level4</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AssemblerOutput>AssemblyAndMachineCode</AssemblerOutput>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
-      <TreatWChar_tAsBuiltInType>false</TreatWChar_tAsBuiltInType>
-      <EnablePREfast>true</EnablePREfast>
+      <AssemblerOutput>AssemblyAndSourceCode</AssemblerOutput>
       <AdditionalIncludeDirectories>$(SolutionDir)Include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
@@ -157,15 +108,13 @@
       <WarningLevel>Level4</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AssemblerOutput>AssemblyAndMachineCode</AssemblerOutput>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
-      <TreatWChar_tAsBuiltInType>false</TreatWChar_tAsBuiltInType>
-      <EnablePREfast>true</EnablePREfast>
+      <AssemblerOutput>AssemblyAndSourceCode</AssemblerOutput>
       <AdditionalIncludeDirectories>$(SolutionDir)Include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <AdditionalLibraryDirectories>$(SolutionDir)Library\$(Platform)\;$(SolutionDir)Library\$(Configuration)_$(Platform)\</AdditionalLibraryDirectories>
       <SubSystem>Console</SubSystem>
+      <AdditionalLibraryDirectories>$(SolutionDir)Library\$(Platform)\;$(SolutionDir)Library\$(Configuration)_$(Platform)\</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -175,10 +124,8 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <AssemblerOutput>AssemblyAndMachineCode</AssemblerOutput>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
-      <TreatWChar_tAsBuiltInType>false</TreatWChar_tAsBuiltInType>
-      <EnablePREfast>true</EnablePREfast>
+      <AssemblerOutput>AssemblyAndSourceCode</AssemblerOutput>
       <AdditionalIncludeDirectories>$(SolutionDir)Include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
@@ -195,19 +142,33 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <AssemblerOutput>AssemblyAndMachineCode</AssemblerOutput>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
-      <TreatWChar_tAsBuiltInType>false</TreatWChar_tAsBuiltInType>
-      <EnablePREfast>true</EnablePREfast>
+      <AssemblerOutput>AssemblyAndSourceCode</AssemblerOutput>
       <AdditionalIncludeDirectories>$(SolutionDir)Include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalLibraryDirectories>$(SolutionDir)Library\$(Platform)\;$(SolutionDir)Library\$(Configuration)_$(Platform)\</AdditionalLibraryDirectories>
       <SubSystem>Console</SubSystem>
+      <AdditionalLibraryDirectories>$(SolutionDir)Library\$(Platform)\;$(SolutionDir)Library\$(Configuration)_$(Platform)\</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="Frame\dll_main_proxy.cpp" />
+    <ClCompile Include="Frame\dll_main_proxy_template.cpp" />
+    <ClCompile Include="Frame\log_attach_detach_dll.cpp" />
+    <ClCompile Include="Frame\log_module_memory_info.cpp" />
+    <ClCompile Include="Frame\thread_local_storage_main.cpp" />
+    <ClCompile Include="dll_main.cpp" />
+    <ClCompile Include="Internal\module_memory_info_internal.cpp" />
+    <ClCompile Include="Internal\thread_attach_detach_internal.cpp" />
+    <ClCompile Include="Internal\thread_local_storage_internal.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Frame\dll_main_proxy.h" />
+    <ClInclude Include="Internal\module_memory_info_internal.h" />
+    <ClInclude Include="Internal\thread_attach_detach_internal.h" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

@@ -1,12 +1,14 @@
 
 #ignore symbolic link folder
 Include/boost
-Include/cppstudy
+Include/staticlib
+Include/dynamiclib
 Include/glew
 Include/glm
 Include/sdl2
 
 #folder
+.vs/
 _ExternlLibrary/
 _Intermediate/
 Bin/

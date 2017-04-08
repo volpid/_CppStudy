@@ -234,7 +234,7 @@ private:
     {};
 };
 
-int _main(int argc, char** argv)
+static int _main(int argc, char** argv)
 {
     Player p;
     int state = 0;

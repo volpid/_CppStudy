@@ -19,10 +19,11 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="cpp_study_sample_internal.cpp" />
+    <ClCompile Include="Internal\attach_console_internal.cpp" />
+    <ClCompile Include="Internal\cpp_study_sample_internal.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="cpp_study_sample_internal.h" />
+    <ClInclude Include="Internal\cpp_study_sample_internal.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{572ECD0D-4074-4F12-ACB2-6AA5C03265BD}</ProjectGuid>
@@ -78,18 +79,22 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <IntDir>$(SolutionDir)_Intermediate\$(Configuration)_$(Platform)\$(ProjectName)\</IntDir>
     <OutDir>$(SolutionDir)Library\$(Configuration)_$(Platform)\</OutDir>
+    <TargetName>static_library</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <IntDir>$(SolutionDir)_Intermediate\$(Configuration)_$(Platform)\$(ProjectName)\</IntDir>
     <OutDir>$(SolutionDir)Library\$(Configuration)_$(Platform)\</OutDir>
+    <TargetName>static_library</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <OutDir>$(SolutionDir)Library\$(Configuration)_$(Platform)\</OutDir>
     <IntDir>$(SolutionDir)_Intermediate\$(Configuration)_$(Platform)\$(ProjectName)\</IntDir>
+    <TargetName>static_library</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <OutDir>$(SolutionDir)Library\$(Configuration)_$(Platform)\</OutDir>
     <IntDir>$(SolutionDir)_Intermediate\$(Configuration)_$(Platform)\$(ProjectName)\</IntDir>
+    <TargetName>static_library</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -98,6 +103,7 @@
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>$(SolutionDir)Include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <AssemblerOutput>AssemblyAndSourceCode</AssemblerOutput>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -107,6 +113,7 @@
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>$(SolutionDir)Include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <AssemblerOutput>AssemblyAndSourceCode</AssemblerOutput>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -118,6 +125,7 @@
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>$(SolutionDir)Include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <AssemblerOutput>AssemblyAndSourceCode</AssemblerOutput>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -133,6 +141,7 @@
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>$(SolutionDir)Include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <AssemblerOutput>AssemblyAndSourceCode</AssemblerOutput>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>

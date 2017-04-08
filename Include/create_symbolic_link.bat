@@ -1,4 +1,5 @@
-mklink /d cppstudy "..\Source\CppStudyLibrary\export"
+mklink /d staticlib "..\Source\CppStudyLibrary\Export"
+mklink /d dynamiclib "..\Source\CppStudyDll\Export"
 
 mklink /d boost "..\_ExternlLibrary\boost_1_63_0\boost\"
 

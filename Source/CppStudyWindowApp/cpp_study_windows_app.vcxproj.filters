@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="win_main.cpp" />
+    <ClCompile Include="Controller\console_controller.cpp">
+      <Filter>_Uncategorized</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="_Uncategorized">
+      <UniqueIdentifier>{4a4c01a2-d662-4d41-81da-03a8551b64ea}</UniqueIdentifier>
+      <Extensions>cpp;h;</Extensions>
+    </Filter>
+    <Filter Include="Resource">
+      <UniqueIdentifier>{6955860c-8453-4219-bf07-455a23dc983e}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Resource\targetver.h">
+      <Filter>Resource</Filter>
+    </ClInclude>
+    <ClInclude Include="Resource\resource.h">
+      <Filter>Resource</Filter>
+    </ClInclude>
+    <ClInclude Include="Controller\console_controller.h">
+      <Filter>_Uncategorized</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Resource\small.ico">
+      <Filter>Resource</Filter>
+    </Image>
+    <Image Include="Resource\windows_app.ico">
+      <Filter>Resource</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Resource\windows_app.rc">
+      <Filter>Resource</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+</Project>

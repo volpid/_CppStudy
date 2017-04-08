@@ -5,18 +5,21 @@
       <UniqueIdentifier>{5e7106f5-eb4f-47c2-a720-b02ea2976ce1}</UniqueIdentifier>
       <Extensions>cpp;h;</Extensions>
     </Filter>
-    <Filter Include="InternalFiles">
+    <Filter Include="Internal">
       <UniqueIdentifier>{17e4bbbb-61c9-4097-8d39-84b884b3ecc4}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="cpp_study_sample_internal.cpp">
-      <Filter>InternalFiles</Filter>
+    <ClCompile Include="Internal\cpp_study_sample_internal.cpp">
+      <Filter>Internal</Filter>
+    </ClCompile>
+    <ClCompile Include="Internal\attach_console_internal.cpp">
+      <Filter>_Uncategorized</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="cpp_study_sample_internal.h">
-      <Filter>InternalFiles</Filter>
+    <ClInclude Include="Internal\cpp_study_sample_internal.h">
+      <Filter>Internal</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

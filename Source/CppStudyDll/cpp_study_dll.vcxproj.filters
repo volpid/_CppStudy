@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="dll_main.cpp" />
+    <ClCompile Include="Frame\dll_main_proxy.cpp">
+      <Filter>Frame</Filter>
+    </ClCompile>
+    <ClCompile Include="Frame\dll_main_proxy_template.cpp">
+      <Filter>Frame</Filter>
+    </ClCompile>
+    <ClCompile Include="Frame\log_attach_detach_dll.cpp">
+      <Filter>Frame</Filter>
+    </ClCompile>
+    <ClCompile Include="Frame\log_module_memory_info.cpp">
+      <Filter>Frame</Filter>
+    </ClCompile>
+    <ClCompile Include="Internal\module_memory_info_internal.cpp">
+      <Filter>Internal</Filter>
+    </ClCompile>
+    <ClCompile Include="Internal\thread_attach_detach_internal.cpp">
+      <Filter>Internal</Filter>
+    </ClCompile>
+    <ClCompile Include="Internal\thread_local_storage_internal.cpp">
+      <Filter>Internal</Filter>
+    </ClCompile>
+    <ClCompile Include="Frame\thread_local_storage_main.cpp">
+      <Filter>Frame</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="_Uncategorized">
+      <UniqueIdentifier>{8b1de3cb-c3a9-4dea-bf60-0de76eba9a45}</UniqueIdentifier>
+      <Extensions>cpp;h;</Extensions>
+    </Filter>
+    <Filter Include="Frame">
+      <UniqueIdentifier>{447edfff-5842-4eaf-9004-89ab7fd9da19}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Internal">
+      <UniqueIdentifier>{0caa0161-a348-446f-98f3-a351e8df4e68}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Frame\dll_main_proxy.h">
+      <Filter>Frame</Filter>
+    </ClInclude>
+    <ClInclude Include="Internal\module_memory_info_internal.h">
+      <Filter>Internal</Filter>
+    </ClInclude>
+    <ClInclude Include="Internal\thread_attach_detach_internal.h">
+      <Filter>Internal</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

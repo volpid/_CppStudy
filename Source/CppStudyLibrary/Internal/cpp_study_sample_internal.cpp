@@ -1,11 +1,7 @@
 
 #include "cpp_study_sample_internal.h"
-#include "export/cpp_study_sample.h"
 
 #include <iostream>
-
-using std::cout;
-using std::endl;
 
 const int testConst = 2;
 static VerbosStruct obj2("global obj");
@@ -15,12 +11,12 @@ void CppStudyLibTest(void)
     TestClass test1;
     TestClass test2(1);
 
-    cout << "test function" << endl;
+    std::cout << "test function" << std::endl;
 
     MyClass22 a1;
-    cout << MyClass22::BytesUsed() << endl;
+    std::cout << MyClass22::BytesUsed() << std::endl;
     MyClass22 a2;
-    cout << MyClass22::BytesUsed() << endl;
+    std::cout << MyClass22::BytesUsed() << std::endl;
 
-    cout << "test function end" << endl;
+    std::cout << "test function end" << std::endl;
 }

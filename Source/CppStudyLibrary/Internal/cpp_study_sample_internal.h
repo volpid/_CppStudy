@@ -2,7 +2,7 @@
 #ifndef __CPP_STUDY_SAMPLE_INTERNAL__H__
 #define __CPP_STUDY_SAMPLE_INTERNAL__H__
 
-#include "export/memory_tracker.h"
+#include <staticlib/memory_tracker.h>
 
 #include <string>
 #include <iostream>

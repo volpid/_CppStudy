@@ -1,0 +1,30 @@
+{
+	"downloads": 
+	[
+		{
+			"filename": "boost_1_63_0.zip", 
+			"url": "https://downloads.sourceforge.net/project/boost/boost/1.63.0/boost_1_63_0.zip?r=https%3A%2F%2Fsourceforge.net%2Fprojects%2Fboost%2Ffiles%2Fboost%2F1.63.0%2F&ts=1492327967&use_mirror=jaist", 
+			"meta": ["boost", "boost_1_63_0"]
+		}, 
+		{
+			"filename": "glew-2.0.0.zip", 
+			"url": "https://downloads.sourceforge.net/project/glew/glew/2.0.0/glew-2.0.0.zip?r=http%3A%2F%2Fglew.sourceforge.net%2F&ts=1492244263&use_mirror=jaist", 
+			"meta": ["glew", "glew-2.0.0"]
+		}, 
+		{	
+			"filename": "glew-2.0.0-win32.zip", 
+			"url": "https://downloads.sourceforge.net/project/glew/glew/2.0.0/glew-2.0.0-win32.zip?r=http%3A%2F%2Fglew.sourceforge.net%2F&ts=1492261002&use_mirror=jaist", 
+			"meta": ["glew", "glew-2.0.0-win32"]
+		}, 
+		{	
+			"filename": "master.zip", 
+			"url": "https://github.com/g-truc/glm/archive/master.zip", 
+			"meta": ["glm"]
+		}, 
+		{
+			"filename": "SDL2-devel-2.0.5-VC.zip", 
+			"url": "https://www.libsdl.org/release/SDL2-devel-2.0.5-VC.zip", 
+			"meta": ["sdl", "SDL2-devel-2.0.5-VC"]
+		}
+	]
+}

@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="_Uncategorized">
+      <UniqueIdentifier>{ed3477d0-d237-43e0-8e7b-1b72db348002}</UniqueIdentifier>
+      <Extensions>cpp;h;</Extensions>
+    </Filter>
+    <Filter Include="Ch4Direct3DInitialization">
+      <UniqueIdentifier>{cefd7cb4-93e6-4e0f-b70f-b11b457fecaa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common">
+      <UniqueIdentifier>{07837676-f4a6-4334-b45a-baefee5a277e}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="app_main.cpp" />
+    <ClCompile Include="Common\d3d_app.cpp">
+      <Filter>_Uncategorized</Filter>
+    </ClCompile>
+    <ClCompile Include="Common\d3d_util.cpp">
+      <Filter>_Uncategorized</Filter>
+    </ClCompile>
+    <ClCompile Include="Common\gametimer.cpp">
+      <Filter>_Uncategorized</Filter>
+    </ClCompile>
+    <ClCompile Include="ch4Direct3DInitialization\init_direct3d_app.cpp">
+      <Filter>_Uncategorized</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Common\d3d_app.h">
+      <Filter>_Uncategorized</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\d3d_util.h">
+      <Filter>_Uncategorized</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\d3dx_12.h">
+      <Filter>_Uncategorized</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\gametimer.h">
+      <Filter>_Uncategorized</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

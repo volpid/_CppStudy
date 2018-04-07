@@ -112,5 +112,11 @@
     <ClCompile Include="ModernCpp\c11_function.cpp">
       <Filter>ModernCpp</Filter>
     </ClCompile>
+    <ClCompile Include="ModernCpp\c11_static_assert.cpp">
+      <Filter>ModernCpp</Filter>
+    </ClCompile>
+    <ClCompile Include="ModernCpp\c11_range_base_for.cpp">
+      <Filter>ModernCpp</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

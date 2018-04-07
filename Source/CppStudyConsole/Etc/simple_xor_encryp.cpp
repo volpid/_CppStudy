@@ -36,7 +36,7 @@ void PrintText(const char* text, int size)
     }
 }
 
-int _main(int argc, char** argv)
+static int _main(int argc, char** argv)
 {
     InitXorStream();
 

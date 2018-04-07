@@ -5,6 +5,9 @@
     <ClCompile Include="Controller\console_controller.cpp">
       <Filter>_Uncategorized</Filter>
     </ClCompile>
+    <ClCompile Include="Frame\core_window.cpp">
+      <Filter>_Uncategorized</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="_Uncategorized">
@@ -23,6 +26,9 @@
       <Filter>Resource</Filter>
     </ClInclude>
     <ClInclude Include="Controller\console_controller.h">
+      <Filter>_Uncategorized</Filter>
+    </ClInclude>
+    <ClInclude Include="Frame\core_window.h">
       <Filter>_Uncategorized</Filter>
     </ClInclude>
   </ItemGroup>

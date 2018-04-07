@@ -13,6 +13,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CppStudyDll", "Source\CppSt
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CppStudyWindowsApp", "Source\CppStudyWindowApp\cpp_study_windows_app.vcxproj", "{75D14981-4828-4044-81E4-7B38FC1740C4}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "IntroductionDirectX12", "Source\IntroductionDirectX12\IntroductionDirect12.vcxproj", "{5647570B-BD2E-4A39-8DA3-264E882C48EC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -61,6 +63,14 @@ Global
 		{75D14981-4828-4044-81E4-7B38FC1740C4}.Release|x64.Build.0 = Release|x64
 		{75D14981-4828-4044-81E4-7B38FC1740C4}.Release|x86.ActiveCfg = Release|Win32
 		{75D14981-4828-4044-81E4-7B38FC1740C4}.Release|x86.Build.0 = Release|Win32
+		{5647570B-BD2E-4A39-8DA3-264E882C48EC}.Debug|x64.ActiveCfg = Debug|x64
+		{5647570B-BD2E-4A39-8DA3-264E882C48EC}.Debug|x64.Build.0 = Debug|x64
+		{5647570B-BD2E-4A39-8DA3-264E882C48EC}.Debug|x86.ActiveCfg = Debug|Win32
+		{5647570B-BD2E-4A39-8DA3-264E882C48EC}.Debug|x86.Build.0 = Debug|Win32
+		{5647570B-BD2E-4A39-8DA3-264E882C48EC}.Release|x64.ActiveCfg = Release|x64
+		{5647570B-BD2E-4A39-8DA3-264E882C48EC}.Release|x64.Build.0 = Release|x64
+		{5647570B-BD2E-4A39-8DA3-264E882C48EC}.Release|x86.ActiveCfg = Release|Win32
+		{5647570B-BD2E-4A39-8DA3-264E882C48EC}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

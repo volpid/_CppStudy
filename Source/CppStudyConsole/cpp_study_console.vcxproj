@@ -33,6 +33,8 @@
     <ClCompile Include="ModernCpp\c11_chrono.cpp" />
     <ClCompile Include="ModernCpp\c11_function.cpp" />
     <ClCompile Include="ModernCpp\c11_random.cpp" />
+    <ClCompile Include="ModernCpp\c11_range_base_for.cpp" />
+    <ClCompile Include="ModernCpp\c11_static_assert.cpp" />
     <ClCompile Include="ModernCpp\c11_thread.cpp" />
     <ClCompile Include="ModernDesignCpp\policy.cpp" />
     <ClCompile Include="ModernDesignCpp\technique.cpp" />

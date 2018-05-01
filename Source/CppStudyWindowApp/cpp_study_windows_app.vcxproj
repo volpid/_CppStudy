@@ -155,13 +155,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ResourceCompile Include="Resource\windows_app.rc" />
-    <ClCompile Include="Controller\console_controller.cpp" />
-    <ClCompile Include="Frame\core_window.cpp" />
+    <ClCompile Include="Application\console_controller.cpp" />
+    <ClCompile Include="Common\core_window.cpp" />
     <ClCompile Include="win_main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Controller\console_controller.h" />
-    <ClInclude Include="Frame\core_window.h" />
+    <ClInclude Include="Application\console_controller.h" />
+    <ClInclude Include="Common\core_window.h" />
     <ClInclude Include="Resource\resource.h" />
     <ClInclude Include="Resource\targetver.h" />
   </ItemGroup>

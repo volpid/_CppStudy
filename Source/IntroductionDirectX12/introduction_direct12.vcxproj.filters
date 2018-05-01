@@ -11,34 +11,56 @@
     <Filter Include="Common">
       <UniqueIdentifier>{07837676-f4a6-4334-b45a-baefee5a277e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Ch6DrawingInDirect3D">
+      <UniqueIdentifier>{bf6d2966-073a-4c73-afa1-2b7f0f74023c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="app_main.cpp" />
     <ClCompile Include="Common\d3d_app.cpp">
-      <Filter>_Uncategorized</Filter>
+      <Filter>Common</Filter>
     </ClCompile>
     <ClCompile Include="Common\d3d_util.cpp">
-      <Filter>_Uncategorized</Filter>
+      <Filter>Common</Filter>
     </ClCompile>
     <ClCompile Include="Common\gametimer.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="Ch6DrawingInDirect3D\drawing_direct3D_app.cpp">
       <Filter>_Uncategorized</Filter>
     </ClCompile>
     <ClCompile Include="ch4Direct3DInitialization\init_direct3d_app.cpp">
+      <Filter>Ch6DrawingInDirect3D</Filter>
+    </ClCompile>
+    <ClCompile Include="Common\math_helper.cpp">
       <Filter>_Uncategorized</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Common\d3d_app.h">
-      <Filter>_Uncategorized</Filter>
+      <Filter>Common</Filter>
     </ClInclude>
     <ClInclude Include="Common\d3d_util.h">
-      <Filter>_Uncategorized</Filter>
+      <Filter>Common</Filter>
     </ClInclude>
     <ClInclude Include="Common\d3dx_12.h">
-      <Filter>_Uncategorized</Filter>
+      <Filter>Common</Filter>
     </ClInclude>
     <ClInclude Include="Common\gametimer.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\upload_buffer.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\math_helper.h">
       <Filter>_Uncategorized</Filter>
     </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="Shader\ch06_color_vs.hlsl" />
+    <FxCompile Include="Shader\ch06_color_ps.hlsl" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="Shader\ch06_color.txt" />
   </ItemGroup>
 </Project>

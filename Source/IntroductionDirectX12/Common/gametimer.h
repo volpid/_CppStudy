@@ -27,7 +27,6 @@ public:
     void Tick(void);
 
 private:
-    //double secondsPerCount_ = 0.0;
     double deltaTime_ = -1.0;
 
     NanoSeconds pausedDuration_;

@@ -4,7 +4,6 @@
 
 #include <type_traits>
 
-
 std::is_union<int>;
 
 struct true_type_

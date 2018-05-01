@@ -6,14 +6,11 @@
 #include "gametimer.h"
 
 #if defined(DEBUG) || defined(_DEBUG)
-#define _CRTDBG_MAP_ALLOC
-#include <crtdbg.h>
+    #define _CRTDBG_MAP_ALLOC
+    #include <crtdbg.h>
 #endif /**/
 
-#include <dxgi1_4.h>
-#include <string>
 #include <Windowsx.h>
-#include <wrl/client.h>
 
 //----------------------------------------------------------------
 // D3DApp
@@ -28,10 +25,10 @@ protected:
     static constexpr int swapChainbufferCount = 2;
 
 protected:
-    D3DApp(void);
-    D3DApp(const D3DApp& other) = delete;
+    D3DApp(void);    
     virtual ~D3DApp(void);
         
+    D3DApp(const D3DApp& other) = delete;
     D3DApp& operator=(const D3DApp& other) = delete;
 
 public:

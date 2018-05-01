@@ -1,8 +1,6 @@
 
 #include "d3d_app.h"
 
-#include "d3dx_12.h"
-
 #include <assert.h>
 #include <stdlib.h>
 #include <vector>
@@ -344,8 +342,7 @@ void D3DApp::OnResize(void)
     commandList_->ResourceBarrier(1, 
         &CD3DX12_RESOURCE_BARRIER::Transition(depthStencilBuffer_.Get(),
             D3D12_RESOURCE_STATE_COMMON,
-            D3D12_RESOURCE_STATE_DEPTH_WRITE)
-        );
+            D3D12_RESOURCE_STATE_DEPTH_WRITE));
 
     ThrowIfFailed(commandList_->Close());
     ID3D12CommandList* cmdsLists[] = {commandList_.Get()};

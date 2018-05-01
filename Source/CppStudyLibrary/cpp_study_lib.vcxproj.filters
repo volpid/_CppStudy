@@ -14,7 +14,7 @@
       <Filter>Internal</Filter>
     </ClCompile>
     <ClCompile Include="Internal\attach_console_internal.cpp">
-      <Filter>_Uncategorized</Filter>
+      <Filter>Internal</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

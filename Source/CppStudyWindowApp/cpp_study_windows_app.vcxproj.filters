@@ -2,11 +2,11 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="win_main.cpp" />
-    <ClCompile Include="Controller\console_controller.cpp">
-      <Filter>_Uncategorized</Filter>
+    <ClCompile Include="Common\core_window.cpp">
+      <Filter>Common</Filter>
     </ClCompile>
-    <ClCompile Include="Frame\core_window.cpp">
-      <Filter>_Uncategorized</Filter>
+    <ClCompile Include="Application\console_controller.cpp">
+      <Filter>Application</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -17,6 +17,12 @@
     <Filter Include="Resource">
       <UniqueIdentifier>{6955860c-8453-4219-bf07-455a23dc983e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Common">
+      <UniqueIdentifier>{f8f0fb91-961c-4381-9f9f-6fbe36fe9293}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application">
+      <UniqueIdentifier>{ceb5f9e2-9752-4d15-9dfe-51ab469f4770}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Resource\targetver.h">
@@ -25,11 +31,11 @@
     <ClInclude Include="Resource\resource.h">
       <Filter>Resource</Filter>
     </ClInclude>
-    <ClInclude Include="Controller\console_controller.h">
-      <Filter>_Uncategorized</Filter>
+    <ClInclude Include="Common\core_window.h">
+      <Filter>Common</Filter>
     </ClInclude>
-    <ClInclude Include="Frame\core_window.h">
-      <Filter>_Uncategorized</Filter>
+    <ClInclude Include="Application\console_controller.h">
+      <Filter>Application</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

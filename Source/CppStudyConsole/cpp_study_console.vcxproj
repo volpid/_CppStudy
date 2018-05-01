@@ -22,6 +22,7 @@
     <ClCompile Include="Etc\check_load_library_simple.cpp" />
     <ClCompile Include="Etc\check_momory_tracker_in_library.cpp" />
     <ClCompile Include="Etc\check_load_library_tls.cpp" />
+    <ClCompile Include="Etc\scalar_vs_simd.cpp" />
     <ClCompile Include="Etc\simple_xor_encryp.cpp" />
     <ClCompile Include="main_code_templete.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>

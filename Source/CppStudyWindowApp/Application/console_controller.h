@@ -2,7 +2,7 @@
 #ifndef __CONSOLE_CONTROLLER__H__
 #define __CONSOLE_CONTROLLER__H__
 
-#include "../Frame/core_window.h"
+#include "../Common/core_window.h"
 
 #include <dinput.h>
 #include <vector>

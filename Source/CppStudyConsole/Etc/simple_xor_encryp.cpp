@@ -11,9 +11,9 @@ char xorStream[maxStream];
 
 bool InitXorStream(void)
 {
-    std::default_random_engine engine(xorStreamSeed);
+    std::default_random_engine engine_(xorStreamSeed);
     std::uniform_int_distribution<int> distribution(0, 256);
-    auto dice = std::bind(distribution, engine);
+    auto dice = std::bind(distribution, engine_);
 
     for (int idx = 0; idx < maxStream; ++idx)
     {

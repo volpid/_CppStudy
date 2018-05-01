@@ -1,0 +1,86 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="_Uncategorized">
+      <UniqueIdentifier>{d8ffd841-f76a-4317-be2f-2733a2313ebd}</UniqueIdentifier>
+      <Extensions>cpp;h;</Extensions>
+    </Filter>
+    <Filter Include="Common">
+      <UniqueIdentifier>{fee72f2e-bb5f-42cb-8ac8-398e05149fa2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Chapters">
+      <UniqueIdentifier>{7fb22fb4-a9fa-41bc-979d-7a175884ea55}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Vulkan">
+      <UniqueIdentifier>{c44cf349-2dea-4a36-bfbf-46fc4e83860e}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="Common\vulkan_functions.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="Common\sample_framework.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="Common\os.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="Chapters\ch01_instance_and_device.cpp">
+      <Filter>Chapters</Filter>
+    </ClCompile>
+    <ClCompile Include="Chapters\ch01_main.cpp">
+      <Filter>Chapters</Filter>
+    </ClCompile>
+    <ClCompile Include="Chapters\ch02_image_presentation.cpp">
+      <Filter>Chapters</Filter>
+    </ClCompile>
+    <ClCompile Include="Chapters\ch02_main.cpp">
+      <Filter>_Uncategorized</Filter>
+    </ClCompile>
+    <ClCompile Include="Chapters\ch03_command_buffer_and_synchronization.cpp">
+      <Filter>Chapters</Filter>
+    </ClCompile>
+    <ClCompile Include="Chapters\ch04_resource_and_memory.cpp">
+      <Filter>Chapters</Filter>
+    </ClCompile>
+    <ClCompile Include="Chapters\ch03_main.cpp">
+      <Filter>_Uncategorized</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Common\vulkan_functions.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\sample_framework.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\vulkan_destroyer.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\os.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Vulkan\vulkan.h">
+      <Filter>Vulkan</Filter>
+    </ClInclude>
+    <ClInclude Include="Chapters\ch01_instance_and_device.h">
+      <Filter>Chapters</Filter>
+    </ClInclude>
+    <ClInclude Include="Chapters\ch02_image_presentation.h">
+      <Filter>Chapters</Filter>
+    </ClInclude>
+    <ClInclude Include="Chapters\ch03_command_buffer_and_synchronization.h">
+      <Filter>Chapters</Filter>
+    </ClInclude>
+    <ClInclude Include="Chapters\ch04_resource_and_memory.h">
+      <Filter>Chapters</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\vulkan_common.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Common\list_vulkan_functions.inl" />
+  </ItemGroup>
+</Project>

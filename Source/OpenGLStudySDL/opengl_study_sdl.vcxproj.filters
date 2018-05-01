@@ -7,6 +7,10 @@
     <Filter Include="Core">
       <UniqueIdentifier>{3e54c49b-bb5a-420f-bef9-15cb64af1e64}</UniqueIdentifier>
     </Filter>
+    <Filter Include="_Uncategorized">
+      <UniqueIdentifier>{ad6b609c-a2eb-4da4-82b8-daecdbaf632d}</UniqueIdentifier>
+      <Extensions>cpp;h;</Extensions>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core\camera.h">

@@ -171,7 +171,7 @@ static int _main(int argc, char** argv)
     */
     cout << endl;
     const Float minus_pi = -3.14159265;
-    const Float pi = abs(minus_pi);
+    const Float Pi = abs(minus_pi);
 
     /*
         @Note 

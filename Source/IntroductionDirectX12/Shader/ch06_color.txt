@@ -1,0 +1,39 @@
+
+cbuffer cbPerObject : register(b0)
+{
+    float4x4 g_worldViewProj;
+}
+
+struct VertexIn
+{
+    float3 position : POSITION;
+    float4 color : COLOR;
+};
+
+struct VertexOut
+{
+    float4 position : SV_POSITION;
+    float4 color : COLOR;
+};
+
+struct PixelOut
+{
+	float4 color : SV_Target;
+};
+
+VertexOut vs_main(VertexIn vin)
+{
+    VertexOut vout;
+
+    vout.position = mul(float4(vin.position, 1.0f), g_worldViewProj);
+    vout.color = vin.color;	
+    return vout;
+}
+
+PixelOut ps_main(VertexOut pin)
+{
+	PixelOut pout;
+	pout.color = pin.color;
+    return pout;
+}
+

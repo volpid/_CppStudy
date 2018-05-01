@@ -1,6 +1,6 @@
 
-#include "Controller/console_controller.h" 
-#include "Frame/core_window.h"
+#include "Application/console_controller.h" 
+#include "Common/core_window.h"
 #include "Resource/resource.h"
 
 #include <iostream>

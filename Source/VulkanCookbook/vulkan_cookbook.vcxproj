@@ -19,10 +19,11 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{5647570B-BD2E-4A39-8DA3-264E882C48EC}</ProjectGuid>
-    <RootNamespace>DirectX12Tutorial</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.10240.0</WindowsTargetPlatformVersion>
-    <ProjectName>IntroductionDirectX12</ProjectName>
+    <ProjectGuid>{C8074644-E2E9-4235-939F-5A7CD6B96789}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>VulkanCookbook</RootNamespace>
+    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
+    <ProjectName>VulkanCookbook</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -70,39 +71,51 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
     <OutDir>$(SolutionDir)Bin\$(Configuration)_$(Platform)\</OutDir>
     <IntDir>$(SolutionDir)_Intermediate\$(Configuration)_$(Platform)\$(ProjectName)\</IntDir>
+    <TargetName>vulkan_cookbook</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <LinkIncremental>true</LinkIncremental>
     <OutDir>$(SolutionDir)Bin\$(Configuration)_$(Platform)\</OutDir>
     <IntDir>$(SolutionDir)_Intermediate\$(Configuration)_$(Platform)\$(ProjectName)\</IntDir>
+    <TargetName>vulkan_cookbook</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
     <OutDir>$(SolutionDir)Bin\$(Configuration)_$(Platform)\</OutDir>
     <IntDir>$(SolutionDir)_Intermediate\$(Configuration)_$(Platform)\$(ProjectName)\</IntDir>
+    <TargetName>vulkan_cookbook</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <LinkIncremental>false</LinkIncremental>
     <OutDir>$(SolutionDir)Bin\$(Configuration)_$(Platform)\</OutDir>
     <IntDir>$(SolutionDir)_Intermediate\$(Configuration)_$(Platform)\$(ProjectName)\</IntDir>
+    <TargetName>vulkan_cookbook</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level4</WarningLevel>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
     <Link>
-      <SubSystem>Windows</SubSystem>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
       <WarningLevel>Level4</WarningLevel>
+      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
     <Link>
-      <SubSystem>Windows</SubSystem>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -110,14 +123,15 @@
       <WarningLevel>Level4</WarningLevel>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AssemblerOutput>AssemblyAndSourceCode</AssemblerOutput>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
     </ClCompile>
     <Link>
+      <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -125,28 +139,44 @@
       <WarningLevel>Level4</WarningLevel>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AssemblerOutput>AssemblyAndSourceCode</AssemblerOutput>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
     </ClCompile>
     <Link>
+      <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="app_main.cpp" />
-    <ClCompile Include="ch4Direct3DInitialization\init_direct3d_app.cpp" />
-    <ClCompile Include="Common\d3d_app.cpp" />
-    <ClCompile Include="Common\d3d_util.cpp" />
-    <ClCompile Include="Common\gametimer.cpp" />
+    <ClCompile Include="Chapters\ch01_instance_and_device.cpp" />
+    <ClCompile Include="Chapters\ch01_main.cpp" />
+    <ClCompile Include="Chapters\ch02_image_presentation.cpp" />
+    <ClCompile Include="Chapters\ch02_main.cpp" />
+    <ClCompile Include="Chapters\ch03_command_buffer_and_synchronization.cpp" />
+    <ClCompile Include="Chapters\ch03_main.cpp" />
+    <ClCompile Include="Chapters\ch04_resource_and_memory.cpp" />
+    <ClCompile Include="Common\os.cpp" />
+    <ClCompile Include="Common\sample_framework.cpp" />
+    <ClCompile Include="Common\vulkan_functions.cpp" />
+    <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Common\d3dx_12.h" />
-    <ClInclude Include="Common\d3d_app.h" />
-    <ClInclude Include="Common\d3d_util.h" />
-    <ClInclude Include="Common\gametimer.h" />
+    <ClInclude Include="Chapters\ch01_instance_and_device.h" />
+    <ClInclude Include="Chapters\ch02_image_presentation.h" />
+    <ClInclude Include="Chapters\ch03_command_buffer_and_synchronization.h" />
+    <ClInclude Include="Chapters\ch04_resource_and_memory.h" />
+    <ClInclude Include="Common\vulkan_common.h" />
+    <ClInclude Include="Common\os.h" />
+    <ClInclude Include="Common\sample_framework.h" />
+    <ClInclude Include="Common\vulkan_destroyer.h" />
+    <ClInclude Include="Common\vulkan_functions.h" />
+    <ClInclude Include="Vulkan\vulkan.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Common\list_vulkan_functions.inl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

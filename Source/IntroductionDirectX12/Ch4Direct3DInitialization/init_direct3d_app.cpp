@@ -1,8 +1,5 @@
 
 #include "../Common/d3d_app.h"
-#include "../Common/d3dx_12.h"
-
-#include <DirectXColors.h>
 
 //----------------------------------------------------------------
 // InitDirect3DApp
@@ -11,7 +8,7 @@ class InitDirect3DApp : public D3DApp
 {
 public:
     InitDirect3DApp(void) = default;
-    ~InitDirect3DApp(void) = default;
+    virtual ~InitDirect3DApp(void) = default;
 
     virtual bool Initialize(HINSTANCE hInstance) override;
 
@@ -21,7 +18,7 @@ private:
     virtual void Draw(const GameTimer& gt) override;
 };
 
-InitDirect3DApp appInstance;
+//InitDirect3DApp appInstance;
 
 //----------------------------------------------------------------
 bool InitDirect3DApp::Initialize(HINSTANCE hInstance)

@@ -118,5 +118,8 @@
     <ClCompile Include="ModernCpp\c11_range_base_for.cpp">
       <Filter>ModernCpp</Filter>
     </ClCompile>
+    <ClCompile Include="Etc\scalar_vs_simd.cpp">
+      <Filter>_Uncategorized</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

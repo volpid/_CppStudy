@@ -14,8 +14,8 @@ public:
 
 private:
     virtual void OnResize(void) override;
-    virtual void Update(const GameTimer& gt) override;
-    virtual void Draw(const GameTimer& gt) override;
+    virtual void Update(const GameTimer& timer) override;
+    virtual void Draw(const GameTimer& timer) override;
 };
 
 //InitDirect3DApp appInstance;
@@ -35,12 +35,15 @@ void InitDirect3DApp::OnResize(void)
     D3DApp::OnResize();
 }
 
-void InitDirect3DApp::Update(const GameTimer& gt)
+void InitDirect3DApp::Update(const GameTimer& timer)
 {
+    _Unreferenced_parameter_(timer);
 }
 
-void InitDirect3DApp::Draw(const GameTimer& gt) 
+void InitDirect3DApp::Draw(const GameTimer& timer) 
 {
+    _Unreferenced_parameter_(timer);
+
     ThrowIfFailed(commandListAlloc_->Reset());
     ThrowIfFailed(commandList_->Reset(commandListAlloc_.Get(), nullptr));
 

@@ -1,10 +1,13 @@
 
 #include "sample_framework.h"
 
-#include "../Chapters/ch01_instance_and_device.h"
-#include "../Chapters/ch02_image_presentation.h"
-#include "../Chapters/ch03_command_buffer_and_synchronization.h"
-#include "../Chapters/ch04_resource_and_memory.h"
+#include "../Chapter/ch01_instance_and_device.h"
+#include "../Chapter/ch02_image_presentation.h"
+#include "../Chapter/ch03_command_buffer_and_synchronization.h"
+#include "../Chapter/ch04_resource_and_memory.h"
+
+//nanpi
+#include <iostream>
 
 //----------------------------------------------------------------
 // TimerStateParameters
@@ -43,8 +46,8 @@ VulkanSampleBase::VulkanSampleBase(void)
 }
 
 VulkanSampleBase::~VulkanSampleBase(void)
-{
-    //ReleaseVulkanLibrary
+{   
+    Cookbook::ReleaseVulkanLibrary(vulkanLibrary_);
 }
 
 void VulkanSampleBase::MouseClick(size_t buttonIndex, bool state)
@@ -130,7 +133,7 @@ bool VulkanSample::InitializeVulkan(WindowParameters params,
         return false;
     }
 
-    if (Cookbook::LoadGlobalFunctions() == false)
+    if (Cookbook::LoadGlobalLevelFunctions() == false)
     {
         return false;
     }
@@ -146,9 +149,8 @@ bool VulkanSample::InitializeVulkan(WindowParameters params,
     {
         return false;
     }
-    
+        
     InitVkDestroyer(instance_, presentationSurface_);
-
     if (Cookbook::CreatePresentaionSurface(*instance_, params, *presentationSurface_) == false)
     {
         return false;
@@ -173,7 +175,7 @@ bool VulkanSample::InitializeVulkan(WindowParameters params,
             continue;
         }
 
-        std::vector<Cookbook::QueueInfo> requestedQueues = 
+        std::vector<QueueInfo> requestedQueues = 
         {
             {graphicsQueue_.familyIndex, {1.0f}},
         };
@@ -210,7 +212,7 @@ bool VulkanSample::InitializeVulkan(WindowParameters params,
     {
         return false;
     }
-    
+        
     InitVkDestroyer(logicalDevice_, commandPool_);
     if (Cookbook::CreateCommandPool(*logicalDevice_, VK_COMMAND_POOL_CREATE_RESET_COMMAND_BUFFER_BIT, graphicsQueue_.familyIndex, *commandPool_) == false)
     {
@@ -227,7 +229,7 @@ bool VulkanSample::InitializeVulkan(WindowParameters params,
         VkDestroyer(VkFence) drawingFinishedFence;
         InitVkDestroyer(logicalDevice_, drawingFinishedFence);
         VkDestroyer(VkImageView) depthAttachment;
-        InitVkDestroyer(logicalDevice_, depthAttachment);        \
+        InitVkDestroyer(logicalDevice_, depthAttachment);
 
         if (Cookbook::AllocateCommandBuffer(*logicalDevice_, *commandPool_, VK_COMMAND_BUFFER_LEVEL_PRIMARY, 1, commandBuffer) == false)
         {

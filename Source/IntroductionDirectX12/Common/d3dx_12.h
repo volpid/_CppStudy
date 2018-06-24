@@ -44,6 +44,33 @@ struct CD3DX12_CPU_DESCRIPTOR_HANDLE : public D3D12_CPU_DESCRIPTOR_HANDLE
 };
 
 //----------------------------------------------------------------
+struct CD3DX12_GPU_DESCRIPTOR_HANDLE : public D3D12_GPU_DESCRIPTOR_HANDLE
+{
+    static inline void InitOffsetted(_Out_ D3D12_GPU_DESCRIPTOR_HANDLE& handle, _In_ const D3D12_GPU_DESCRIPTOR_HANDLE& base, INT offsetScaledByIncrementSize);
+    static inline void InitOffsetted(_Out_ D3D12_GPU_DESCRIPTOR_HANDLE& handle, _In_ const D3D12_GPU_DESCRIPTOR_HANDLE& base, INT offsetInDescriptor, UINT descriptorIncrementSize);
+
+    CD3DX12_GPU_DESCRIPTOR_HANDLE(void) = default;
+    ~CD3DX12_GPU_DESCRIPTOR_HANDLE(void) = default;
+
+    inline explicit CD3DX12_GPU_DESCRIPTOR_HANDLE(CD3DX12_DEFAULT);
+    inline explicit CD3DX12_GPU_DESCRIPTOR_HANDLE(const D3D12_GPU_DESCRIPTOR_HANDLE& o);
+
+    inline CD3DX12_GPU_DESCRIPTOR_HANDLE(_In_ const D3D12_GPU_DESCRIPTOR_HANDLE& other, INT offsetScaledByIncreamentSize);
+    inline CD3DX12_GPU_DESCRIPTOR_HANDLE(_In_ const D3D12_GPU_DESCRIPTOR_HANDLE& other, INT offsetInDescriptor, UINT decriptorIncrementSize);
+
+    inline CD3DX12_GPU_DESCRIPTOR_HANDLE& Offset(INT offsetInDescriptor, UINT descriptorIncrementSize);
+    inline CD3DX12_GPU_DESCRIPTOR_HANDLE& Offset(INT offsetScaledByIncreamentSize);
+
+    inline bool operator==(_In_ const D3D12_GPU_DESCRIPTOR_HANDLE& other);
+    inline bool operator!=(_In_ const D3D12_GPU_DESCRIPTOR_HANDLE& other);
+
+    inline CD3DX12_GPU_DESCRIPTOR_HANDLE& operator=(const D3D12_GPU_DESCRIPTOR_HANDLE& other);
+    
+    inline void InitOffsetted(_In_ const D3D12_GPU_DESCRIPTOR_HANDLE& base, INT offsetScaledByIncrementSize);
+    inline void InitOffsetted(_In_ const D3D12_GPU_DESCRIPTOR_HANDLE& base, INT offsetInDescriptor, UINT descriptorIncrementSize);
+};
+
+//----------------------------------------------------------------
 struct CD3DX12_HEAP_PROPERTIES : public D3D12_HEAP_PROPERTIES
 {
     CD3DX12_HEAP_PROPERTIES(void) = default;
@@ -462,7 +489,7 @@ inline UINT64 UpdateSubresource(_In_ ID3D12GraphicsCommandList* pCmdList,
     }
     else
     {
-        for (UINT idx = 0; idx < numSubresouce; +idx)
+        for (UINT idx = 0; idx < numSubresouce; ++idx)
         {
             CD3DX12_TEXTURE_COPY_LOCATION dest(pDestinationResource, idx + firstSubresource);
             CD3DX12_TEXTURE_COPY_LOCATION src(pIntermediate, pLayouts[idx]);
@@ -550,6 +577,7 @@ inline CD3DX12_CPU_DESCRIPTOR_HANDLE::CD3DX12_CPU_DESCRIPTOR_HANDLE(const D3D12_
 
 inline CD3DX12_CPU_DESCRIPTOR_HANDLE::CD3DX12_CPU_DESCRIPTOR_HANDLE(CD3DX12_DEFAULT def) 
 {
+    _Unreferenced_parameter_(def);
     ptr = 0;
 }
 
@@ -641,6 +669,75 @@ bool CD3DX12_HEAP_PROPERTIES::IsCPUAccessible(void) const
         || ((Type == D3D12_HEAP_TYPE_CUSTOM)
         && (CPUPageProperty == D3D12_CPU_PAGE_PROPERTY_WRITE_COMBINE 
         || CPUPageProperty == D3D12_CPU_PAGE_PROPERTY_WRITE_BACK));
+}
+
+//----------------------------------------------------------------
+inline void CD3DX12_GPU_DESCRIPTOR_HANDLE::InitOffsetted(_Out_ D3D12_GPU_DESCRIPTOR_HANDLE& handle, _In_ const D3D12_GPU_DESCRIPTOR_HANDLE& base, INT offsetScaledByIncrementSize)
+{
+    handle.ptr = base.ptr + offsetScaledByIncrementSize;
+}
+
+inline void CD3DX12_GPU_DESCRIPTOR_HANDLE::InitOffsetted(_Out_ D3D12_GPU_DESCRIPTOR_HANDLE& handle, _In_ const D3D12_GPU_DESCRIPTOR_HANDLE& base, INT offsetInDescriptor, UINT descriptorIncrementSize)
+{
+    handle.ptr = base.ptr + offsetInDescriptor * descriptorIncrementSize;
+}
+
+inline CD3DX12_GPU_DESCRIPTOR_HANDLE::CD3DX12_GPU_DESCRIPTOR_HANDLE(CD3DX12_DEFAULT)    
+{
+    ptr = 0;
+}
+
+inline CD3DX12_GPU_DESCRIPTOR_HANDLE::CD3DX12_GPU_DESCRIPTOR_HANDLE(const D3D12_GPU_DESCRIPTOR_HANDLE& o)
+    : D3D12_GPU_DESCRIPTOR_HANDLE(o)
+{
+}
+
+inline CD3DX12_GPU_DESCRIPTOR_HANDLE::CD3DX12_GPU_DESCRIPTOR_HANDLE(_In_ const D3D12_GPU_DESCRIPTOR_HANDLE& other, INT offsetScaledByIncreamentSize)
+{
+    InitOffsetted(other, offsetScaledByIncreamentSize);
+}
+
+inline CD3DX12_GPU_DESCRIPTOR_HANDLE::CD3DX12_GPU_DESCRIPTOR_HANDLE(_In_ const D3D12_GPU_DESCRIPTOR_HANDLE& other, INT offsetInDescriptor, UINT decriptorIncrementSize)
+{
+    InitOffsetted(other, offsetInDescriptor, decriptorIncrementSize);
+}
+
+inline CD3DX12_GPU_DESCRIPTOR_HANDLE& CD3DX12_GPU_DESCRIPTOR_HANDLE::Offset(INT offsetInDescriptor, UINT descriptorIncrementSize)
+{
+    ptr += offsetInDescriptor * descriptorIncrementSize;
+    return *this;    
+}
+
+inline CD3DX12_GPU_DESCRIPTOR_HANDLE& CD3DX12_GPU_DESCRIPTOR_HANDLE::Offset(INT offsetScaledByIncreamentSize)
+{
+    ptr += offsetScaledByIncreamentSize;
+    return *this;
+}
+
+inline bool CD3DX12_GPU_DESCRIPTOR_HANDLE::operator==(_In_ const D3D12_GPU_DESCRIPTOR_HANDLE& other)
+{
+    return (ptr == other.ptr);
+}
+
+inline bool CD3DX12_GPU_DESCRIPTOR_HANDLE::operator!=(_In_ const D3D12_GPU_DESCRIPTOR_HANDLE& other)
+{
+    return (ptr != other.ptr);
+}
+
+inline CD3DX12_GPU_DESCRIPTOR_HANDLE& CD3DX12_GPU_DESCRIPTOR_HANDLE::operator=(const D3D12_GPU_DESCRIPTOR_HANDLE& other)
+{
+    ptr = other.ptr;
+    return *this;
+}
+    
+inline void CD3DX12_GPU_DESCRIPTOR_HANDLE::InitOffsetted(_In_ const D3D12_GPU_DESCRIPTOR_HANDLE& base, INT offsetScaledByIncrementSize)
+{
+    InitOffsetted(*this, base, offsetScaledByIncrementSize);
+}
+
+inline void CD3DX12_GPU_DESCRIPTOR_HANDLE::InitOffsetted(_In_ const D3D12_GPU_DESCRIPTOR_HANDLE& base, INT offsetInDescriptor, UINT descriptorIncrementSize)
+{
+    InitOffsetted(*this, base, offsetInDescriptor, descriptorIncrementSize);
 }
 
 //----------------------------------------------------------------
@@ -886,9 +983,9 @@ inline CD3DX12_ROOT_DESCRIPTOR_TABLE::CD3DX12_ROOT_DESCRIPTOR_TABLE(UINT numDesc
 }
 
 inline void CD3DX12_ROOT_DESCRIPTOR_TABLE::Init(UINT numDescriptorRange,
-    _In_reads_(numDescriptorRange) const D3D12_DESCRIPTOR_RANGE* pDescriptorRanges)
+    _In_reads_(numDescriptorRange) const D3D12_DESCRIPTOR_RANGE* pDescriptorRange)
 {
-    Init(*this, numDescriptorRange, pDescriptorRanges);
+    Init(*this, numDescriptorRange, pDescriptorRange);
 }
 
 //----------------------------------------------------------------
@@ -941,13 +1038,13 @@ inline void CD3DX12_ROOT_DESCRIPTOR::Init(UINT shaderRegister, UINT registerSpac
 //----------------------------------------------------------------
 inline void CD3DX12_ROOT_PARAMETER::InitAsDescriptorTable(_Out_ D3D12_ROOT_PARAMETER& rootParam,
     UINT numDescriptorRange,
-    _In_reads_(numDescriptorRange) const D3D12_DESCRIPTOR_RANGE* pDescriptorRanges,
+    _In_reads_(numDescriptorRange) const D3D12_DESCRIPTOR_RANGE* pDescriptorRange,
     D3D12_SHADER_VISIBILITY visibility)
 {
     rootParam.ParameterType = D3D12_ROOT_PARAMETER_TYPE_DESCRIPTOR_TABLE;
     rootParam.ShaderVisibility = visibility;
         
-    CD3DX12_ROOT_DESCRIPTOR_TABLE::Init(rootParam.DescriptorTable, numDescriptorRange, pDescriptorRanges);
+    CD3DX12_ROOT_DESCRIPTOR_TABLE::Init(rootParam.DescriptorTable, numDescriptorRange, pDescriptorRange);
 }
 
 inline void CD3DX12_ROOT_PARAMETER::InitAsConstant(_Out_ D3D12_ROOT_PARAMETER& rootParam,
@@ -1000,10 +1097,10 @@ inline CD3DX12_ROOT_PARAMETER::CD3DX12_ROOT_PARAMETER(const D3D12_ROOT_PARAMETER
 {}
 
 inline void CD3DX12_ROOT_PARAMETER::InitAsDescriptorTable(UINT numDescriptorRange,
-    _In_reads_(numDescriptorRange) const D3D12_DESCRIPTOR_RANGE* pDescriptorRanges,
+    _In_reads_(numDescriptorRange) const D3D12_DESCRIPTOR_RANGE* pDescriptorRange,
     D3D12_SHADER_VISIBILITY visibility)
 {
-    InitAsDescriptorTable(*this, numDescriptorRange, pDescriptorRanges, visibility);
+    InitAsDescriptorTable(*this, numDescriptorRange, pDescriptorRange, visibility);
 }
 
 inline void CD3DX12_ROOT_PARAMETER::InitAsConstant(UINT num32bitValue,
@@ -1011,7 +1108,7 @@ inline void CD3DX12_ROOT_PARAMETER::InitAsConstant(UINT num32bitValue,
     UINT registerSpace,
     D3D12_SHADER_VISIBILITY visibility)
 {
-    InitAsConstant(*this, shaderRegister, registerSpace, visibility);
+    InitAsConstant(*this, num32bitValue, shaderRegister, registerSpace, visibility);
 }
 
 inline void CD3DX12_ROOT_PARAMETER::InitAsConstantBufferView(UINT shaderRegister,
@@ -1093,25 +1190,27 @@ inline CD3DX12_ROOT_SIGNATURE_DESC::CD3DX12_ROOT_SIGNATURE_DESC(const D3D12_ROOT
 
 inline CD3DX12_ROOT_SIGNATURE_DESC::CD3DX12_ROOT_SIGNATURE_DESC(CD3DX12_DEFAULT def)
 {
+    _Unreferenced_parameter_(def);
+
     Init(0, nullptr, 0, nullptr, D3D12_ROOT_SIGNATURE_FLAG_NONE);
 }
 
 inline CD3DX12_ROOT_SIGNATURE_DESC::CD3DX12_ROOT_SIGNATURE_DESC(UINT numParameter,
     _In_reads_opt_(numParameter) const D3D12_ROOT_PARAMETER* pParameters,
     UINT numStaticSampler,
-    _In_reads_opt_(numStaticSampler) const D3D12_STATIC_SAMPLER_DESC* pStaticSamplers,
+    _In_reads_opt_(numStaticSampler) const D3D12_STATIC_SAMPLER_DESC* pStaticSampler,
     D3D12_ROOT_SIGNATURE_FLAGS flags)
 {
-    Init(numParameter, pParameters, numStaticSampler, pStaticSamplers, flags);
+    Init(numParameter, pParameters, numStaticSampler, pStaticSampler, flags);
 }
 
 inline void CD3DX12_ROOT_SIGNATURE_DESC::Init(UINT numParameter,
-    _In_reads_opt_(numParameter) const D3D12_ROOT_PARAMETER* pParameters,
+    _In_reads_opt_(numParameter) const D3D12_ROOT_PARAMETER* pParameter,
     UINT numStaticSampler,
-    _In_reads_opt_(numStaticSampler) const D3D12_STATIC_SAMPLER_DESC* pStaticSamplers,
+    _In_reads_opt_(numStaticSampler) const D3D12_STATIC_SAMPLER_DESC* pStaticSampler,
     D3D12_ROOT_SIGNATURE_FLAGS flags)
 {
-    Init(*this, numParameter, pParameters, numStaticSampler, pStaticSamplers, flags);
+    Init(*this, numParameter, pParameter, numStaticSampler, pStaticSampler, flags);
 }
 
 
@@ -1252,6 +1351,8 @@ inline CD3DX12_BLEND_DESC::CD3DX12_BLEND_DESC(const D3D12_BLEND_DESC& o)
 
 inline CD3DX12_BLEND_DESC::CD3DX12_BLEND_DESC(CD3DX12_DEFAULT def)
 {
+    _Unreferenced_parameter_(def);
+
     AlphaToCoverageEnable = FALSE;
     IndependentBlendEnable = FALSE;
 

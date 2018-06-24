@@ -7,6 +7,10 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE prevInstance, PSTR cmdLine, in
     _CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 #endif /**/
 
+    _Unreferenced_parameter_(prevInstance);
+    _Unreferenced_parameter_(cmdLine);
+    _Unreferenced_parameter_(showCmd);
+
     try
     {
         D3DApp* pApp = D3DApp::GetApp();
@@ -21,4 +25,6 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE prevInstance, PSTR cmdLine, in
     {
         MessageBox(nullptr, e.ToString().c_str(), "HR Failed", MB_OK);
     }
+
+    return 0;
 }

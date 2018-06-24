@@ -83,6 +83,13 @@ struct FrameResources
 };
 
 //----------------------------------------------------------------
+struct QueueInfo
+{
+    uint32_t familyIndex;
+    std::vector<float> priorities;
+};
+
+//----------------------------------------------------------------
 struct QueueParameters
 {
     VkQueue handle;
@@ -125,6 +132,50 @@ struct PresentInfo
 {
     VkSwapchainKHR swapchain;
     uint32_t imageIndex;
+};
+
+//----------------------------------------------------------------
+struct SubpassParameter
+{
+    VkPipelineBindPoint pipelineType;
+    std::vector<VkAttachmentReference> inputAttachments;
+    std::vector<VkAttachmentReference> colorAttachments;
+    std::vector<VkAttachmentReference> resolveAttachments;
+    const VkAttachmentReference* depthStencilAttachment;
+    std::vector<uint32_t> preserveAttachments;
+};
+
+//----------------------------------------------------------------
+struct ShaderStageParameter
+{
+    VkShaderStageFlagBits shaderStage;
+    VkShaderModule shaderModule;
+    const char* entryPointName;
+    const VkSpecializationInfo* specializationInfo;
+};
+
+//----------------------------------------------------------------
+struct ViewportInfo
+{
+    std::vector<VkViewport> viewports;
+    std::vector<VkRect2D> scissors;
+};
+
+//----------------------------------------------------------------
+struct BufferTransition
+{
+    VkBuffer buffer;
+    VkAccessFlags currentAccess;
+    VkAccessFlags newAccess;
+    uint32_t currentQueueFamily;
+    uint32_t newQueueFamily;
+};
+
+//----------------------------------------------------------------
+struct VertexBufferParameter
+{
+    VkBuffer buffer;
+    VkDeviceSize memoryOffset;
 };
 
 #endif /*__VULKAN_COMMON__H__*/

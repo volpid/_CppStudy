@@ -1,11 +1,10 @@
 
-#include "ch01_instance_and_device.h"
-#include "ch03_command_buffer_and_synchronization.h"
-
+#include "../Chapter/ch01_instance_and_device.h"
+#include "../Chapter/ch03_command_buffer_and_synchronization.h"
 #include "../Common/sample_framework.h"
 
 //----------------------------------------------------------------
-// SampleChapter01
+// SampleChapter01 : create logical device
 //----------------------------------------------------------------
 class SampleChapter01 : public VulkanSampleBase
 {
@@ -23,7 +22,7 @@ private:
     VkQueue computeQueue_;
 };
 
-//VULKAN_SAMPLE_FRAMEWORK("01_CreateLogicalDevice", 50, 25, 1280, 800, SampleChapter01);
+//VULKAN_SAMPLE_FRAMEWORK("01_CreateLogicalDevice", 50, 25, 800, 600, SampleChapter01);
 
 //----------------------------------------------------------------
 bool SampleChapter01::Initialize(WindowParameters parameters)
@@ -38,7 +37,7 @@ bool SampleChapter01::Initialize(WindowParameters parameters)
         return false;
     }
 
-    if (Cookbook::LoadGlobalFunctions() == false)
+    if (Cookbook::LoadGlobalLevelFunctions() == false)
     {
         return false;
     }

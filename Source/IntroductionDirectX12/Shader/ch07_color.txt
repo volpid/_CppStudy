@@ -1,0 +1,58 @@
+
+cbuffer cbPerObject : register(b0)
+{
+    float4x4 gWorld;
+};
+
+cbuffer cbPass : register(b1)
+{
+	float4x4 gView;
+	float4x4 gInvView;
+	float4x4 gProj;
+	float4x4 gInvProj;
+	float4x4 gViewProj;
+	float4x4 gInvViewProj;
+	float3 gEyePosW;
+	float cbPerObjectPad1;
+	float2 gRenderTargetSize;
+	float2 gInvRenderTargetSize;
+	float gNearZ;
+	float gFarZ;
+	float gTotalTime;
+	float gDeltaTime;
+};
+
+struct VertexIn
+{
+    float3 positionL : POSITION;
+    float4 color : COLOR;
+};
+
+struct VertexOut
+{
+    float4 positionH : SV_POSITION;
+    float4 color : COLOR;
+};
+
+struct PixelOut
+{
+	float4 color : SV_Target;
+};
+
+VertexOut vs_main(VertexIn vin)
+{
+    VertexOut vout;
+
+	float4 posW = mul(float4(vin.positionL, 1.0f), gWorld);
+	vout.positionH = mul(posW, gViewProj);
+    vout.color = vin.color;	
+    return vout;
+}
+
+PixelOut ps_main(VertexOut pin)
+{
+	PixelOut pout;
+	pout.color = pin.color;
+    return pout;
+}
+

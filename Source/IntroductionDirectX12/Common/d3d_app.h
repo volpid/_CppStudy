@@ -47,8 +47,8 @@ public:
 protected:
     virtual void CreateRtvAndDsvDescriptorHeaps(void);
     virtual void OnResize(void);
-    virtual void Update(const GameTimer& gt) = 0;
-    virtual void Draw(const GameTimer& gt) = 0;
+    virtual void Update(const GameTimer& timer) = 0;
+    virtual void Draw(const GameTimer& timer) = 0;
 
     virtual void OnMouseDown(WPARAM btnState, int x, int y);
     virtual void OnMouseUp(WPARAM btnState, int x, int y);

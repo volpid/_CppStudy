@@ -16,13 +16,13 @@ namespace D3DUtil
     UINT CalcConstantBufferByteSize(UINT byteSize);
 
     Microsoft::WRL::ComPtr<ID3D12Resource> CreataDefaultBuffer(ID3D12Device* pDevice,
-        ID3D12GraphicsCommandList* cmdList,
-        const void* initData,
+        ID3D12GraphicsCommandList* pCmdList,
+        const void* pInitData,
         UINT64 byteSize,
         Microsoft::WRL::ComPtr<ID3D12Resource>& uploadBuffer);
 
     Microsoft::WRL::ComPtr<ID3DBlob> CompileShader(const std::string& filename, 
-        const D3D_SHADER_MACRO* defines,
+        const D3D_SHADER_MACRO* pDefines,
         const std::string& entryPoint, 
         const std::string& target);
 }

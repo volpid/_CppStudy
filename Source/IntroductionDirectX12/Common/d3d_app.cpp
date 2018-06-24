@@ -362,14 +362,23 @@ void D3DApp::OnResize(void)
 
 void D3DApp::OnMouseDown(WPARAM btnState, int x, int y)
 {
+    _Unreferenced_parameter_(btnState);
+    _Unreferenced_parameter_(x);
+    _Unreferenced_parameter_(y);
 }
 
 void D3DApp::OnMouseUp(WPARAM btnState, int x, int y)
 {
+    _Unreferenced_parameter_(btnState);
+    _Unreferenced_parameter_(x);
+    _Unreferenced_parameter_(y);
 }
 
 void D3DApp::OnMouseMove(WPARAM btnState, int x, int y)
 {
+    _Unreferenced_parameter_(btnState);
+    _Unreferenced_parameter_(x);
+    _Unreferenced_parameter_(y);
 }
 
 bool D3DApp::InitMainWindow(void)
@@ -593,10 +602,10 @@ void D3DApp::LogAdapters(void)
         ++i;
     }
 
-    for (size_t i = 0; i < adapterList.size(); ++i)
+    for (size_t idx = 0; idx < adapterList.size(); ++idx)
     {
-        LogAdapterOutpujts(adapterList[i]);
-        ReleaseCom(adapterList[i]);
+        LogAdapterOutpujts(adapterList[idx]);
+        ReleaseCom(adapterList[idx]);
     }
 }
 
@@ -637,7 +646,7 @@ void D3DApp::LogOutputDisplayModes(IDXGIOutput* output, DXGI_FORMAT format)
         UINT d = mode.RefreshRate.Denominator;
         std::string text = "width = " + std::to_string(mode.Width) + " "
             + "height = " + std::to_string(mode.Height) + " "
-            + "refresh = " + std::to_string(n) + "/" + std::to_string(d);
+            + "refresh = " + std::to_string(n) + "/" + std::to_string(d)
             + "\n";
 
         OutputDebugString(text.c_str());

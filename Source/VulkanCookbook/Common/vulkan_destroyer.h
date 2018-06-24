@@ -73,6 +73,7 @@ VK_DESTOYER_SPECIALIZATION(VkImageView, vkDestroyImageView);
 VK_DESTOYER_SPECIALIZATION(VkShaderModule, vkDestroyShaderModule);
 VK_DESTOYER_SPECIALIZATION(VkPipelineCache, vkDestroyPipelineCache);
 VK_DESTOYER_SPECIALIZATION(VkPipelineLayout, vkDestroyPipelineLayout);
+VK_DESTOYER_SPECIALIZATION(VkRenderPass, vkDestroyRenderPass);
 VK_DESTOYER_SPECIALIZATION(VkPipeline, vkDestroyPipeline);
 VK_DESTOYER_SPECIALIZATION(VkDescriptorSetLayout, vkDestroyDescriptorSetLayout);
 VK_DESTOYER_SPECIALIZATION(VkSampler, vkDestroySampler);

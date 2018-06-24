@@ -8,6 +8,10 @@
 
 namespace Cookbook
 {
+    bool CreateVulkanInstanceWithWsiExtensionEnabled(std::vector<const char*>& desiredExtension,
+        const char* const applicationName, 
+        VkInstance& instance);
+    bool CreatePresentaionSurface(VkInstance instance, WindowParameters windowParams, VkSurfaceKHR& presentationSurface);
     bool SelectQueueFamilyThatSupportPresentToGivenSurface(VkPhysicalDevice physicalDevice,
         VkSurfaceKHR presentationSurface,
         uint32_t& queueFamilyIndex);
@@ -61,10 +65,9 @@ namespace Cookbook
         VkSemaphore semaphore,
         VkFence fence,
         uint32_t& imageIndex);
-    bool BeginCommandBufferRecordingOperation(VkCommandBuffer commandbuffer,
-        VkCommandBufferUsageFlags usage,
-        VkCommandBufferInheritanceInfo* secondaryCommandBufferInfo);
     bool PresentImage(VkQueue queue, std::vector<VkSemaphore> renderingSemaphore, std::vector<PresentInfo> imagesToPresent);
+    void DestroySwapchain(VkDevice logicalDevice, VkSwapchainKHR& swapchain);
+    void DestroyPresentationSurface(VkInstance instance, VkSurfaceKHR& presentationSurface);
 }
 
 #endif /*__CH2_IMAGE_PRESENTATION__H__*/

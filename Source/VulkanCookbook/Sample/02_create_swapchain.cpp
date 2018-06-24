@@ -1,13 +1,13 @@
 
-#include "ch01_instance_and_device.h"
-#include "ch02_image_presentation.h"
-#include "ch03_command_buffer_and_synchronization.h"
-#include "ch04_resource_and_memory.h"
+#include "../Chapter/ch01_instance_and_device.h"
+#include "../Chapter/ch02_image_presentation.h"
+#include "../Chapter/ch03_command_buffer_and_synchronization.h"
+#include "../Chapter/ch04_resource_and_memory.h"
 
 #include "../Common/sample_framework.h"
 
 //----------------------------------------------------------------
-// SampleChapter02
+// SampleChapter02 : create swap chain
 //----------------------------------------------------------------
 class SampleChapter02 : public VulkanSampleBase
 {
@@ -37,7 +37,7 @@ private:
     VkCommandBuffer commandBuffer_;
 };
 
-VULKAN_SAMPLE_FRAMEWORK("02_ImagePresentation", 50, 25, 1280, 800, SampleChapter02);
+//VULKAN_SAMPLE_FRAMEWORK("02_CreateSwapchain", 50, 25, 800, 600, SampleChapter02);
 
 //----------------------------------------------------------------
 bool SampleChapter02::Initialize(WindowParameters parameters)
@@ -52,7 +52,7 @@ bool SampleChapter02::Initialize(WindowParameters parameters)
         return false;
     }
 
-    if (Cookbook::LoadGlobalFunctions() == false)
+    if (Cookbook::LoadGlobalLevelFunctions() == false)
     {
         return false;
     }
@@ -87,7 +87,7 @@ bool SampleChapter02::Initialize(WindowParameters parameters)
             continue;
         }
 
-        std::vector<Cookbook::QueueInfo> requestedQueues = 
+        std::vector<QueueInfo> requestedQueues = 
         {
             {graphicsQueueFamilyIndex_, {1.0f}},
         };

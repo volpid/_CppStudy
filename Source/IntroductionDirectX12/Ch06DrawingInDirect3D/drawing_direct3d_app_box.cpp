@@ -10,13 +10,13 @@
 //----------------------------------------------------------------
 // data
 //----------------------------------------------------------------
-struct Vertex
+struct VertexCh04
 {
     DirectX::XMFLOAT3 position;
     DirectX::XMFLOAT4 color;
 };
 
-struct ObjectConstant
+struct ObjectConstantCh04
 {
     DirectX::XMFLOAT4X4 worldViewProj = MathHelper::Indentity4x4();
 };
@@ -36,8 +36,8 @@ public:
     virtual bool Initialize(HINSTANCE hInstance) override;
 
     virtual void OnResize(void) override;
-    virtual void Update(const GameTimer& gt) override;
-    virtual void Draw(const GameTimer& gt) override;
+    virtual void Update(const GameTimer& timer) override;
+    virtual void Draw(const GameTimer& timer) override;
 
     virtual void OnMouseDown(WPARAM btnState, int x, int y) override;
     virtual void OnMouseUp(WPARAM btnState, int x, int y) override;
@@ -48,14 +48,14 @@ private:
     void BuildConstantBuffer(void);
     void BuildRootSignature(void);
     void BuildShaderAndInputLayout(void);
-    void BuildBoxGeometry(void);
+    void BuildShapeGeometry(void);
     void BuildPSO(void);
 
 private:
     Microsoft::WRL::ComPtr<ID3D12RootSignature> rootSignature_ = nullptr;
     Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> cbvHeap_ = nullptr;
 
-    std::unique_ptr<UplaodBuffer<ObjectConstant>> objectCB_ = nullptr;
+    std::unique_ptr<UplaodBuffer<ObjectConstantCh04>> objectCB_ = nullptr;
     std::unique_ptr<MeshGeometry> boxGeometry_ = nullptr;
 
     Microsoft::WRL::ComPtr<ID3DBlob> vsByteCode_ = nullptr;
@@ -76,7 +76,7 @@ private:
     POINT lastMousePos_;
 };
 
-BoxApp appInstance;
+//BoxApp appInstance;
 
 //----------------------------------------------------------------
 bool BoxApp::Initialize(HINSTANCE hInstance)
@@ -92,7 +92,7 @@ bool BoxApp::Initialize(HINSTANCE hInstance)
     BuildConstantBuffer();
     BuildRootSignature();
     BuildShaderAndInputLayout();
-    BuildBoxGeometry();
+    BuildShapeGeometry();
     BuildPSO();
 
     ThrowIfFailed(commandList_->Close());
@@ -100,6 +100,8 @@ bool BoxApp::Initialize(HINSTANCE hInstance)
     commandQueue_->ExecuteCommandLists(_countof(cmdLists), cmdLists);
 
     FlushCommandQueue();
+
+    return true;
 }
 
 void BoxApp::OnResize(void)
@@ -113,8 +115,10 @@ void BoxApp::OnResize(void)
     DirectX::XMStoreFloat4x4(&proj_, proj);
 }
 
-void BoxApp::Update(const GameTimer& gt)
+void BoxApp::Update(const GameTimer& timer)
 {
+    _Unreferenced_parameter_(timer);
+
     float x = radius_ * sinf(phi_) * cosf(theta_);
     float y = radius_ * sinf(phi_) * sinf(theta_);
     float z = radius_ * cosf(phi_);
@@ -130,13 +134,15 @@ void BoxApp::Update(const GameTimer& gt)
     DirectX::XMMATRIX proj = DirectX::XMLoadFloat4x4(&proj_);
     DirectX::XMMATRIX worldViewProj = world * view * proj;
 
-    ObjectConstant objectConstant;
+    ObjectConstantCh04 objectConstant;
     DirectX::XMStoreFloat4x4(&objectConstant.worldViewProj, DirectX::XMMatrixTranspose(worldViewProj));
     objectCB_->CopyData(0, objectConstant);
 }
 
-void BoxApp::Draw(const GameTimer& gt)
+void BoxApp::Draw(const GameTimer& timer)
 {
+    _Unreferenced_parameter_(timer);
+
     ThrowIfFailed(commandListAlloc_->Reset());
     ThrowIfFailed(commandList_->Reset(commandListAlloc_.Get(), pso_.Get()));
 
@@ -192,6 +198,8 @@ void BoxApp::Draw(const GameTimer& gt)
 
 void BoxApp::OnMouseDown(WPARAM btnState, int x, int y)
 {
+    _Unreferenced_parameter_(btnState);
+
     lastMousePos_.x = x;
     lastMousePos_.y = y;
 
@@ -200,6 +208,10 @@ void BoxApp::OnMouseDown(WPARAM btnState, int x, int y)
 
 void BoxApp::OnMouseUp(WPARAM btnState, int x, int y)
 {
+    _Unreferenced_parameter_(btnState);
+    _Unreferenced_parameter_(x);
+    _Unreferenced_parameter_(y);
+
     ReleaseCapture();
 }
 
@@ -241,9 +253,9 @@ void BoxApp::BuildDescriptorHeap(void)
 
 void BoxApp::BuildConstantBuffer(void)
 {
-    objectCB_ = std::make_unique<UplaodBuffer<ObjectConstant>>(d3dDevice_.Get(), 1, true);
+    objectCB_ = std::make_unique<UplaodBuffer<ObjectConstantCh04>>(d3dDevice_.Get(), 1, true);
 
-    const UINT objCBByteSize = D3DUtil::CalcConstantBufferByteSize(sizeof(ObjectConstant));
+    const UINT objCBByteSize = D3DUtil::CalcConstantBufferByteSize(sizeof(ObjectConstantCh04));
 
     D3D12_GPU_VIRTUAL_ADDRESS cbAddress = objectCB_->Resource()->GetGPUVirtualAddress();
     int boxCBufIndex = 0;
@@ -294,8 +306,6 @@ void BoxApp::BuildRootSignature(void)
 
 void BoxApp::BuildShaderAndInputLayout(void)
 {
-    HRESULT hr = S_OK;
-
     vsByteCode_ = D3DUtil::CompileShader("..\\..\\Source\\IntroductionDirectX12\\Shader\\ch06_color_vs.hlsl", nullptr, "vs_main", "vs_5_0");
     psByteCode_ = D3DUtil::CompileShader("..\\..\\Source\\IntroductionDirectX12\\Shader\\ch06_color_ps.hlsl", nullptr, "ps_main", "ps_5_0");
 
@@ -306,18 +316,18 @@ void BoxApp::BuildShaderAndInputLayout(void)
     };
 }
 
-void BoxApp::BuildBoxGeometry(void)
+void BoxApp::BuildShapeGeometry(void)
 {
-    std::array<Vertex, 8> vertices = 
+    std::array<VertexCh04, 8> vertices = 
     {
-        Vertex({DirectX::XMFLOAT3(-1.0f, -1.0f, -1.0f), DirectX::XMFLOAT4(DirectX::Colors::White)}),
-        Vertex({DirectX::XMFLOAT3(-1.0f, +1.0f, -1.0f), DirectX::XMFLOAT4(DirectX::Colors::Black)}),
-        Vertex({DirectX::XMFLOAT3(+1.0f, +1.0f, -1.0f), DirectX::XMFLOAT4(DirectX::Colors::Red)}),
-        Vertex({DirectX::XMFLOAT3(+1.0f, -1.0f, -1.0f), DirectX::XMFLOAT4(DirectX::Colors::Green)}),
-        Vertex({DirectX::XMFLOAT3(-1.0f, -1.0f, +1.0f), DirectX::XMFLOAT4(DirectX::Colors::Blue)}),
-        Vertex({DirectX::XMFLOAT3(-1.0f, +1.0f, +1.0f), DirectX::XMFLOAT4(DirectX::Colors::Yellow)}),
-        Vertex({DirectX::XMFLOAT3(+1.0f, +1.0f, +1.0f), DirectX::XMFLOAT4(DirectX::Colors::Cyan)}),
-        Vertex({DirectX::XMFLOAT3(+1.0f, -1.0f, +1.0f), DirectX::XMFLOAT4(DirectX::Colors::Magenta)})
+        VertexCh04({DirectX::XMFLOAT3(-1.0f, -1.0f, -1.0f), DirectX::XMFLOAT4(DirectX::Colors::White)}),
+        VertexCh04({DirectX::XMFLOAT3(-1.0f, +1.0f, -1.0f), DirectX::XMFLOAT4(DirectX::Colors::Black)}),
+        VertexCh04({DirectX::XMFLOAT3(+1.0f, +1.0f, -1.0f), DirectX::XMFLOAT4(DirectX::Colors::Red)}),
+        VertexCh04({DirectX::XMFLOAT3(+1.0f, -1.0f, -1.0f), DirectX::XMFLOAT4(DirectX::Colors::Green)}),
+        VertexCh04({DirectX::XMFLOAT3(-1.0f, -1.0f, +1.0f), DirectX::XMFLOAT4(DirectX::Colors::Blue)}),
+        VertexCh04({DirectX::XMFLOAT3(-1.0f, +1.0f, +1.0f), DirectX::XMFLOAT4(DirectX::Colors::Yellow)}),
+        VertexCh04({DirectX::XMFLOAT3(+1.0f, +1.0f, +1.0f), DirectX::XMFLOAT4(DirectX::Colors::Cyan)}),
+        VertexCh04({DirectX::XMFLOAT3(+1.0f, -1.0f, +1.0f), DirectX::XMFLOAT4(DirectX::Colors::Magenta)})
     };
 
     std::array<std::uint16_t, 36> indices = 
@@ -342,8 +352,8 @@ void BoxApp::BuildBoxGeometry(void)
         4, 3, 7,
     };
 
-    const UINT vbByteSize = (UINT) vertices.size() * sizeof(Vertex);
-    const UINT ibByteSize = (UINT) indices.size() * sizeof(std::uint16_t);
+    const UINT vbByteSize = static_cast<UINT> (vertices.size() * sizeof(VertexCh04));
+    const UINT ibByteSize = static_cast<UINT> (indices.size() * sizeof(std::uint16_t));
 
     boxGeometry_ = std::make_unique<MeshGeometry>();
     boxGeometry_->name = "boxGeometry";
@@ -366,13 +376,13 @@ void BoxApp::BuildBoxGeometry(void)
         ibByteSize,
         boxGeometry_->indexBufferUploader);
 
-    boxGeometry_->vertexByteStride = sizeof(Vertex);
+    boxGeometry_->vertexByteStride = sizeof(VertexCh04);
     boxGeometry_->vertexBufferByteSize = vbByteSize;
     boxGeometry_->indexFormat = DXGI_FORMAT_R16_UINT;
     boxGeometry_->indexBufferByteSize = ibByteSize;
 
     SubmeshGeometry submesh;
-    submesh.indexCount = (UINT) indices.size();
+    submesh.indexCount = static_cast<UINT> (indices.size());
     submesh.startIndexLocation = 0;
     submesh.baseVertexLocation = 0;
 
@@ -383,7 +393,7 @@ void BoxApp::BuildPSO(void)
 {
     D3D12_GRAPHICS_PIPELINE_STATE_DESC psoDesc;
     ZeroMemory(&psoDesc, sizeof(psoDesc));
-    psoDesc.InputLayout = {inputLayout_.data(), (UINT) inputLayout_.size()};
+    psoDesc.InputLayout = {inputLayout_.data(), static_cast<UINT> (inputLayout_.size())};
     psoDesc.pRootSignature = rootSignature_.Get();
     psoDesc.VS = 
     {

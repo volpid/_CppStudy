@@ -8,25 +8,15 @@
 
 namespace Cookbook
 {
-    struct QueueInfo
-    {
-        uint32_t familyIndex;
-        std::vector<float> priorities;
-    };
-
     bool ConnectWithVulkanLoaderLibrary(LIBRARY_TYPE& vulaknLibrary);  
     bool LoadFunctionExportedFromVulkanLoaderLibrary(const LIBRARY_TYPE& vulkanLibrary)  ;
-    bool LoadGlobalFunctions(void);
-    bool CreateVulkanInstanceWithWsiExtensionEnabled(std::vector<const char*>& desiredExtension,
-        const char* const applicationName, 
-        VkInstance& instance);
+    bool LoadGlobalLevelFunctions(void);    
     bool CreateVulkanInstance(const std::vector<const char*>& desiredExtension,
         const char* const applicationName, 
         VkInstance& instance);
     bool CheckAvailableInstanceExtension(std::vector<VkExtensionProperties>& availableExtensions);
     bool IsExtensionSupported(const std::vector<VkExtensionProperties>& availableExtensions, const char* const extensionName);
-    bool LoadInstanceLevelFunction(VkInstance instance, const std::vector<const char*>& enabledExtensions);
-    bool CreatePresentaionSurface(VkInstance instance, WindowParameters windowParams, VkSurfaceKHR& presentationSurface);
+    bool LoadInstanceLevelFunction(VkInstance instance, const std::vector<const char*>& enabledExtensions);    
     bool EnumerateAvailablePhysicalDevice(VkInstance instance, std::vector<VkPhysicalDevice>& availableDevices);
     bool SelectIndexOfQueueFamilyWithDesiredCapability(VkPhysicalDevice physicalDevice,
         VkQueueFlags desiredCapabilities,
@@ -49,6 +39,9 @@ namespace Cookbook
     void GetFeatureAndPropertyOfPhysicalDevice(VkPhysicalDevice physicalDevice,
         VkPhysicalDeviceFeatures& deviceFeatures,
         VkPhysicalDeviceProperties& deviceProperties);
+    void DestroyLogicalDevice(VkDevice& logicalDevice);
+    void DestroyVulkanInstance(VkInstance& instance);
+    void ReleaseVulkanLibrary(LIBRARY_TYPE& vulkanLibrary);    
 }
 
 #endif /**/

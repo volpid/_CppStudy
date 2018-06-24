@@ -5,14 +5,20 @@
       <UniqueIdentifier>{ed3477d0-d237-43e0-8e7b-1b72db348002}</UniqueIdentifier>
       <Extensions>cpp;h;</Extensions>
     </Filter>
-    <Filter Include="Ch4Direct3DInitialization">
-      <UniqueIdentifier>{cefd7cb4-93e6-4e0f-b70f-b11b457fecaa}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Common">
       <UniqueIdentifier>{07837676-f4a6-4334-b45a-baefee5a277e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Ch6DrawingInDirect3D">
+    <Filter Include="Ch04Direct3DInitialization">
+      <UniqueIdentifier>{cefd7cb4-93e6-4e0f-b70f-b11b457fecaa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Ch06DrawingInDirect3D">
       <UniqueIdentifier>{bf6d2966-073a-4c73-afa1-2b7f0f74023c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Ch07DrawingInDirect3D">
+      <UniqueIdentifier>{84bc6535-fcf0-47a1-9195-b9cc5252266c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shader">
+      <UniqueIdentifier>{1411242b-bfd7-4b7a-9ea6-9866e66f5fee}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -26,13 +32,28 @@
     <ClCompile Include="Common\gametimer.cpp">
       <Filter>Common</Filter>
     </ClCompile>
-    <ClCompile Include="Ch6DrawingInDirect3D\drawing_direct3D_app.cpp">
+    <ClCompile Include="Common\math_helper.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="Ch04Direct3DInitialization\init_direct3d_app.cpp">
+      <Filter>Ch04Direct3DInitialization</Filter>
+    </ClCompile>
+    <ClCompile Include="Ch06DrawingInDirect3D\drawing_direct3d_app_box.cpp">
+      <Filter>Ch06DrawingInDirect3D</Filter>
+    </ClCompile>
+    <ClCompile Include="Ch07DrawingInDirect3D\drawing_direct3d_app_shape.cpp">
+      <Filter>Ch07DrawingInDirect3D</Filter>
+    </ClCompile>
+    <ClCompile Include="Ch07DrawingInDirect3D\ch07_frame_resource.cpp">
+      <Filter>Ch07DrawingInDirect3D</Filter>
+    </ClCompile>
+    <ClCompile Include="Common\geometry_generator.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="Ch07DrawingInDirect3D\drawing_direct3d_app_land_and_wave.cpp">
       <Filter>_Uncategorized</Filter>
     </ClCompile>
-    <ClCompile Include="ch4Direct3DInitialization\init_direct3d_app.cpp">
-      <Filter>Ch6DrawingInDirect3D</Filter>
-    </ClCompile>
-    <ClCompile Include="Common\math_helper.cpp">
+    <ClCompile Include="Ch07DrawingInDirect3D\ch07_waves.cpp">
       <Filter>_Uncategorized</Filter>
     </ClCompile>
   </ItemGroup>
@@ -53,14 +74,26 @@
       <Filter>Common</Filter>
     </ClInclude>
     <ClInclude Include="Common\math_helper.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Ch07DrawingInDirect3D\ch07_frame_resource.h">
+      <Filter>Ch07DrawingInDirect3D</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\geometry_generator.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Ch07DrawingInDirect3D\ch07_waves.h">
       <Filter>_Uncategorized</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <FxCompile Include="Shader\ch06_color_vs.hlsl" />
     <FxCompile Include="Shader\ch06_color_ps.hlsl" />
+    <FxCompile Include="Shader\ch06_color_vs.hlsl" />
+    <FxCompile Include="Shader\ch07_color_ps.hlsl" />
+    <FxCompile Include="Shader\ch07_color_vs.hlsl" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="Shader\ch06_color.txt" />
+    <Text Include="Shader\ch07_color.txt" />
   </ItemGroup>
 </Project>

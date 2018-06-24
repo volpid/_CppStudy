@@ -12,8 +12,8 @@ UINT D3DUtil::CalcConstantBufferByteSize(UINT byteSize)
 }
 
 Microsoft::WRL::ComPtr<ID3D12Resource> D3DUtil::CreataDefaultBuffer(ID3D12Device* pDevice,
-    ID3D12GraphicsCommandList* cmdList,
-    const void* initData,
+    ID3D12GraphicsCommandList* pCmdList,
+    const void* pInitData,
     UINT64 byteSize,
     Microsoft::WRL::ComPtr<ID3D12Resource>& uploadBuffer)
 {
@@ -33,18 +33,19 @@ Microsoft::WRL::ComPtr<ID3D12Resource> D3DUtil::CreataDefaultBuffer(ID3D12Device
         IID_PPV_ARGS(uploadBuffer.GetAddressOf())));
 
     D3D12_SUBRESOURCE_DATA subResourceData = {};
-    subResourceData.pData = initData;
+    subResourceData.pData = pInitData;
+    //nanpid
     subResourceData.RowPitch = byteSize;
     subResourceData.SlicePitch = subResourceData.RowPitch;
 
-    cmdList->ResourceBarrier(1, 
+    pCmdList->ResourceBarrier(1, 
         &CD3DX12_RESOURCE_BARRIER::Transition(defaultBuffer.Get(),
             D3D12_RESOURCE_STATE_COMMON, 
             D3D12_RESOURCE_STATE_COPY_DEST));
 
-    UpdateSubresource<1>(cmdList, defaultBuffer.Get(), uploadBuffer.Get(), 0, 0, 1, &subResourceData);
+    UpdateSubresource<1>(pCmdList, defaultBuffer.Get(), uploadBuffer.Get(), 0, 0, 1, &subResourceData);
 
-    cmdList->ResourceBarrier(1, 
+    pCmdList->ResourceBarrier(1, 
         &CD3DX12_RESOURCE_BARRIER::Transition(defaultBuffer.Get(),
             D3D12_RESOURCE_STATE_COPY_DEST, 
             D3D12_RESOURCE_STATE_GENERIC_READ));
@@ -53,7 +54,7 @@ Microsoft::WRL::ComPtr<ID3D12Resource> D3DUtil::CreataDefaultBuffer(ID3D12Device
 }
 
 Microsoft::WRL::ComPtr<ID3DBlob> D3DUtil::CompileShader(const std::string& filename, 
-    const D3D_SHADER_MACRO* defines,
+    const D3D_SHADER_MACRO* pDefines,
     const std::string& entryPoint, 
     const std::string& target)
 {
@@ -69,7 +70,7 @@ Microsoft::WRL::ComPtr<ID3DBlob> D3DUtil::CompileShader(const std::string& filen
     Microsoft::WRL::ComPtr<ID3DBlob> bytecodeBlob = nullptr;
     Microsoft::WRL::ComPtr<ID3DBlob> errorBlob = nullptr;
     HRESULT hr = D3DCompileFromFile(wfilename.c_str(), 
-        defines,
+        pDefines,
         D3D_COMPILE_STANDARD_FILE_INCLUDE,
         entryPoint.c_str(),
         target.c_str(),

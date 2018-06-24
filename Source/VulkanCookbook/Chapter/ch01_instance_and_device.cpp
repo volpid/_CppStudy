@@ -42,7 +42,7 @@ bool Cookbook::LoadFunctionExportedFromVulkanLoaderLibrary(const LIBRARY_TYPE& v
     return true;
 }
 
-bool Cookbook::LoadGlobalFunctions(void)
+bool Cookbook::LoadGlobalLevelFunctions(void)
 {
     #define GLOBAL_LEVEL_VULKAN_FUNCTION(name)  \
         name = (PFN_##name) vkGetInstanceProcAddr(nullptr, #name);  \
@@ -55,24 +55,6 @@ bool Cookbook::LoadGlobalFunctions(void)
     #include "../Common/list_vulkan_functions.inl"
 
     return true;
-}
-
-bool Cookbook::CreateVulkanInstanceWithWsiExtensionEnabled(std::vector<const char*>& desiredExtension,
-    const char* const applicationName, 
-    VkInstance& instance)
-{
-    desiredExtension.emplace_back(VK_KHR_SURFACE_EXTENSION_NAME);
-    desiredExtension.emplace_back(    
-#if defined(VK_USE_PLATFORM_WIN32_KHR)
-        VK_KHR_WIN32_SURFACE_EXTENSION_NAME
-#elif defined(VK_USE_PLATFORM_XLIB_KHR)
-        VK_KHR_XCB_SURFACE_EXTENSION_NAME
-#elif defined(VK_USE_PLATFORM_XCB_KHR)
-        VK_KHR_XLIB_SURFACE_EXTENSION_NAME
-#endif /**/
-    );
-
-    return CreateVulkanInstance(desiredExtension, applicationName, instance);
 }
 
 bool Cookbook::CreateVulkanInstance(const std::vector<const char*>& desiredExtension,
@@ -105,17 +87,23 @@ bool Cookbook::CreateVulkanInstance(const std::vector<const char*>& desiredExten
         VK_MAKE_VERSION(1, 0, 0)
     };
 
+    std::vector<const char*> desiredlayers;
+#if defined(DEBUG) || defined(_DEBUG)
+    desiredlayers.emplace_back("VK_LAYER_LUNARG_standard_validation");
+#endif /**/
+
     VkInstanceCreateInfo intanceCreateInfo = 
     {
         VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO,
         nullptr, 
         0, 
         &applicationInfo,
-        0,
-        nullptr, 
+        desiredlayers.size(),
+        desiredlayers.data(),
         static_cast<size_t> (desiredExtension.size()),
         desiredExtension.data()
     };
+
 
     VkResult result = vkCreateInstance(&intanceCreateInfo, nullptr, &instance);
     if (result != VK_SUCCESS || instance == VK_NULL_HANDLE)
@@ -188,56 +176,6 @@ bool Cookbook::LoadInstanceLevelFunction(VkInstance instance, const std::vector<
         }
 
     #include "../Common/list_vulkan_functions.inl"
-
-    return true;
-}
-
-bool Cookbook::CreatePresentaionSurface(VkInstance instance, WindowParameters windowParams, VkSurfaceKHR& presentationSurface)
-{
-    VkResult result;
-
-#if defined(VK_USE_PLATFORM_WIN32_KHR)
-    VkWin32SurfaceCreateInfoKHR surfaceCreateInfo = 
-    {
-        VK_STRUCTURE_TYPE_WIN32_SURFACE_CREATE_INFO_KHR,
-        nullptr, 
-        0, 
-        windowParams.hIntance,
-        windowParams.hWnd
-    };
-    result = vkCreateWin32SurfaceKHR(instance, &surfaceCreateInfo, nullptr, &presentationSurface);
-
-#elif defined(VK_USE_PLATFORM_XLIB_KHR)
-    VkXlibSurfaceCreateInfoKHR surfaceCreateInfo = 
-    {
-        VK_STRUCTURE_TYPE_XLIB_SURFACE_CREATE_INFO_KHR,
-        nullptr, 
-        0, 
-        windowParams.pDisplay,
-        windowParams.window
-    };
-
-    result = vkCreateXlibSurfaceKHR(instance, &surfaceCreateInfo, nullptr, &presentationSurface);
-
-#elif defined(VK_USE_PLATFORM_XCB_KHR)
-    VkXcbSurfaceCreateInfoKHR surfaceCreateInfo = 
-    {
-        VK_STRUCTURE_TYPE_XCB_SURFACE_CREATE_INFO_KHR,
-        nullptr, 
-        0, 
-        windowParams.connection,
-        windowParams.window
-    };
-
-    result = vkCreateXcbSurfaceKHR(instance, &surfaceCreateInfo, nullptr, &presentationSurface);
-
-#endif /**/
-
-    if (result != VK_SUCCESS || presentationSurface == VK_NULL_HANDLE)
-    {
-        std::cout << "Could not craete presentation surface." << std::endl;
-        return false;
-    }
 
     return true;
 }
@@ -348,6 +286,11 @@ bool Cookbook::CreateLogicalDevice(VkPhysicalDevice& physicalDevice,
         queueCreateInfos.push_back(queueCreateInfo);
     }
 
+    std::vector<const char*> desiredlayers;
+#if defined(DEBUG) || defined(_DEBUG)
+    desiredlayers.emplace_back("VK_LAYER_LUNARG_standard_validation");
+#endif /**/
+
     VkDeviceCreateInfo devcieCreateInfo =
     {
         VK_STRUCTURE_TYPE_DEVICE_CREATE_INFO,
@@ -355,8 +298,8 @@ bool Cookbook::CreateLogicalDevice(VkPhysicalDevice& physicalDevice,
         0,
         static_cast<uint32_t> (queueCreateInfos.size()),
         queueCreateInfos.data(),
-        0,
-        nullptr,
+        desiredlayers.size(),
+        desiredlayers.data(),
         static_cast<uint32_t> (desiredExtensions.size()),
         desiredExtensions.data(),
         desiredFeatures
@@ -498,4 +441,35 @@ void Cookbook::GetFeatureAndPropertyOfPhysicalDevice(VkPhysicalDevice physicalDe
 {
     vkGetPhysicalDeviceFeatures(physicalDevice, &deviceFeatures);
     vkGetPhysicalDeviceProperties(physicalDevice, &deviceProperties);
+}
+
+void Cookbook::DestroyLogicalDevice(VkDevice& logicalDevice)
+{
+    if (logicalDevice != VK_NULL_HANDLE)
+    {
+        vkDestroyDevice(logicalDevice, nullptr);
+        logicalDevice = VK_NULL_HANDLE;
+    }
+}
+
+void Cookbook::DestroyVulkanInstance(VkInstance& instance)
+{
+    if (instance != VK_NULL_HANDLE)
+    {
+        vkDestroyInstance(instance, nullptr);
+        instance = VK_NULL_HANDLE;
+    }
+}
+
+void Cookbook::ReleaseVulkanLibrary(LIBRARY_TYPE& vulkanLibrary)
+{
+    if (vulkanLibrary != nullptr)
+    {
+#if defined(_WIN32)
+        FreeLibrary(vulkanLibrary);
+#elif defined(__linux)
+        dlclose(vulkanLibrary);
+#endif /**/
+        vulkanLibrary = nullptr;
+    }
 }

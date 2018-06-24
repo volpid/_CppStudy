@@ -2,7 +2,7 @@
 #ifndef __VULKAN_SAMPLE_FRAMEWORK__H__
 #define __VULKAN_SAMPLE_FRAMEWORK__H__
 
-#include "os.h"
+#include "vulkan_os.h"
 
 #include <chrono>
 #include <vector>

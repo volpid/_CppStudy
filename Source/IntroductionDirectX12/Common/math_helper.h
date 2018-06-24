@@ -4,6 +4,9 @@
 
 #include "d3dx_12.h"
 
+//----------------------------------------------------------------
+// MathHelper
+//----------------------------------------------------------------
 namespace MathHelper
 {
     extern const float Infinity;
@@ -13,6 +16,10 @@ namespace MathHelper
 
     template <typename _T>
     inline _T Clamp(const _T& x, const _T& low, const _T& high);
+
+    float RandF(void);
+    float RandF(float a, float b);
+    int Rand(int a, int b);
 }
 
 //----------------------------------------------------------------

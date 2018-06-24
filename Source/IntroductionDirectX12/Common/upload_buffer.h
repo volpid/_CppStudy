@@ -11,7 +11,7 @@ template <typename _Type>
 class UplaodBuffer
 {
 public:
-    UplaodBuffer(ID3D12Device* device, UINT elementCount, bool isConstantbuffer);
+    UplaodBuffer(ID3D12Device* pDevice, UINT elementCount, bool isConstantbuffer);
     ~UplaodBuffer(void);
 
     UplaodBuffer(const UplaodBuffer& other) = delete;
@@ -30,7 +30,7 @@ private:
 
 //----------------------------------------------------------------
 template <typename _Type>
-inline UplaodBuffer<_Type>::UplaodBuffer(ID3D12Device* device, UINT elementCount, bool isConstantbuffer)
+inline UplaodBuffer<_Type>::UplaodBuffer(ID3D12Device* pDevice, UINT elementCount, bool isConstantbuffer)
     : isConstantBuffer_(isConstantbuffer)
 {
     elementByteSize_ = sizeof(_Type);
@@ -39,7 +39,7 @@ inline UplaodBuffer<_Type>::UplaodBuffer(ID3D12Device* device, UINT elementCount
         elementByteSize_ = D3DUtil::CalcConstantBufferByteSize(sizeof(_Type));
     }
 
-    ThrowIfFailed(device->CreateCommittedResource(&CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_UPLOAD),
+    ThrowIfFailed(pDevice->CreateCommittedResource(&CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_UPLOAD),
         D3D12_HEAP_FLAG_NONE,
         &CD3DX12_RESOURCE_DESC::Buffer(elementByteSize_ * elementCount),
         D3D12_RESOURCE_STATE_GENERIC_READ,
@@ -68,7 +68,7 @@ inline ID3D12Resource* UplaodBuffer<_Type>::Resource(void) const
 template <typename _Type>
 inline void UplaodBuffer<_Type>::CopyData(int elementIndex, const _Type& data)
 {
-    memcpy(&mappedData_[elementIndex], &data, sizeof(_Type));
+    memcpy(&mappedData_[elementIndex * elementByteSize_], &data, sizeof(_Type));
 }
 
 #endif /*__UPLOAD_BUFFER__H__*/

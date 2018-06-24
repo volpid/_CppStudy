@@ -4,6 +4,74 @@
 
 #include <iostream>
 
+bool Cookbook::CreateVulkanInstanceWithWsiExtensionEnabled(std::vector<const char*>& desiredExtension,
+    const char* const applicationName, 
+    VkInstance& instance)
+{
+    desiredExtension.emplace_back(VK_KHR_SURFACE_EXTENSION_NAME);
+    desiredExtension.emplace_back(    
+#if defined(VK_USE_PLATFORM_WIN32_KHR)
+        VK_KHR_WIN32_SURFACE_EXTENSION_NAME
+#elif defined(VK_USE_PLATFORM_XLIB_KHR)
+        VK_KHR_XCB_SURFACE_EXTENSION_NAME
+#elif defined(VK_USE_PLATFORM_XCB_KHR)
+        VK_KHR_XLIB_SURFACE_EXTENSION_NAME
+#endif /**/
+    );
+    
+    return CreateVulkanInstance(desiredExtension, applicationName, instance);
+}
+
+bool Cookbook::CreatePresentaionSurface(VkInstance instance, WindowParameters windowParams, VkSurfaceKHR& presentationSurface)
+{
+    VkResult result;
+
+#if defined(VK_USE_PLATFORM_WIN32_KHR)
+    VkWin32SurfaceCreateInfoKHR surfaceCreateInfo = 
+    {
+        VK_STRUCTURE_TYPE_WIN32_SURFACE_CREATE_INFO_KHR,
+        nullptr, 
+        0, 
+        windowParams.hIntance,
+        windowParams.hWnd
+    };
+    result = vkCreateWin32SurfaceKHR(instance, &surfaceCreateInfo, nullptr, &presentationSurface);
+
+#elif defined(VK_USE_PLATFORM_XLIB_KHR)
+    VkXlibSurfaceCreateInfoKHR surfaceCreateInfo = 
+    {
+        VK_STRUCTURE_TYPE_XLIB_SURFACE_CREATE_INFO_KHR,
+        nullptr, 
+        0, 
+        windowParams.pDisplay,
+        windowParams.window
+    };
+
+    result = vkCreateXlibSurfaceKHR(instance, &surfaceCreateInfo, nullptr, &presentationSurface);
+
+#elif defined(VK_USE_PLATFORM_XCB_KHR)
+    VkXcbSurfaceCreateInfoKHR surfaceCreateInfo = 
+    {
+        VK_STRUCTURE_TYPE_XCB_SURFACE_CREATE_INFO_KHR,
+        nullptr, 
+        0, 
+        windowParams.connection,
+        windowParams.window
+    };
+
+    result = vkCreateXcbSurfaceKHR(instance, &surfaceCreateInfo, nullptr, &presentationSurface);
+
+#endif /**/
+
+    if (result != VK_SUCCESS || presentationSurface == VK_NULL_HANDLE)
+    {
+        std::cout << "Could not craete presentation surface." << std::endl;
+        return false;
+    }
+
+    return true;
+}
+
 bool Cookbook::SelectQueueFamilyThatSupportPresentToGivenSurface(VkPhysicalDevice physicalDevice,
     VkSurfaceKHR presentationSurface,
     uint32_t& queueFamilyIndex)
@@ -35,7 +103,7 @@ bool Cookbook::CreateLogicalDeviceWithWsiExtensionEnabled(VkPhysicalDevice physi
     VkDevice& logicalDevice)
 {
     desiredExtensions.emplace_back(VK_KHR_SWAPCHAIN_EXTENSION_NAME);
-
+        
     return CreateLogicalDevice(physicalDevice, queueInfos, desiredExtensions, desiredFeatures, logicalDevice);
 }
 
@@ -77,6 +145,12 @@ bool Cookbook::CreateSwapchain(VkDevice logicalDevice,
     {
         std::cout << "Could not create a swapchain." << std::endl;
         return false;
+    }
+
+    if (oldSwapchain != VK_NULL_HANDLE)
+    {
+        vkDestroySwapchainKHR(logicalDevice, oldSwapchain, nullptr);
+        oldSwapchain = VK_NULL_HANDLE;
     }
 
     return true;
@@ -369,28 +443,6 @@ bool Cookbook::AccquireSwapchainImage(VkDevice logicalDevice,
     return (result == VK_SUCCESS) || (result == VK_SUBOPTIMAL_KHR);
 }
 
-bool Cookbook::BeginCommandBufferRecordingOperation(VkCommandBuffer commandbuffer,
-    VkCommandBufferUsageFlags usage,
-    VkCommandBufferInheritanceInfo* secondaryCommandBufferInfo)
-{
-    VkCommandBufferBeginInfo commandBufferBeginInfo = 
-    {
-        VK_STRUCTURE_TYPE_COMMAND_BUFFER_BEGIN_INFO,
-        nullptr,
-        usage,
-        secondaryCommandBufferInfo
-    };
-
-    VkResult result = vkBeginCommandBuffer(commandbuffer, &commandBufferBeginInfo);
-    if (result != VK_SUCCESS)
-    {
-        std::cout << "Could not begin command buffer recording operation." << std::endl;
-        return false;
-    }
-
-    return true;
-}
-
 bool Cookbook::PresentImage(VkQueue queue, std::vector<VkSemaphore> renderingSemaphore, std::vector<PresentInfo> imagesToPresent)
 {
     VkResult result;
@@ -417,4 +469,22 @@ bool Cookbook::PresentImage(VkQueue queue, std::vector<VkSemaphore> renderingSem
 
     result = vkQueuePresentKHR(queue, &presentInfo);
     return (result == VK_SUCCESS);
+}
+
+void Cookbook::DestroySwapchain(VkDevice logicalDevice, VkSwapchainKHR& swapchain)
+{
+    if (swapchain != VK_NULL_HANDLE)
+    {
+        vkDestroySwapchainKHR(logicalDevice, swapchain, nullptr);
+        swapchain = VK_NULL_HANDLE;
+    }
+}
+
+void Cookbook::DestroyPresentationSurface(VkInstance instance, VkSurfaceKHR& presentationSurface)
+{
+    if (presentationSurface != VK_NULL_HANDLE)
+    {
+        vkDestroySurfaceKHR(instance, presentationSurface, nullptr);
+        presentationSurface = VK_NULL_HANDLE;
+    }
 }

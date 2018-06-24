@@ -151,28 +151,39 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Chapters\ch01_instance_and_device.cpp" />
-    <ClCompile Include="Chapters\ch01_main.cpp" />
-    <ClCompile Include="Chapters\ch02_image_presentation.cpp" />
-    <ClCompile Include="Chapters\ch02_main.cpp" />
-    <ClCompile Include="Chapters\ch03_command_buffer_and_synchronization.cpp" />
-    <ClCompile Include="Chapters\ch03_main.cpp" />
-    <ClCompile Include="Chapters\ch04_resource_and_memory.cpp" />
-    <ClCompile Include="Common\os.cpp" />
+    <ClCompile Include="Chapter\ch05_creating_framebuffer.cpp" />
+    <ClCompile Include="Chapter\ch06_renderpass_and_framebuffer.cpp" />
+    <ClCompile Include="Chapter\ch01_instance_and_device.cpp" />
+    <ClCompile Include="Chapter\ch08_graphics_and_compute_pipeline.cpp" />
+    <ClCompile Include="Chapter\ch09_command_recording_and_drawing.cpp" />
+    <ClCompile Include="Common\vulkan_tool.cpp" />
+    <ClCompile Include="Sample\01_create_logical_device.cpp" />
+    <ClCompile Include="Chapter\ch02_image_presentation.cpp" />
+    <ClCompile Include="Sample\02_create_swapchain.cpp" />
+    <ClCompile Include="Chapter\ch03_command_buffer_and_synchronization.cpp" />
+    <ClCompile Include="Sample\03_use_render_pass.cpp" />
+    <ClCompile Include="Chapter\ch04_resource_and_memory.cpp" />
+    <ClCompile Include="Common\vulkan_os.cpp" />
     <ClCompile Include="Common\sample_framework.cpp" />
     <ClCompile Include="Common\vulkan_functions.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Sample\04_use_graphics_pipeline.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Chapters\ch01_instance_and_device.h" />
-    <ClInclude Include="Chapters\ch02_image_presentation.h" />
-    <ClInclude Include="Chapters\ch03_command_buffer_and_synchronization.h" />
-    <ClInclude Include="Chapters\ch04_resource_and_memory.h" />
+    <ClInclude Include="Chapter\ch01_instance_and_device.h" />
+    <ClInclude Include="Chapter\ch02_image_presentation.h" />
+    <ClInclude Include="Chapter\ch03_command_buffer_and_synchronization.h" />
+    <ClInclude Include="Chapter\ch04_resource_and_memory.h" />
+    <ClInclude Include="Chapter\ch05_creating_framebuffer.h" />
+    <ClInclude Include="Chapter\ch06_renderpass_and_framebuffer.h" />
+    <ClInclude Include="Chapter\ch08_graphics_and_compute_pipeline.h" />
+    <ClInclude Include="Chapter\ch09_command_recording_and_drawing.h" />
     <ClInclude Include="Common\vulkan_common.h" />
-    <ClInclude Include="Common\os.h" />
+    <ClInclude Include="Common\vulkan_os.h" />
     <ClInclude Include="Common\sample_framework.h" />
     <ClInclude Include="Common\vulkan_destroyer.h" />
     <ClInclude Include="Common\vulkan_functions.h" />
+    <ClInclude Include="Common\vulkan_tool.h" />
     <ClInclude Include="Vulkan\vulkan.h" />
   </ItemGroup>
   <ItemGroup>

@@ -47,11 +47,11 @@ unsigned int indices[] = {0, 1, 2};
 
 void RenderSimpleMesh::InitInternal(void)
 {
-    pShader_.reset(new Shader("../../resource/basicShader"));
-    pTexture_.reset(new Texture("../../resource/bricks.jpg"));
+    pShader_.reset(new Shader("../../Resource/OpenGLSDL/Shader/basic_shader"));
+    pTexture_.reset(new Texture("../../Resource/OpenGLSDL/Image/bricks.jpg"));
     
     pMesh1_.reset(new Mesh(vertices, sizeof(vertices) / sizeof(vertices[0]), indices, sizeof(indices) / sizeof(indices[0])));
-    pMesh2_.reset(new Mesh("../../resource/monkey3.obj"));
+    pMesh2_.reset(new Mesh("../../Resource/OpenGLSDL/Object/monkey3.obj"));
     
     pCamera_.reset(new Camera(glm::vec3(0.0f, 0.0f, -5.0f), 70.0f, float(WIDTH) / float(HEIGHT), 0.01f, 1000.0f));
 }

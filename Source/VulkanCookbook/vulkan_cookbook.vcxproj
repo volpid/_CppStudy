@@ -100,6 +100,7 @@
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <AdditionalIncludeDirectories>..\..\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -112,6 +113,7 @@
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <AdditionalIncludeDirectories>..\..\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -126,6 +128,7 @@
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <AdditionalIncludeDirectories>..\..\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -142,6 +145,7 @@
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <AdditionalIncludeDirectories>..\..\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -156,6 +160,7 @@
     <ClCompile Include="Chapter\ch01_instance_and_device.cpp" />
     <ClCompile Include="Chapter\ch08_graphics_and_compute_pipeline.cpp" />
     <ClCompile Include="Chapter\ch09_command_recording_and_drawing.cpp" />
+    <ClCompile Include="Chapter\ch10_helper_recipes.cpp" />
     <ClCompile Include="Common\vulkan_tool.cpp" />
     <ClCompile Include="Sample\01_create_logical_device.cpp" />
     <ClCompile Include="Chapter\ch02_image_presentation.cpp" />
@@ -168,6 +173,7 @@
     <ClCompile Include="Common\vulkan_functions.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Sample\04_use_graphics_pipeline.cpp" />
+    <ClCompile Include="Sample\05_using_combined_image_samplers.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Chapter\ch01_instance_and_device.h" />
@@ -178,6 +184,7 @@
     <ClInclude Include="Chapter\ch06_renderpass_and_framebuffer.h" />
     <ClInclude Include="Chapter\ch08_graphics_and_compute_pipeline.h" />
     <ClInclude Include="Chapter\ch09_command_recording_and_drawing.h" />
+    <ClInclude Include="Chapter\ch10_helper_recipes.h" />
     <ClInclude Include="Common\vulkan_common.h" />
     <ClInclude Include="Common\vulkan_os.h" />
     <ClInclude Include="Common\sample_framework.h" />

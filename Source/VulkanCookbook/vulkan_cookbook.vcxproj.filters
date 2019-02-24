@@ -68,6 +68,12 @@
     <ClCompile Include="Common\vulkan_tool.cpp">
       <Filter>Common</Filter>
     </ClCompile>
+    <ClCompile Include="Sample\05_using_combined_image_samplers.cpp">
+      <Filter>_Uncategorized</Filter>
+    </ClCompile>
+    <ClCompile Include="Chapter\ch10_helper_recipes.cpp">
+      <Filter>_Uncategorized</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Common\vulkan_functions.h">
@@ -114,6 +120,9 @@
     </ClInclude>
     <ClInclude Include="Common\vulkan_os.h">
       <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Chapter\ch10_helper_recipes.h">
+      <Filter>_Uncategorized</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

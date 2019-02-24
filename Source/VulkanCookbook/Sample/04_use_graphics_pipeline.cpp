@@ -36,7 +36,7 @@ private:
     VkDestroyer(VkDeviceMemory) bufferMemory_;
 };
 
-VULKAN_SAMPLE_FRAMEWORK("04_UseGraphicsPipeline", 50, 25, 800, 600, SampleChapter04);
+//VULKAN_SAMPLE_FRAMEWORK("04_UseGraphicsPipeline", 50, 25, 800, 600, SampleChapter04);
 
 //----------------------------------------------------------------
 bool SampleChapter04::Initialize(WindowParameters parameters)

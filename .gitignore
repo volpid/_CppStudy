@@ -13,6 +13,7 @@ _ExternlLibrary/
 _Intermediate/
 Bin/
 Library/**/
+Resource/
 
 #files
 *.opendb

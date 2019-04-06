@@ -60,7 +60,7 @@ namespace Cookbook
         VkFormat& iamgeFormat,
         VkColorSpaceKHR& imageColorSpace);
     bool GetHandleOfSwapchainImage(VkDevice logicalDevice, VkSwapchainKHR swapchain, std::vector<VkImage>& swapchainImages);
-    bool AccquireSwapchainImage(VkDevice logicalDevice,
+    bool AcquireSwapchainImage(VkDevice logicalDevice,
         VkSwapchainKHR swapchain,
         VkSemaphore semaphore,
         VkFence fence,

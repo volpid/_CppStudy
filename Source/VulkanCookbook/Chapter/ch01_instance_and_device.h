@@ -9,7 +9,7 @@
 namespace Cookbook
 {
     bool ConnectWithVulkanLoaderLibrary(LIBRARY_TYPE& vulaknLibrary);  
-    bool LoadFunctionExportedFromVulkanLoaderLibrary(const LIBRARY_TYPE& vulkanLibrary)  ;
+    bool LoadFunctionExportedFromVulkanLoaderLibrary(const LIBRARY_TYPE& vulkanLibrary);
     bool LoadGlobalLevelFunctions(void);    
     bool CreateVulkanInstance(const std::vector<const char*>& desiredExtension,
         const char* const applicationName, 

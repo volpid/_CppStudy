@@ -56,8 +56,8 @@ public:
     void Update(void);
 
 private:
-    std::chrono::time_point<std::chrono::high_resolution_clock> time_;
-    std::chrono::duration<float> deltaTime_;
+    std::chrono::time_point<std::chrono::high_resolution_clock> _time;
+    std::chrono::duration<float> _deltaTime;
 };
 
 //----------------------------------------------------------------
@@ -84,17 +84,17 @@ protected:
     virtual void OnMouseEvent(void);
 
 protected:
-    LIBRARY_TYPE vulkanLibrary_;
-    bool ready_;
-    MouseStateParameters mouseState_;
-    TimerStateParameters timerState_;
+    LIBRARY_TYPE _vulkanLibrary;
+    bool _ready;
+    MouseStateParameters _mouseState;
+    TimerStateParameters _timerState;
 };
 
 class VulkanSample : public VulkanSampleBase
 {
 public:
-    static const uint32_t frameCount = 3;
-    static const VkFormat depthFormat = VK_FORMAT_D16_UNORM;
+    static const uint32_t FrameCount = 3;
+    static const VkFormat DepthFormat = VK_FORMAT_D16_UNORM;
 
 public:
     VulkanSample(void);
@@ -113,24 +113,28 @@ public:
     virtual void Deinitialize(void) final;
 
 protected:
-    VkDestroyer(VkInstance) instance_;
-    VkPhysicalDevice physicalDevice_;
-    VkDestroyer(VkDevice) logicalDevice_;
-    VkDestroyer(VkSurfaceKHR) presentationSurface_;
-    QueueParameters graphicsQueue_;
-    QueueParameters computeQueue_;
-    QueueParameters presentQueue_;
-    SwapchainParamters swapchain_;
-    VkDestroyer(VkCommandPool) commandPool_;
-    std::vector<VkDestroyer(VkImage)> depthImages;
-    std::vector<VkDestroyer(VkDeviceMemory)> depthImagesMemory;
-    std::vector<FrameResources> frameResources_;
+    VkDestroyer(VkInstance) _instance;
+    VkPhysicalDevice _physicalDevice;
+    VkDestroyer(VkDevice) _logicalDevice;
+    VkDestroyer(VkSurfaceKHR) _presentationSurface;
+
+    QueueParameters _graphicsQueue;
+    QueueParameters _computeQueue;
+    QueueParameters _presentQueue;
+    SwapchainParamters _swapchain;
+
+    VkDestroyer(VkCommandPool) _commandPool;
+    std::vector<VkDestroyer(VkImage)> _depthImages;
+    std::vector<VkDestroyer(VkDeviceMemory)> _depthImagesMemory;
+    std::vector<FrameResources> _frameResources;
 };
 
 //----------------------------------------------------------------
 #define VULKAN_SAMPLE_FRAMEWORK(title, x, y, width, height, sample_type)    \
     int main(int argc, char** argv) \
     {   \
+        argc;   \
+        argv;   \
         sample_type sample; \
         WindowFramework window("vulkan "#title, x, y, width, height, sample);   \
             \

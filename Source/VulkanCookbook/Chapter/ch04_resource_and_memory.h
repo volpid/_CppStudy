@@ -37,7 +37,7 @@ namespace Cookbook
     bool AllocateAndBindMemoryObjectToImage(VkPhysicalDevice physicalDevice,
         VkDevice logicalDevice,
         VkImage image,
-        VkMemoryPropertyFlagBits memoryProperty,
+        VkMemoryPropertyFlags memoryProperty,
         VkDeviceMemory& memoryObject);
     void SetImageMemoryBarrier(VkCommandBuffer commandBuffer, 
         VkPipelineStageFlags generatingStages,
@@ -47,7 +47,7 @@ namespace Cookbook
     bool AllocateAndBindMemoryObjectToBuffer(VkPhysicalDevice physicalDevice,
         VkDevice logicalDevice,
         VkBuffer buffer,
-        VkMemoryPropertyFlagBits memoryProperty,
+        VkMemoryPropertyFlags memoryProperty,
         VkDeviceMemory& memoryObject);
     bool UseStagingBufferToUpdateBufferWithDeviceLocalMemoryBound(VkPhysicalDevice physicalDevice,
         VkDevice logicalDevice,

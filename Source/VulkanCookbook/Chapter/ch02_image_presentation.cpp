@@ -431,7 +431,7 @@ bool Cookbook::GetHandleOfSwapchainImage(VkDevice logicalDevice, VkSwapchainKHR 
     return true;
 }
 
-bool Cookbook::AccquireSwapchainImage(VkDevice logicalDevice,
+bool Cookbook::AcquireSwapchainImage(VkDevice logicalDevice,
     VkSwapchainKHR swapchain,
     VkSemaphore semaphore,
     VkFence fence,

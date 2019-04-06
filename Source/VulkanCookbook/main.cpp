@@ -15,6 +15,7 @@ public:
 //----------------------------------------------------------------
 bool Sample::Initialize(WindowParameters parameters)
 {
+    parameters;
     return true;
 }
 

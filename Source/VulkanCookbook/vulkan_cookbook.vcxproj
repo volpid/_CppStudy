@@ -155,36 +155,60 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Chapter\ch05_creating_framebuffer.cpp" />
+    <ClCompile Include="Chapter\ch05_descriptor_sets.cpp" />
     <ClCompile Include="Chapter\ch06_renderpass_and_framebuffer.cpp" />
     <ClCompile Include="Chapter\ch01_instance_and_device.cpp" />
     <ClCompile Include="Chapter\ch08_graphics_and_compute_pipeline.cpp" />
     <ClCompile Include="Chapter\ch09_command_recording_and_drawing.cpp" />
     <ClCompile Include="Chapter\ch10_helper_recipes.cpp" />
+    <ClCompile Include="Common\sample_camera.cpp" />
+    <ClCompile Include="Common\sample_orbiting_camera.cpp" />
     <ClCompile Include="Common\vulkan_tool.cpp" />
-    <ClCompile Include="Sample\01_create_logical_device.cpp" />
+    <ClCompile Include="Sample\Advance\02_drawing_bilboards_using_geometry_shader.cpp" />
+    <ClCompile Include="Sample\Advance\03_drawing_particles_using_compute_and_graphics_pipeline.cpp" />
+    <ClCompile Include="Sample\Advance\04_rendering_a_tesselated_terrain.cpp" />
+    <ClCompile Include="Sample\Advance\05_rendering_a_fullscreen_quad_for_postprocessing.cpp" />
+    <ClCompile Include="Sample\Advance\06_using_input_attachment_for_color_correction_postprocess_effect.cpp" />
+    <ClCompile Include="Sample\Basic\01_create_logical_device.cpp" />
     <ClCompile Include="Chapter\ch02_image_presentation.cpp" />
-    <ClCompile Include="Sample\02_create_swapchain.cpp" />
+    <ClCompile Include="Sample\Basic\02_create_swapchain.cpp" />
     <ClCompile Include="Chapter\ch03_command_buffer_and_synchronization.cpp" />
-    <ClCompile Include="Sample\03_use_render_pass.cpp" />
+    <ClCompile Include="Sample\Basic\03_use_render_pass.cpp" />
     <ClCompile Include="Chapter\ch04_resource_and_memory.cpp" />
     <ClCompile Include="Common\vulkan_os.cpp" />
     <ClCompile Include="Common\sample_framework.cpp" />
     <ClCompile Include="Common\vulkan_functions.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="Sample\04_use_graphics_pipeline.cpp" />
-    <ClCompile Include="Sample\05_using_combined_image_samplers.cpp" />
+    <ClCompile Include="Sample\Basic\04_use_graphics_pipeline.cpp" />
+    <ClCompile Include="Sample\Basic\05_using_combined_image_samplers.cpp" />
+    <ClCompile Include="Sample\Basic\06_using_uniform_buffers.cpp" />
+    <ClCompile Include="Sample\Basic\07_using_push_constants.cpp" />
+    <ClCompile Include="Sample\Basic\08_using_tessellation_shaders.cpp" />
+    <ClCompile Include="Sample\Basic\09_using_geometry_shaders.cpp" />
+    <ClCompile Include="Sample\Basic\10_using_compute_shaders.cpp" />
+    <ClCompile Include="Sample\Basic\11_drawing_vertex_normals.cpp" />
+    <ClCompile Include="Sample\Basic\12_using_depth_attachments.cpp" />
+    <ClCompile Include="Sample\Basic\13_enabling_alpha_blending.cpp" />
+    <ClCompile Include="Sample\Basic\14_drawing_single_fullscreen_for_postprocessing.cpp" />
+    <ClCompile Include="Sample\Advance\01_drawing_a_skybox.cpp" />
+    <ClCompile Include="Sample\Lighting\01_rendering_a_geometry_with_vertex_diffuse_lighting.cpp" />
+    <ClCompile Include="Sample\Lighting\02_rendering_a_geometry_with_fragment_specular_lighting.cpp" />
+    <ClCompile Include="Sample\Lighting\03_rendering_a_normal_mapped_geometry.cpp" />
+    <ClCompile Include="Sample\Lighting\04_rendering_a_reflective_and_refractive_geometry_using_cuebemap.cpp" />
+    <ClCompile Include="Sample\Lighting\05_adding_shadows_to_the_scene.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Chapter\ch01_instance_and_device.h" />
     <ClInclude Include="Chapter\ch02_image_presentation.h" />
     <ClInclude Include="Chapter\ch03_command_buffer_and_synchronization.h" />
     <ClInclude Include="Chapter\ch04_resource_and_memory.h" />
-    <ClInclude Include="Chapter\ch05_creating_framebuffer.h" />
+    <ClInclude Include="Chapter\ch05_descriptor_sets.h" />
     <ClInclude Include="Chapter\ch06_renderpass_and_framebuffer.h" />
     <ClInclude Include="Chapter\ch08_graphics_and_compute_pipeline.h" />
     <ClInclude Include="Chapter\ch09_command_recording_and_drawing.h" />
     <ClInclude Include="Chapter\ch10_helper_recipes.h" />
+    <ClInclude Include="Common\sample_camera.h" />
+    <ClInclude Include="Common\sample_orbiting_camera.h" />
     <ClInclude Include="Common\vulkan_common.h" />
     <ClInclude Include="Common\vulkan_os.h" />
     <ClInclude Include="Common\sample_framework.h" />

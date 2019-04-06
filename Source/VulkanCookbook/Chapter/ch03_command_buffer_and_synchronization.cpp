@@ -178,7 +178,7 @@ bool Cookbook::ResetFence(VkDevice logicalDevice, const std::vector<VkFence>& fe
     if (fences.size() > 0)
     {   
         VkResult result = vkResetFences(logicalDevice, static_cast<uint32_t> (fences.size()), fences.data());
-        if (result =VK_SUCCESS)
+        if (result != VK_SUCCESS)
         {
             std::cout << "Error occured when tired reset fences." << std::endl;
             return false;
@@ -272,6 +272,7 @@ bool Cookbook::CheckIfProcessingOfSubmittedCommandBufferHasFinished(VkDevice log
     uint64_t timeout,
     VkResult& waitStatus)
 {
+    waitStatus;
     if (SubmitCommandBufferToQueue(queue, waitSemaphoreInfos, commandBuffers, signalSemaphores, fence) == false)
     {
         return false;

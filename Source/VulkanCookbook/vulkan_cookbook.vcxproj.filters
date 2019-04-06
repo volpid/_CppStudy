@@ -17,6 +17,12 @@
     <Filter Include="Sample">
       <UniqueIdentifier>{53d5e4a0-0287-4d2c-a6a8-906d828d2492}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Sample\Basic">
+      <UniqueIdentifier>{eff5043c-e783-48a6-937e-5da118250952}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sample\Lighting">
+      <UniqueIdentifier>{7e4bd880-d5e3-4d71-818a-c87bbc7036ba}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -38,21 +44,6 @@
     <ClCompile Include="Chapter\ch04_resource_and_memory.cpp">
       <Filter>Chapter</Filter>
     </ClCompile>
-    <ClCompile Include="Sample\01_create_logical_device.cpp">
-      <Filter>Sample</Filter>
-    </ClCompile>
-    <ClCompile Include="Sample\02_create_swapchain.cpp">
-      <Filter>Sample</Filter>
-    </ClCompile>
-    <ClCompile Include="Sample\03_use_render_pass.cpp">
-      <Filter>Sample</Filter>
-    </ClCompile>
-    <ClCompile Include="Sample\04_use_graphics_pipeline.cpp">
-      <Filter>Sample</Filter>
-    </ClCompile>
-    <ClCompile Include="Chapter\ch05_creating_framebuffer.cpp">
-      <Filter>Chapter</Filter>
-    </ClCompile>
     <ClCompile Include="Chapter\ch06_renderpass_and_framebuffer.cpp">
       <Filter>Chapter</Filter>
     </ClCompile>
@@ -68,10 +59,91 @@
     <ClCompile Include="Common\vulkan_tool.cpp">
       <Filter>Common</Filter>
     </ClCompile>
-    <ClCompile Include="Sample\05_using_combined_image_samplers.cpp">
-      <Filter>_Uncategorized</Filter>
+    <ClCompile Include="Chapter\ch05_descriptor_sets.cpp">
+      <Filter>Chapter</Filter>
+    </ClCompile>
+    <ClCompile Include="Sample\Basic\05_using_combined_image_samplers.cpp">
+      <Filter>Sample\Basic</Filter>
+    </ClCompile>
+    <ClCompile Include="Sample\Basic\06_using_uniform_buffers.cpp">
+      <Filter>Sample\Basic</Filter>
+    </ClCompile>
+    <ClCompile Include="Sample\Basic\07_using_push_constants.cpp">
+      <Filter>Sample\Basic</Filter>
+    </ClCompile>
+    <ClCompile Include="Sample\Basic\08_using_tessellation_shaders.cpp">
+      <Filter>Sample\Basic</Filter>
+    </ClCompile>
+    <ClCompile Include="Sample\Basic\09_using_geometry_shaders.cpp">
+      <Filter>Sample\Basic</Filter>
+    </ClCompile>
+    <ClCompile Include="Sample\Basic\10_using_compute_shaders.cpp">
+      <Filter>Sample\Basic</Filter>
+    </ClCompile>
+    <ClCompile Include="Sample\Basic\11_drawing_vertex_normals.cpp">
+      <Filter>Sample\Basic</Filter>
+    </ClCompile>
+    <ClCompile Include="Sample\Basic\12_using_depth_attachments.cpp">
+      <Filter>Sample\Basic</Filter>
+    </ClCompile>
+    <ClCompile Include="Sample\Basic\13_enabling_alpha_blending.cpp">
+      <Filter>Sample\Basic</Filter>
+    </ClCompile>
+    <ClCompile Include="Sample\Basic\14_drawing_single_fullscreen_for_postprocessing.cpp">
+      <Filter>Sample\Basic</Filter>
+    </ClCompile>
+    <ClCompile Include="Sample\Basic\01_create_logical_device.cpp">
+      <Filter>Sample\Basic</Filter>
+    </ClCompile>
+    <ClCompile Include="Sample\Basic\02_create_swapchain.cpp">
+      <Filter>Sample\Basic</Filter>
+    </ClCompile>
+    <ClCompile Include="Sample\Basic\03_use_render_pass.cpp">
+      <Filter>Sample\Basic</Filter>
+    </ClCompile>
+    <ClCompile Include="Sample\Basic\04_use_graphics_pipeline.cpp">
+      <Filter>Sample\Basic</Filter>
     </ClCompile>
     <ClCompile Include="Chapter\ch10_helper_recipes.cpp">
+      <Filter>Chapter</Filter>
+    </ClCompile>
+    <ClCompile Include="Sample\Lighting\01_rendering_a_geometry_with_vertex_diffuse_lighting.cpp">
+      <Filter>Sample\Lighting</Filter>
+    </ClCompile>
+    <ClCompile Include="Sample\Lighting\02_rendering_a_geometry_with_fragment_specular_lighting.cpp">
+      <Filter>Sample\Lighting</Filter>
+    </ClCompile>
+    <ClCompile Include="Sample\Lighting\03_rendering_a_normal_mapped_geometry.cpp">
+      <Filter>Sample\Lighting</Filter>
+    </ClCompile>
+    <ClCompile Include="Sample\Lighting\04_rendering_a_reflective_and_refractive_geometry_using_cuebemap.cpp">
+      <Filter>Sample\Lighting</Filter>
+    </ClCompile>
+    <ClCompile Include="Sample\Lighting\05_adding_shadows_to_the_scene.cpp">
+      <Filter>Sample\Lighting</Filter>
+    </ClCompile>
+    <ClCompile Include="Common\sample_camera.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="Common\sample_orbiting_camera.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="Sample\Advance\01_drawing_a_skybox.cpp">
+      <Filter>_Uncategorized</Filter>
+    </ClCompile>
+    <ClCompile Include="Sample\Advance\02_drawing_bilboards_using_geometry_shader.cpp">
+      <Filter>_Uncategorized</Filter>
+    </ClCompile>
+    <ClCompile Include="Sample\Advance\03_drawing_particles_using_compute_and_graphics_pipeline.cpp">
+      <Filter>_Uncategorized</Filter>
+    </ClCompile>
+    <ClCompile Include="Sample\Advance\04_rendering_a_tesselated_terrain.cpp">
+      <Filter>_Uncategorized</Filter>
+    </ClCompile>
+    <ClCompile Include="Sample\Advance\05_rendering_a_fullscreen_quad_for_postprocessing.cpp">
+      <Filter>_Uncategorized</Filter>
+    </ClCompile>
+    <ClCompile Include="Sample\Advance\06_using_input_attachment_for_color_correction_postprocess_effect.cpp">
       <Filter>_Uncategorized</Filter>
     </ClCompile>
   </ItemGroup>
@@ -103,9 +175,6 @@
     <ClInclude Include="Chapter\ch04_resource_and_memory.h">
       <Filter>Chapter</Filter>
     </ClInclude>
-    <ClInclude Include="Chapter\ch05_creating_framebuffer.h">
-      <Filter>Chapter</Filter>
-    </ClInclude>
     <ClInclude Include="Chapter\ch06_renderpass_and_framebuffer.h">
       <Filter>Chapter</Filter>
     </ClInclude>
@@ -121,11 +190,22 @@
     <ClInclude Include="Common\vulkan_os.h">
       <Filter>Common</Filter>
     </ClInclude>
+    <ClInclude Include="Chapter\ch05_descriptor_sets.h">
+      <Filter>Chapter</Filter>
+    </ClInclude>
     <ClInclude Include="Chapter\ch10_helper_recipes.h">
-      <Filter>_Uncategorized</Filter>
+      <Filter>Chapter</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\sample_orbiting_camera.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\sample_camera.h">
+      <Filter>Common</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Common\list_vulkan_functions.inl" />
+    <None Include="Common\list_vulkan_functions.inl">
+      <Filter>Common</Filter>
+    </None>
   </ItemGroup>
 </Project>

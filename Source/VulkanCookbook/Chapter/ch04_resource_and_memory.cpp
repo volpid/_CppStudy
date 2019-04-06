@@ -118,7 +118,7 @@ bool Cookbook::CreateImage(VkDevice logicalDevice,
 bool Cookbook::AllocateAndBindMemoryObjectToImage(VkPhysicalDevice physicalDevice,
     VkDevice logicalDevice,
     VkImage image,
-    VkMemoryPropertyFlagBits memoryProperty,
+    VkMemoryPropertyFlags memoryProperty,
     VkDeviceMemory& memoryObject)
 {
     VkPhysicalDeviceMemoryProperties physicalDeviceMemoryProperties;
@@ -237,7 +237,7 @@ bool Cookbook::CreateBuffer(VkDevice logicalDevice, VkDeviceSize size, VkBufferU
 bool Cookbook::AllocateAndBindMemoryObjectToBuffer(VkPhysicalDevice physicalDevice,
     VkDevice logicalDevice,
     VkBuffer buffer,
-    VkMemoryPropertyFlagBits memoryProperty,
+    VkMemoryPropertyFlags memoryProperty,
     VkDeviceMemory& memoryObject)
 {
     VkPhysicalDeviceMemoryProperties physicalDeviceMemoryProperties;
@@ -441,15 +441,15 @@ bool Cookbook::UseStagingBufferToUpdateImageWithDeviceLocalMemoryBound(VkPhysica
         });
 
     SetImageMemoryBarrier(commandBuffer, 
-        destinationImageGeneratingStage, 
         VK_PIPELINE_STAGE_TRANSFER_BIT, 
+        destinationImageConsumingStage, 
         {
             {
                 destinationImage,
-                destinationImageCurrentAccess,
                 VK_ACCESS_TRANSFER_WRITE_BIT,
-                destinationImageCurrentLayout,
+                destinationImageNewAccess,                
                 VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL,
+                destinationImageNewLayout,                
                 VK_QUEUE_FAMILY_IGNORED,
                 VK_QUEUE_FAMILY_IGNORED,
                 destinationImageAspect

@@ -3,6 +3,37 @@
 
 #include <iostream>
 
+bool Cookbook::CreateFramebuffer(VkDevice logicalDevice,
+    VkRenderPass renderpass,
+    const std::vector<VkImageView>& attachments,
+    uint32_t width,
+    uint32_t height,
+    uint32_t layers,
+    VkFramebuffer& framebuffer)
+{
+    VkFramebufferCreateInfo framebufferCreateInfo = 
+    {
+        VK_STRUCTURE_TYPE_FRAMEBUFFER_CREATE_INFO,
+        nullptr,
+        0,
+        renderpass,
+        static_cast<uint32_t> (attachments.size()),
+        attachments.data(),
+        width,
+        height,
+        layers
+    };
+
+    VkResult result = vkCreateFramebuffer(logicalDevice, &framebufferCreateInfo, nullptr, &framebuffer);
+    if (result != VK_SUCCESS)
+    {
+        std::cout << "Could not create a framebuffer." << std::endl;
+        return false;
+    }
+
+    return true;
+}
+
 bool Cookbook::CreateRenderpass(VkDevice logicalDevice,
     const std::vector<VkAttachmentDescription>& attachmentDescriptions,
     const std::vector<SubpassParameter>& subpassParameters,
@@ -41,6 +72,7 @@ bool Cookbook::CreateRenderpass(VkDevice logicalDevice,
 
 void Cookbook::SpecifyAttachmentDescription(const std::vector<VkAttachmentDescription>& attachmentDescriptions)
 {
+    attachmentDescriptions;
     //typedef struct VkAttachmentDescription {
     //    VkAttachmentDescriptionFlags    flags;
     //    VkFormat                        format;
@@ -79,6 +111,7 @@ void Cookbook::SpecifySubpassDescription(const std::vector<SubpassParameter>& su
 
 void Cookbook::SpecifyDependencyBetweenSubpass(const std::vector<VkSubpassDependency>& subpassDependencies)
 {
+    subpassDependencies;
     //typedef struct VkSubpassDependency {
     //    uint32_t                srcSubpass;
     //    uint32_t                dstSubpass;
@@ -115,3 +148,7 @@ void Cookbook::EndRenderPass(VkCommandBuffer commandBuffer)
     vkCmdEndRenderPass(commandBuffer);
 }
 
+void Cookbook::ProgressToTheNextSubpass(VkCommandBuffer commandBuffer, VkSubpassContents subpassContents)
+{
+    vkCmdNextSubpass(commandBuffer, subpassContents);
+}

@@ -19,7 +19,7 @@ TimerStateParameters::TimerStateParameters(void)
 
 float TimerStateParameters::GetTime(void) const
 {
-    auto durtaion = time_.time_since_epoch();
+    auto durtaion = _time.time_since_epoch();
     auto milliseconds = std::chrono::duration_cast<std::chrono::milliseconds> (durtaion).count();
 
     return static_cast<float> (milliseconds * 0.001f);
@@ -27,36 +27,36 @@ float TimerStateParameters::GetTime(void) const
 
 float TimerStateParameters::GetDeltaTime(void) const
 {
-    return deltaTime_.count();
+    return _deltaTime.count();
 }
 
 void TimerStateParameters::Update(void)
 {
-    auto previousTime = time_;
-    time_ = std::chrono::high_resolution_clock::now();
-    deltaTime_ = time_ - previousTime;
+    auto previousTime = _time;
+    _time = std::chrono::high_resolution_clock::now();
+    _deltaTime = _time - previousTime;
 }
 
 //----------------------------------------------------------------
 // VulkanSampleBase
 //----------------------------------------------------------------
 VulkanSampleBase::VulkanSampleBase(void)
-    : vulkanLibrary_(nullptr), ready_(false)
+    : _vulkanLibrary(nullptr), _ready(false)
 {
 }
 
 VulkanSampleBase::~VulkanSampleBase(void)
 {   
-    Cookbook::ReleaseVulkanLibrary(vulkanLibrary_);
+    Cookbook::ReleaseVulkanLibrary(_vulkanLibrary);
 }
 
 void VulkanSampleBase::MouseClick(size_t buttonIndex, bool state)
 {
     if (buttonIndex < 2)
     {
-        mouseState_.buttons[buttonIndex].isPressed = state;
-        mouseState_.buttons[buttonIndex].wasClicked = state;
-        mouseState_.buttons[buttonIndex].wasClicked = !state;
+        _mouseState.buttons[buttonIndex].isPressed = state;
+        _mouseState.buttons[buttonIndex].wasClicked = state;
+        _mouseState.buttons[buttonIndex].wasClicked = !state;
 
         OnMouseEvent();
     }
@@ -64,42 +64,42 @@ void VulkanSampleBase::MouseClick(size_t buttonIndex, bool state)
 
 void VulkanSampleBase::MouseMove(int x, int y)
 {
-    mouseState_.position.delta.x = x - mouseState_.position.x;
-    mouseState_.position.delta.y = y - mouseState_.position.y;
-    mouseState_.position.x = x;
-    mouseState_.position.y = y;
+    _mouseState.position.delta.x = x - _mouseState.position.x;
+    _mouseState.position.delta.y = y - _mouseState.position.y;
+    _mouseState.position.x = x;
+    _mouseState.position.y = y;
     
     OnMouseEvent();
 }
 
 void VulkanSampleBase::MouseWheel(float distance)
 {
-    mouseState_.wheel.wasMoved = true;
-    mouseState_.wheel.distance = distance;
+    _mouseState.wheel.wasMoved = true;
+    _mouseState.wheel.distance = distance;
 
     OnMouseEvent();
 }
 
 void VulkanSampleBase::MouseReset(void)
 {
-    mouseState_.position.delta.x = 0;
-    mouseState_.position.delta.y = 0;
-    mouseState_.buttons[0].wasClicked = false;
-    mouseState_.buttons[0].wasReleased = false;
-    mouseState_.buttons[1].wasClicked = false;
-    mouseState_.buttons[1].wasReleased = false;
-    mouseState_.wheel.wasMoved = false;
-    mouseState_.wheel.distance = 0.0f;
+    _mouseState.position.delta.x = 0;
+    _mouseState.position.delta.y = 0;
+    _mouseState.buttons[0].wasClicked = false;
+    _mouseState.buttons[0].wasReleased = false;
+    _mouseState.buttons[1].wasClicked = false;
+    _mouseState.buttons[1].wasReleased = false;
+    _mouseState.wheel.wasMoved = false;
+    _mouseState.wheel.distance = 0.0f;
 }
 
 void VulkanSampleBase::UpdateTime(void)
 {
-    timerState_.Update();
+    _timerState.Update();
 }
 
 bool VulkanSampleBase::IsReady(void)
 {
-    return ready_;
+    return _ready;
 }
 
 void VulkanSampleBase::OnMouseEvent(void)
@@ -123,12 +123,12 @@ bool VulkanSample::InitializeVulkan(WindowParameters params,
     bool useDepth,
     VkImageUsageFlags depthAttachmentUsage)
 {
-    if (Cookbook::ConnectWithVulkanLoaderLibrary(vulkanLibrary_) == false)
+    if (Cookbook::ConnectWithVulkanLoaderLibrary(_vulkanLibrary) == false)
     {
         return false;
     }
     
-    if (Cookbook::LoadFunctionExportedFromVulkanLoaderLibrary(vulkanLibrary_) == false)
+    if (Cookbook::LoadFunctionExportedFromVulkanLoaderLibrary(_vulkanLibrary) == false)
     {
         return false;
     }
@@ -139,67 +139,67 @@ bool VulkanSample::InitializeVulkan(WindowParameters params,
     }
 
     std::vector<const char*> instanceExtensions;
-    InitVkDestroyer(instance_);
-    if (Cookbook::CreateVulkanInstanceWithWsiExtensionEnabled(instanceExtensions, "vulkan cookbook", *instance_) == false)
+    InitVkDestroyer(_instance);
+    if (Cookbook::CreateVulkanInstanceWithWsiExtensionEnabled(instanceExtensions, "vulkan cookbook", *_instance) == false)
     {
         return false;
     }
 
-    if (Cookbook::LoadInstanceLevelFunction(*instance_,  instanceExtensions) == false)
+    if (Cookbook::LoadInstanceLevelFunction(*_instance,  instanceExtensions) == false)
     {
         return false;
     }
         
-    InitVkDestroyer(instance_, presentationSurface_);
-    if (Cookbook::CreatePresentaionSurface(*instance_, params, *presentationSurface_) == false)
+    InitVkDestroyer(_instance, _presentationSurface);
+    if (Cookbook::CreatePresentaionSurface(*_instance, params, *_presentationSurface) == false)
     {
         return false;
     }
 
     std::vector<VkPhysicalDevice> physicalDevices;
-    Cookbook::EnumerateAvailablePhysicalDevice(*instance_, physicalDevices);
+    Cookbook::EnumerateAvailablePhysicalDevice(*_instance, physicalDevices);
 
     for (auto& physicalDevice : physicalDevices)
     {
-        if (Cookbook::SelectIndexOfQueueFamilyWithDesiredCapability(physicalDevice, VK_QUEUE_GRAPHICS_BIT, graphicsQueue_.familyIndex) == false)
+        if (Cookbook::SelectIndexOfQueueFamilyWithDesiredCapability(physicalDevice, VK_QUEUE_GRAPHICS_BIT, _graphicsQueue.familyIndex) == false)
         {
             continue;
         }
-        if (Cookbook::SelectIndexOfQueueFamilyWithDesiredCapability(physicalDevice, VK_QUEUE_COMPUTE_BIT, computeQueue_.familyIndex) == false)
+        if (Cookbook::SelectIndexOfQueueFamilyWithDesiredCapability(physicalDevice, VK_QUEUE_COMPUTE_BIT, _computeQueue.familyIndex) == false)
         {
             continue;
         }
 
-        if (Cookbook::SelectQueueFamilyThatSupportPresentToGivenSurface(physicalDevice, *presentationSurface_, presentQueue_.familyIndex) == false)
+        if (Cookbook::SelectQueueFamilyThatSupportPresentToGivenSurface(physicalDevice, *_presentationSurface, _presentQueue.familyIndex) == false)
         {
             continue;
         }
 
         std::vector<QueueInfo> requestedQueues = 
         {
-            {graphicsQueue_.familyIndex, {1.0f}},
+            {_graphicsQueue.familyIndex, {1.0f}},
         };
 
-        if (graphicsQueue_.familyIndex != computeQueue_.familyIndex)
+        if (_graphicsQueue.familyIndex != _computeQueue.familyIndex)
         {
-            requestedQueues.push_back({computeQueue_.familyIndex, {1.0f}});
+            requestedQueues.push_back({_computeQueue.familyIndex, {1.0f}});
         }
-        if ((graphicsQueue_.familyIndex != presentQueue_.familyIndex)
-            && (computeQueue_.familyIndex != presentQueue_.familyIndex))
+        if ((_graphicsQueue.familyIndex != _presentQueue.familyIndex)
+            && (_computeQueue.familyIndex != _presentQueue.familyIndex))
         {
-            requestedQueues.push_back({presentQueue_.familyIndex, {1.0f}});
+            requestedQueues.push_back({_presentQueue.familyIndex, {1.0f}});
         }
 
         std::vector<const char*> deviceExtensions;
-        InitVkDestroyer(logicalDevice_);
+        InitVkDestroyer(_logicalDevice);
 
-        if (Cookbook::CreateLogicalDeviceWithWsiExtensionEnabled(physicalDevice, requestedQueues, deviceExtensions, desiredDeviceFeatures, *logicalDevice_) == true)
+        if (Cookbook::CreateLogicalDeviceWithWsiExtensionEnabled(physicalDevice, requestedQueues, deviceExtensions, desiredDeviceFeatures, *_logicalDevice) == true)
         {
-            physicalDevice_ = physicalDevice;
-            Cookbook::LoadDeviceLevelFunction(*logicalDevice_, deviceExtensions);
-            Cookbook::GetDeviceQueue(*logicalDevice_, graphicsQueue_.familyIndex, 0, graphicsQueue_.handle);
-            Cookbook::GetDeviceQueue(*logicalDevice_, graphicsQueue_.familyIndex, 0, computeQueue_.handle);
-            Cookbook::GetDeviceQueue(*logicalDevice_, presentQueue_.familyIndex, 0, presentQueue_.handle);
+            _physicalDevice = physicalDevice;
+            Cookbook::LoadDeviceLevelFunction(*_logicalDevice, deviceExtensions);
+            Cookbook::GetDeviceQueue(*_logicalDevice, _graphicsQueue.familyIndex, 0, _graphicsQueue.handle);
+            Cookbook::GetDeviceQueue(*_logicalDevice, _graphicsQueue.familyIndex, 0, _computeQueue.handle);
+            Cookbook::GetDeviceQueue(*_logicalDevice, _presentQueue.familyIndex, 0, _presentQueue.handle);
             break;
         }
         else
@@ -208,47 +208,47 @@ bool VulkanSample::InitializeVulkan(WindowParameters params,
         }
     }
 
-    if (logicalDevice_ == false)
+    if (_logicalDevice == false)
     {
         return false;
     }
         
-    InitVkDestroyer(logicalDevice_, commandPool_);
-    if (Cookbook::CreateCommandPool(*logicalDevice_, VK_COMMAND_POOL_CREATE_RESET_COMMAND_BUFFER_BIT, graphicsQueue_.familyIndex, *commandPool_) == false)
+    InitVkDestroyer(_logicalDevice, _commandPool);
+    if (Cookbook::CreateCommandPool(*_logicalDevice, VK_COMMAND_POOL_CREATE_RESET_COMMAND_BUFFER_BIT, _graphicsQueue.familyIndex, *_commandPool) == false)
     {
         return false;
     }
 
-    for (uint32_t idx = 0; idx < frameCount; ++idx)
+    for (uint32_t idx = 0; idx < FrameCount; ++idx)
     {
         std::vector<VkCommandBuffer> commandBuffer;
         VkDestroyer(VkSemaphore) imageAcquiredSemaphore;
-        InitVkDestroyer(logicalDevice_, imageAcquiredSemaphore);
+        InitVkDestroyer(_logicalDevice, imageAcquiredSemaphore);
         VkDestroyer(VkSemaphore) readyToPresentSemaphore;
-        InitVkDestroyer(logicalDevice_, readyToPresentSemaphore);
+        InitVkDestroyer(_logicalDevice, readyToPresentSemaphore);
         VkDestroyer(VkFence) drawingFinishedFence;
-        InitVkDestroyer(logicalDevice_, drawingFinishedFence);
+        InitVkDestroyer(_logicalDevice, drawingFinishedFence);
         VkDestroyer(VkImageView) depthAttachment;
-        InitVkDestroyer(logicalDevice_, depthAttachment);
+        InitVkDestroyer(_logicalDevice, depthAttachment);
 
-        if (Cookbook::AllocateCommandBuffer(*logicalDevice_, *commandPool_, VK_COMMAND_BUFFER_LEVEL_PRIMARY, 1, commandBuffer) == false)
+        if (Cookbook::AllocateCommandBuffer(*_logicalDevice, *_commandPool, VK_COMMAND_BUFFER_LEVEL_PRIMARY, 1, commandBuffer) == false)
         {
             return false;
         }
-        if (Cookbook::CreateSemaphore(*logicalDevice_, *imageAcquiredSemaphore) == false)
+        if (Cookbook::CreateSemaphore(*_logicalDevice, *imageAcquiredSemaphore) == false)
         {
             return false;
         }
-        if (Cookbook::CreateSemaphore(*logicalDevice_, *readyToPresentSemaphore) == false)
+        if (Cookbook::CreateSemaphore(*_logicalDevice, *readyToPresentSemaphore) == false)
         {
             return false;
         }
-        if (Cookbook::CreateFence(*logicalDevice_, true, *drawingFinishedFence) == false)
+        if (Cookbook::CreateFence(*_logicalDevice, true, *drawingFinishedFence) == false)
         {
             return false;
         }
 
-        frameResources_.emplace_back(commandBuffer[0],
+        _frameResources.emplace_back(commandBuffer[0],
             std::move(imageAcquiredSemaphore),
             std::move(readyToPresentSemaphore),
             std::move(drawingFinishedFence),
@@ -268,81 +268,83 @@ bool VulkanSample::CreateSwapchain(VkImageUsageFlags swapchainImageUsage,
     bool useDepth, 
     VkImageCreateFlags depthAttachmentUsage)
 {
-    Cookbook::WaitForAllSubmittedCommandToBeFinished(*logicalDevice_);
+    depthAttachmentUsage;
+
+    Cookbook::WaitForAllSubmittedCommandToBeFinished(*_logicalDevice);
     
-    ready_ = false;
+    _ready = false;
 
-    swapchain_.imageViewsRaw.clear();
-    swapchain_.imageViews.clear();
-    swapchain_.images.clear();
+    _swapchain.imageViewsRaw.clear();
+    _swapchain.imageViews.clear();
+    _swapchain.images.clear();
 
-    if (swapchain_.handle == false)
+    if (_swapchain.handle == false)
     {
-        InitVkDestroyer(logicalDevice_, swapchain_.handle);
+        InitVkDestroyer(_logicalDevice, _swapchain.handle);
     }
 
-    VkDestroyer(VkSwapchainKHR) oldSwapChain = std::move(swapchain_.handle);
-    InitVkDestroyer(logicalDevice_, swapchain_.handle);
-    if (Cookbook::CreateSwapchainWithR8G8B8A8FormatAndMailboxPresentMode(physicalDevice_, *presentationSurface_, *logicalDevice_, swapchainImageUsage, swapchain_.size, swapchain_.format, *oldSwapChain, *swapchain_.handle, swapchain_.images) == false)
+    VkDestroyer(VkSwapchainKHR) oldSwapChain = std::move(_swapchain.handle);
+    InitVkDestroyer(_logicalDevice, _swapchain.handle);
+    if (Cookbook::CreateSwapchainWithR8G8B8A8FormatAndMailboxPresentMode(_physicalDevice, *_presentationSurface, *_logicalDevice, swapchainImageUsage, _swapchain.size, _swapchain.format, *oldSwapChain, *_swapchain.handle, _swapchain.images) == false)
     {
         return false;
     }
 
-    if (swapchain_.handle == false)
+    if (_swapchain.handle == false)
     {
         return true;
     }
 
-    for (size_t idx = 0; idx < swapchain_.images.size(); ++idx)
+    for (size_t idx = 0; idx < _swapchain.images.size(); ++idx)
     {
-        swapchain_.imageViews.emplace_back(VkDestroyer(VkImageView)());
-        InitVkDestroyer(logicalDevice_, swapchain_.imageViews.back());
-        if (Cookbook::CreateImageView(*logicalDevice_, swapchain_.images[idx], VK_IMAGE_VIEW_TYPE_2D, swapchain_.format, VK_IMAGE_ASPECT_COLOR_BIT, *swapchain_.imageViews.back()) == false)
+        _swapchain.imageViews.emplace_back(VkDestroyer(VkImageView)());
+        InitVkDestroyer(_logicalDevice, _swapchain.imageViews.back());
+        if (Cookbook::CreateImageView(*_logicalDevice, _swapchain.images[idx], VK_IMAGE_VIEW_TYPE_2D, _swapchain.format, VK_IMAGE_ASPECT_COLOR_BIT, *_swapchain.imageViews.back()) == false)
         {
             return false;
         }
-        swapchain_.imageViewsRaw.push_back(*swapchain_.imageViews.back());
+        _swapchain.imageViewsRaw.push_back(*_swapchain.imageViews.back());
     }
 
-    depthImages.clear();
-    depthImagesMemory.clear();
+    _depthImages.clear();
+    _depthImagesMemory.clear();
 
     if (useDepth == true)
     {
-        for (uint32_t idx = 0; idx < frameCount; ++idx)
+        for (uint32_t idx = 0; idx < FrameCount; ++idx)
         {
-            depthImages.emplace_back(VkDestroyer(VkImage)());
-            InitVkDestroyer(logicalDevice_, depthImages.back());
-            depthImagesMemory.emplace_back(VkDestroyer(VkDeviceMemory)());
-            InitVkDestroyer(logicalDevice_, depthImagesMemory.back());
-            InitVkDestroyer(logicalDevice_, frameResources_[idx].depthAttachment);
+            _depthImages.emplace_back(VkDestroyer(VkImage)());
+            InitVkDestroyer(_logicalDevice, _depthImages.back());
+            _depthImagesMemory.emplace_back(VkDestroyer(VkDeviceMemory)());
+            InitVkDestroyer(_logicalDevice, _depthImagesMemory.back());
+            InitVkDestroyer(_logicalDevice, _frameResources[idx].depthAttachment);
 
-            if (Cookbook::Create2DImageAndView(physicalDevice_,
-                *logicalDevice_,
-                depthFormat, 
-                swapchain_.size, 
+            if (Cookbook::Create2DImageAndView(_physicalDevice,
+                *_logicalDevice,
+                DepthFormat, 
+                _swapchain.size, 
                 1, 
                 1, 
                 VK_SAMPLE_COUNT_1_BIT,
                 VK_IMAGE_USAGE_DEPTH_STENCIL_ATTACHMENT_BIT,
                 VK_IMAGE_ASPECT_DEPTH_BIT,
-                *depthImages.back(),
-                *depthImagesMemory.back(),
-                *frameResources_[idx].depthAttachment) == false)
+                *_depthImages.back(),
+                *_depthImagesMemory.back(),
+                *_frameResources[idx].depthAttachment) == false)
             {
                 return false;
             }
         }
     }
 
-    ready_ = true;
+    _ready = true;
     return true;
 }
 
 void VulkanSample::Deinitialize(void)
 {
-    if (logicalDevice_)
+    if (_logicalDevice)
     {
-        Cookbook::WaitForAllSubmittedCommandToBeFinished(*logicalDevice_);
+        Cookbook::WaitForAllSubmittedCommandToBeFinished(*_logicalDevice);
     }
 }

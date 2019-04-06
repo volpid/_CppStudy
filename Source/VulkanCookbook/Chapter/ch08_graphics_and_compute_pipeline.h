@@ -70,6 +70,25 @@ namespace Cookbook
     void BindPipelineObject(VkCommandBuffer commandBuffer,
         VkPipelineBindPoint pipelineType,
         VkPipeline pipeline);
+    void SpecifyPipelineTessellationState(uint32_t patchControlPointsCount, 
+        VkPipelineTessellationStateCreateInfo&  tessellationStateCreateInfo);
+    bool CreateComputePipeline(VkDevice logicalDevice,
+        VkPipelineCreateFlags additionalOptions,
+        const VkPipelineShaderStageCreateInfo& computeShaderStage,
+        VkPipelineLayout pipelineLayout,
+        VkPipeline basePipelineHandle,
+        VkPipelineCache pipelineCache,
+        VkPipeline& computePipeline);
+    void SpecifyPipelineDepthAndStencilState(bool depthTestEnable,
+        bool depthWriteEnable,
+        VkCompareOp depthCompareOP,
+        bool depthBoundsTestEnable,
+        float minDepthBounds,
+        float maxDepthBounds,
+        bool stencilTestEnable,
+        VkStencilOpState frontStencilTestParameter,
+        VkStencilOpState backStencilTestParameter,
+        VkPipelineDepthStencilStateCreateInfo& depthAndStencilStateCreateInfo);
 }
 
 #endif /*__GRAPHICS_AND_COMPUTE_PIPELINE__H__*/

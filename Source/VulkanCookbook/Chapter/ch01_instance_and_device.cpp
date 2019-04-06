@@ -387,7 +387,7 @@ bool Cookbook::CreateLogicalDeviceWithGeometryShaderAndGraphicAndComputeQueue(Vk
         VkPhysicalDeviceProperties deviceProperties;
         GetFeatureAndPropertyOfPhysicalDevice(physicalDevice, deviceFeatures, deviceProperties);
 
-        if (deviceFeatures.geometryShader == true)
+        if (deviceFeatures.geometryShader == VK_TRUE)
         {
             deviceFeatures = {};
             deviceFeatures.geometryShader = VK_TRUE;

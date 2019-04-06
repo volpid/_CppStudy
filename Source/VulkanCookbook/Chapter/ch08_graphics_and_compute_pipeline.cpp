@@ -281,3 +281,77 @@ void Cookbook::BindPipelineObject(VkCommandBuffer commandBuffer,
 {
     vkCmdBindPipeline(commandBuffer, pipelineType, pipeline);
 }
+
+void Cookbook::SpecifyPipelineTessellationState(uint32_t patchControlPointsCount, 
+    VkPipelineTessellationStateCreateInfo&  tessellationStateCreateInfo)
+{
+    tessellationStateCreateInfo =
+    {
+        VK_STRUCTURE_TYPE_PIPELINE_TESSELLATION_STATE_CREATE_INFO,
+        nullptr,
+        0,
+        patchControlPointsCount
+    };
+}
+
+bool Cookbook::CreateComputePipeline(VkDevice logicalDevice,
+    VkPipelineCreateFlags additionalOptions,
+    const VkPipelineShaderStageCreateInfo& computeShaderStage,
+    VkPipelineLayout pipelineLayout,
+    VkPipeline basePipelineHandle,
+    VkPipelineCache pipelineCache,
+    VkPipeline& computePipeline)
+{
+    VkComputePipelineCreateInfo computePipelineCreateInfo = 
+    {
+        VK_STRUCTURE_TYPE_COMPUTE_PIPELINE_CREATE_INFO,
+        nullptr,
+        additionalOptions,
+        computeShaderStage,
+        pipelineLayout,
+        basePipelineHandle,
+        -1
+    };
+
+    VkResult result = vkCreateComputePipelines(logicalDevice, 
+        pipelineCache, 
+        1,
+        &computePipelineCreateInfo,
+        nullptr,
+        &computePipeline);
+    if (result != VK_SUCCESS)
+    {
+        std::cout << "Could not create compute pipeline." << std::endl;
+        return false;
+    }
+
+    return true;
+}
+
+void Cookbook::SpecifyPipelineDepthAndStencilState(bool depthTestEnable,
+    bool depthWriteEnable,
+    VkCompareOp depthCompareOP,
+    bool depthBoundsTestEnable,
+    float minDepthBounds,
+    float maxDepthBounds,
+    bool stencilTestEnable,
+    VkStencilOpState frontStencilTestParameter,
+    VkStencilOpState backStencilTestParameter,
+    VkPipelineDepthStencilStateCreateInfo& depthAndStencilStateCreateInfo)
+{
+    depthAndStencilStateCreateInfo =
+    {
+        VK_STRUCTURE_TYPE_PIPELINE_DEPTH_STENCIL_STATE_CREATE_INFO,
+        nullptr,
+        0,
+        depthTestEnable,
+        depthWriteEnable,
+        depthCompareOP,
+        depthBoundsTestEnable,
+        stencilTestEnable,
+        frontStencilTestParameter,
+        backStencilTestParameter,
+        minDepthBounds,
+        maxDepthBounds
+    };
+}

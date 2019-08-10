@@ -538,7 +538,6 @@ int _main(int argc, char** argv)
             }
         }
 
-        int i = 0;
         for (int i = 0; i < n; ++i)
         {
             float diffAOS_min0 = fabs(outAABB[i].min[0] - outAABB_aos[i].min.m128_f32[0]);

@@ -1,5 +1,5 @@
-rem set GlslangValidator=D:\_SubDevTools\VulkanSDK\1.0.68.0\Bin\glslangValidator.exe
-set GlslangValidator=D:\DevelopmentTools\VulkanSDK\1.1.97.0\Bin\glslangValidator.exe
+set GlslangValidator=D:\DevelopTools\VulkanSDK\1.0.68.0\Bin\glslangValidator.exe
+rem set GlslangValidator=D:\DevelopmentTools\VulkanSDK\1.1.97.0\Bin\glslangValidator.exe
 
 %GlslangValidator% -V 04_shader.vert -o 04_shader.vert.spv
 %GlslangValidator% -V 04_shader.frag -o 04_shader.frag.spv

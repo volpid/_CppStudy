@@ -39,9 +39,11 @@ inline UplaodBuffer<_Type>::UplaodBuffer(ID3D12Device* pDevice, UINT elementCoun
         elementByteSize_ = D3DUtil::CalcConstantBufferByteSize(sizeof(_Type));
     }
 
-    ThrowIfFailed(pDevice->CreateCommittedResource(&CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_UPLOAD),
+    CD3DX12_HEAP_PROPERTIES heapPropertyUpload = CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_UPLOAD);
+    CD3DX12_RESOURCE_DESC resourceDescBuffer = CD3DX12_RESOURCE_DESC::Buffer(elementByteSize_ * elementCount);
+    ThrowIfFailed(pDevice->CreateCommittedResource(&heapPropertyUpload,
         D3D12_HEAP_FLAG_NONE,
-        &CD3DX12_RESOURCE_DESC::Buffer(elementByteSize_ * elementCount),
+        &resourceDescBuffer,
         D3D12_RESOURCE_STATE_GENERIC_READ,
         nullptr,
         IID_PPV_ARGS(&uploadBuffer_)));

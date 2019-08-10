@@ -44,42 +44,37 @@ void InitDirect3DApp::Draw(const GameTimer& timer)
 {
     _Unreferenced_parameter_(timer);
 
-    ThrowIfFailed(commandListAlloc_->Reset());
-    ThrowIfFailed(commandList_->Reset(commandListAlloc_.Get(), nullptr));
+    ThrowIfFailed(_commandListAlloc->Reset());
+    ThrowIfFailed(_commandList->Reset(_commandListAlloc.Get(), nullptr));
 
-    commandList_->ResourceBarrier(1, 
-        &CD3DX12_RESOURCE_BARRIER::Transition(CurrentBackBuffer(),
-            D3D12_RESOURCE_STATE_PRESENT,
-            D3D12_RESOURCE_STATE_RENDER_TARGET));
+    CD3DX12_RESOURCE_BARRIER barrierPresentToRenderTarget = CD3DX12_RESOURCE_BARRIER::Transition(CurrentBackBuffer(),
+        D3D12_RESOURCE_STATE_PRESENT,
+        D3D12_RESOURCE_STATE_RENDER_TARGET);
+    _commandList->ResourceBarrier(1, &barrierPresentToRenderTarget);
 
-    commandList_->RSSetViewports(1, &screenViewport_);
-    commandList_->RSSetScissorRects(1, &scissorRect_);
+    _commandList->RSSetViewports(1, &_screenViewport);
+    _commandList->RSSetScissorRects(1, &_scissorRect);
 
-    commandList_->ClearRenderTargetView(CurrentBackBufferView(),
-        DirectX::Colors::LightSteelBlue,
-        0, 
-        nullptr);
-    commandList_->ClearDepthStencilView(DepthStencilView(),
-        D3D12_CLEAR_FLAG_DEPTH | D3D12_CLEAR_FLAG_STENCIL, 
-        1.0f, 
-        0,
-        0,
-        nullptr);
+    D3D12_CPU_DESCRIPTOR_HANDLE currentBackBufferView = CurrentBackBufferView();
+    D3D12_CPU_DESCRIPTOR_HANDLE depthStencilView = DepthStencilView();
 
-    commandList_->OMSetRenderTargets(1, &CurrentBackBufferView(), true, &DepthStencilView());
+    _commandList->ClearRenderTargetView(currentBackBufferView, DirectX::Colors::LightSteelBlue, 0,  nullptr);
+    _commandList->ClearDepthStencilView(depthStencilView, D3D12_CLEAR_FLAG_DEPTH | D3D12_CLEAR_FLAG_STENCIL, 1.0f, 0, 0, nullptr);
 
-    commandList_->ResourceBarrier(1, 
-        &CD3DX12_RESOURCE_BARRIER::Transition(CurrentBackBuffer(),
-            D3D12_RESOURCE_STATE_RENDER_TARGET,
-            D3D12_RESOURCE_STATE_PRESENT));
+    _commandList->OMSetRenderTargets(1, &currentBackBufferView, true, &depthStencilView);
+
+    CD3DX12_RESOURCE_BARRIER barrierRenderTargetToPresent = CD3DX12_RESOURCE_BARRIER::Transition(CurrentBackBuffer(),
+        D3D12_RESOURCE_STATE_RENDER_TARGET,
+        D3D12_RESOURCE_STATE_PRESENT);
+    _commandList->ResourceBarrier(1, &barrierRenderTargetToPresent);
     
-    ThrowIfFailed(commandList_->Close());
+    ThrowIfFailed(_commandList->Close());
 
-    ID3D12CommandList* cmdsLists[] = {commandList_.Get()};
-    commandQueue_->ExecuteCommandLists(_countof(cmdsLists), cmdsLists);
+    ID3D12CommandList* cmdsLists[] = {_commandList.Get()};
+    _commandQueue->ExecuteCommandLists(_countof(cmdsLists), cmdsLists);
 
-    ThrowIfFailed(swapChain_->Present(0, 0));
-    currBackBuffer_ = (currBackBuffer_ + 1) % swapChainbufferCount;
+    ThrowIfFailed(_swapChain->Present(0, 0));
+    currBackBuffer_ = (currBackBuffer_ + 1) % SwapChainbufferCount;
 
     FlushCommandQueue();
 }

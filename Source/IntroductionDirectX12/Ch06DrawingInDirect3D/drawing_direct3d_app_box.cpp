@@ -86,7 +86,7 @@ bool BoxApp::Initialize(HINSTANCE hInstance)
         return false;
     }
 
-    ThrowIfFailed(commandList_->Reset(commandListAlloc_.Get(), nullptr));
+    ThrowIfFailed(_commandList->Reset(_commandListAlloc.Get(), nullptr));
 
     BuildDescriptorHeap();
     BuildConstantBuffer();
@@ -95,9 +95,9 @@ bool BoxApp::Initialize(HINSTANCE hInstance)
     BuildShapeGeometry();
     BuildPSO();
 
-    ThrowIfFailed(commandList_->Close());
-    ID3D12CommandList* cmdLists[] = {commandList_.Get()};
-    commandQueue_->ExecuteCommandLists(_countof(cmdLists), cmdLists);
+    ThrowIfFailed(_commandList->Close());
+    ID3D12CommandList* cmdLists[] = {_commandList.Get()};
+    _commandQueue->ExecuteCommandLists(_countof(cmdLists), cmdLists);
 
     FlushCommandQueue();
 
@@ -143,55 +143,52 @@ void BoxApp::Draw(const GameTimer& timer)
 {
     _Unreferenced_parameter_(timer);
 
-    ThrowIfFailed(commandListAlloc_->Reset());
-    ThrowIfFailed(commandList_->Reset(commandListAlloc_.Get(), pso_.Get()));
+    ThrowIfFailed(_commandListAlloc->Reset());
+    ThrowIfFailed(_commandList->Reset(_commandListAlloc.Get(), pso_.Get()));
 
-    commandList_->RSSetViewports(1, &screenViewport_);
-    commandList_->RSSetScissorRects(1, &scissorRect_);
+    _commandList->RSSetViewports(1, &_screenViewport);
+    _commandList->RSSetScissorRects(1, &_scissorRect);
 
-    commandList_->ResourceBarrier(1, 
-        &CD3DX12_RESOURCE_BARRIER::Transition(CurrentBackBuffer(),
-            D3D12_RESOURCE_STATE_PRESENT,
-            D3D12_RESOURCE_STATE_RENDER_TARGET));
+    CD3DX12_RESOURCE_BARRIER barrierPresentToRenderTarget = CD3DX12_RESOURCE_BARRIER::Transition(CurrentBackBuffer(),
+        D3D12_RESOURCE_STATE_PRESENT,
+        D3D12_RESOURCE_STATE_RENDER_TARGET);
+    _commandList->ResourceBarrier(1, &barrierPresentToRenderTarget);
 
-    commandList_->ClearRenderTargetView(CurrentBackBufferView(),
-        DirectX::Colors::LightSteelBlue,
-        0, 
-        nullptr);
-    commandList_->ClearDepthStencilView(DepthStencilView(),
-        D3D12_CLEAR_FLAG_DEPTH | D3D12_CLEAR_FLAG_STENCIL, 
-        1.0f, 
-        0,
-        0,
-        nullptr);
+    D3D12_CPU_DESCRIPTOR_HANDLE currentBackBufferView = CurrentBackBufferView();
+    D3D12_CPU_DESCRIPTOR_HANDLE currentDepthStencilView = DepthStencilView();
 
-    commandList_->OMSetRenderTargets(1, &CurrentBackBufferView(), true, &DepthStencilView());
+    _commandList->ClearRenderTargetView(currentBackBufferView, DirectX::Colors::LightSteelBlue, 0, nullptr);
+    _commandList->ClearDepthStencilView(currentDepthStencilView, D3D12_CLEAR_FLAG_DEPTH | D3D12_CLEAR_FLAG_STENCIL, 1.0f, 0, 0, nullptr);
+
+    _commandList->OMSetRenderTargets(1, &currentBackBufferView, true, &currentDepthStencilView);
 
     ID3D12DescriptorHeap* descriptorHeap[] = {cbvHeap_.Get()};
-    commandList_->SetDescriptorHeaps(_countof(descriptorHeap), descriptorHeap);
+    _commandList->SetDescriptorHeaps(_countof(descriptorHeap), descriptorHeap);
 
-    commandList_->SetGraphicsRootSignature(rootSignature_.Get());
+    _commandList->SetGraphicsRootSignature(rootSignature_.Get());
+
+    D3D12_VERTEX_BUFFER_VIEW vertexBufferView = boxGeometry_->VertexBufferView();
+    D3D12_INDEX_BUFFER_VIEW indexBufferView = boxGeometry_->IndexBufferView();    
+    _commandList->IASetVertexBuffers(0, 1, &vertexBufferView);
+    _commandList->IASetIndexBuffer(&indexBufferView);
+    _commandList->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+
+    _commandList->SetGraphicsRootDescriptorTable(0, cbvHeap_->GetGPUDescriptorHandleForHeapStart());
+
+    _commandList->DrawIndexedInstanced(boxGeometry_->drawArgs["box"].indexCount, 1, 0, 0, 0);
+
+    CD3DX12_RESOURCE_BARRIER barrierRenderTargetToPresent = CD3DX12_RESOURCE_BARRIER::Transition(CurrentBackBuffer(),
+        D3D12_RESOURCE_STATE_RENDER_TARGET,
+        D3D12_RESOURCE_STATE_PRESENT);
+    _commandList->ResourceBarrier(1, &barrierRenderTargetToPresent);
     
-    commandList_->IASetVertexBuffers(0, 1, &boxGeometry_->VertexBufferView());
-    commandList_->IASetIndexBuffer(&boxGeometry_->IndexBufferView());
-    commandList_->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+    ThrowIfFailed(_commandList->Close());
 
-    commandList_->SetGraphicsRootDescriptorTable(0, cbvHeap_->GetGPUDescriptorHandleForHeapStart());
+    ID3D12CommandList* cmdsLists[] = {_commandList.Get()};
+    _commandQueue->ExecuteCommandLists(_countof(cmdsLists), cmdsLists);
 
-    commandList_->DrawIndexedInstanced(boxGeometry_->drawArgs["box"].indexCount, 1, 0, 0, 0);
-
-    commandList_->ResourceBarrier(1, 
-        &CD3DX12_RESOURCE_BARRIER::Transition(CurrentBackBuffer(),
-            D3D12_RESOURCE_STATE_RENDER_TARGET,
-            D3D12_RESOURCE_STATE_PRESENT));
-    
-    ThrowIfFailed(commandList_->Close());
-
-    ID3D12CommandList* cmdsLists[] = {commandList_.Get()};
-    commandQueue_->ExecuteCommandLists(_countof(cmdsLists), cmdsLists);
-
-    ThrowIfFailed(swapChain_->Present(0, 0));
-    currBackBuffer_ = (currBackBuffer_ + 1) % swapChainbufferCount;
+    ThrowIfFailed(_swapChain->Present(0, 0));
+    currBackBuffer_ = (currBackBuffer_ + 1) % SwapChainbufferCount;
 
     FlushCommandQueue();
 }
@@ -203,7 +200,7 @@ void BoxApp::OnMouseDown(WPARAM btnState, int x, int y)
     lastMousePos_.x = x;
     lastMousePos_.y = y;
 
-    SetCapture(hMainWnd_);
+    SetCapture(_hMainWnd);
 }
 
 void BoxApp::OnMouseUp(WPARAM btnState, int x, int y)
@@ -248,12 +245,12 @@ void BoxApp::BuildDescriptorHeap(void)
     cbvHeapDesc.Flags = D3D12_DESCRIPTOR_HEAP_FLAG_SHADER_VISIBLE;
     cbvHeapDesc.NodeMask = 0;
 
-    ThrowIfFailed(d3dDevice_->CreateDescriptorHeap(&cbvHeapDesc, IID_PPV_ARGS(&cbvHeap_)));
+    ThrowIfFailed(_d3dDevice->CreateDescriptorHeap(&cbvHeapDesc, IID_PPV_ARGS(&cbvHeap_)));
 }
 
 void BoxApp::BuildConstantBuffer(void)
 {
-    objectCB_ = std::make_unique<UplaodBuffer<ObjectConstantCh04>>(d3dDevice_.Get(), 1, true);
+    objectCB_ = std::make_unique<UplaodBuffer<ObjectConstantCh04>>(_d3dDevice.Get(), 1, true);
 
     const UINT objCBByteSize = D3DUtil::CalcConstantBufferByteSize(sizeof(ObjectConstantCh04));
 
@@ -265,7 +262,7 @@ void BoxApp::BuildConstantBuffer(void)
     cbvDesc.BufferLocation = cbAddress;
     cbvDesc.SizeInBytes = objCBByteSize;
 
-    d3dDevice_->CreateConstantBufferView(&cbvDesc, cbvHeap_->GetCPUDescriptorHandleForHeapStart());
+    _d3dDevice->CreateConstantBufferView(&cbvDesc, cbvHeap_->GetCPUDescriptorHandleForHeapStart());
 }
 
 void BoxApp::BuildRootSignature(void)
@@ -298,10 +295,10 @@ void BoxApp::BuildRootSignature(void)
     }
     
     ThrowIfFailed(hr);
-    ThrowIfFailed(d3dDevice_->CreateRootSignature(0,
+    ThrowIfFailed(_d3dDevice->CreateRootSignature(0,
         serializedRootSig->GetBufferPointer(),
         serializedRootSig->GetBufferSize(),
-        IID_PPV_ARGS(&rootSignature_)));
+        IID_PPV_ARGS(rootSignature_.GetAddressOf())));
 }
 
 void BoxApp::BuildShaderAndInputLayout(void)
@@ -364,14 +361,14 @@ void BoxApp::BuildShapeGeometry(void)
     ThrowIfFailed(D3DCreateBlob(ibByteSize, &boxGeometry_->indexBufferCPU));
     CopyMemory(boxGeometry_->indexBufferCPU->GetBufferPointer(), indices.data(), ibByteSize);
 
-    boxGeometry_->vertexBufferGPU = D3DUtil::CreataDefaultBuffer(d3dDevice_.Get(),
-        commandList_.Get(), 
+    boxGeometry_->vertexBufferGPU = D3DUtil::CreataDefaultBuffer(_d3dDevice.Get(),
+        _commandList.Get(), 
         vertices.data(),
         vbByteSize,
         boxGeometry_->vertexBufferUploader);
 
-    boxGeometry_->indexBufferGPU = D3DUtil::CreataDefaultBuffer(d3dDevice_.Get(),
-        commandList_.Get(), 
+    boxGeometry_->indexBufferGPU = D3DUtil::CreataDefaultBuffer(_d3dDevice.Get(),
+        _commandList.Get(), 
         indices.data(),
         ibByteSize,
         boxGeometry_->indexBufferUploader);
@@ -411,10 +408,10 @@ void BoxApp::BuildPSO(void)
     psoDesc.SampleMask = UINT_MAX;
     psoDesc.PrimitiveTopologyType = D3D12_PRIMITIVE_TOPOLOGY_TYPE_TRIANGLE;
     psoDesc.NumRenderTargets = 1;
-    psoDesc.RTVFormats[0] = backBufferFormat_;
-    psoDesc.SampleDesc.Count = (msaaState4x_ == true) ? (4) : (1);
-    psoDesc.SampleDesc.Quality = (msaaState4x_ == true) ? (msaaQuality4x_ - 1) : (0);
-    psoDesc.DSVFormat = depthStencilFormat_;
+    psoDesc.RTVFormats[0] = _backBufferFormat;
+    psoDesc.SampleDesc.Count = (_msaaState4x == true) ? (4) : (1);
+    psoDesc.SampleDesc.Quality = (_msaaState4x == true) ? (_msaaQuality4x - 1) : (0);
+    psoDesc.DSVFormat = _depthStencilFormat;
 
-    ThrowIfFailed(d3dDevice_->CreateGraphicsPipelineState(&psoDesc, IID_PPV_ARGS(&pso_)));
+    ThrowIfFailed(_d3dDevice->CreateGraphicsPipelineState(&psoDesc, IID_PPV_ARGS(&pso_)));
 }

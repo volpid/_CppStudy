@@ -56,6 +56,12 @@
     <ClCompile Include="Ch07DrawingInDirect3D\ch07_waves.cpp">
       <Filter>_Uncategorized</Filter>
     </ClCompile>
+    <ClCompile Include="Ch08Lighting\drawing_direct3d_app_lit_columns.cpp">
+      <Filter>_Uncategorized</Filter>
+    </ClCompile>
+    <ClCompile Include="Ch08Lighting\ch08_frame_resource.cpp">
+      <Filter>_Uncategorized</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Common\d3d_app.h">
@@ -85,6 +91,9 @@
     <ClInclude Include="Ch07DrawingInDirect3D\ch07_waves.h">
       <Filter>_Uncategorized</Filter>
     </ClInclude>
+    <ClInclude Include="Ch08Lighting\ch08_frame_resource.h">
+      <Filter>_Uncategorized</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Shader\ch06_color_ps.hlsl" />
@@ -95,5 +104,7 @@
   <ItemGroup>
     <Text Include="Shader\ch06_color.txt" />
     <Text Include="Shader\ch07_color.txt" />
+    <Text Include="Shader\ch08_default.txt" />
+    <Text Include="Shader\ch08_LightingUtil.txt" />
   </ItemGroup>
 </Project>

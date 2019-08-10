@@ -146,6 +146,8 @@
     <ClCompile Include="Ch07DrawingInDirect3D\ch07_waves.cpp" />
     <ClCompile Include="Ch07DrawingInDirect3D\drawing_direct3d_app_land_and_wave.cpp" />
     <ClCompile Include="Ch07DrawingInDirect3D\drawing_direct3d_app_shape.cpp" />
+    <ClCompile Include="Ch08Lighting\ch08_frame_resource.cpp" />
+    <ClCompile Include="Ch08Lighting\drawing_direct3d_app_lit_columns.cpp" />
     <ClCompile Include="Common\d3d_app.cpp" />
     <ClCompile Include="Common\d3d_util.cpp" />
     <ClCompile Include="Ch07DrawingInDirect3D\ch07_frame_resource.cpp" />
@@ -155,6 +157,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Ch07DrawingInDirect3D\ch07_waves.h" />
+    <ClInclude Include="Ch08Lighting\ch08_frame_resource.h" />
     <ClInclude Include="Common\d3dx_12.h" />
     <ClInclude Include="Common\d3d_app.h" />
     <ClInclude Include="Common\d3d_util.h" />
@@ -226,6 +229,8 @@
   <ItemGroup>
     <Text Include="Shader\ch06_color.txt" />
     <Text Include="Shader\ch07_color.txt" />
+    <Text Include="Shader\ch08_default.txt" />
+    <Text Include="Shader\ch08_LightingUtil.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -25,7 +25,7 @@ class LandAndWaveApp : public D3DApp
 {
 public:
     LandAndWaveApp(void) = default;
-    virtual ~LandAndWaveApp(void) = default;
+    virtual ~LandAndWaveApp(void);
 
     LandAndWaveApp(const LandAndWaveApp& other) = delete;
     LandAndWaveApp& operator=(const LandAndWaveApp& other) = delete;
@@ -95,9 +95,17 @@ private:
     POINT lastMousePos_;
 };
 
-LandAndWaveApp appInstance;
+//LandAndWaveApp appInstance;
 
 //----------------------------------------------------------------
+LandAndWaveApp::~LandAndWaveApp(void)
+{
+    if (_d3dDevice != nullptr)
+    {
+        FlushCommandQueue();
+    }
+}
+
 bool LandAndWaveApp::Initialize(HINSTANCE hInstance)
 {
     if (D3DApp::Initialize(hInstance) == false)
@@ -105,7 +113,7 @@ bool LandAndWaveApp::Initialize(HINSTANCE hInstance)
         return false;
     }
 
-    ThrowIfFailed(commandList_->Reset(commandListAlloc_.Get(), nullptr));
+    ThrowIfFailed(_commandList->Reset(_commandListAlloc.Get(), nullptr));
     waves_ = std::make_unique<WavesCh07>(128, 128, 1.0f, 0.03f, 3.0f, 0.2f);
     
     BuildRootSignature();
@@ -116,9 +124,9 @@ bool LandAndWaveApp::Initialize(HINSTANCE hInstance)
     BuildFrameResource();
     BuildPSO();
 
-    ThrowIfFailed(commandList_->Close());
-    ID3D12CommandList* cmdLists[] = {commandList_.Get()};
-    commandQueue_->ExecuteCommandLists(_countof(cmdLists), cmdLists);
+    ThrowIfFailed(_commandList->Close());
+    ID3D12CommandList* cmdLists[] = {_commandList.Get()};
+    _commandQueue->ExecuteCommandLists(_countof(cmdLists), cmdLists);
 
     FlushCommandQueue();
 
@@ -141,13 +149,13 @@ void LandAndWaveApp::Update(const GameTimer& timer)
     OnKeyboardInput(timer);
     UpdateCamera(timer);
 
-    curFrameResourceIndex_ = (curFrameResourceIndex_ + 1) % numFrameResourceCh07;
+    curFrameResourceIndex_ = (curFrameResourceIndex_ + 1) % NumFrameResourceCh07;
     pCurFrameResource_ = frameResources_[curFrameResourceIndex_].get();
 
-    if (pCurFrameResource_->fence != 0 && fence_->GetCompletedValue() < pCurFrameResource_->fence)
+    if (pCurFrameResource_->fence != 0 && _fence->GetCompletedValue() < pCurFrameResource_->fence)
     {
         HANDLE eventHandle = CreateEventEx(nullptr, false, false, EVENT_ALL_ACCESS);
-        ThrowIfFailed(fence_->SetEventOnCompletion(pCurFrameResource_->fence, eventHandle));
+        ThrowIfFailed(_fence->SetEventOnCompletion(pCurFrameResource_->fence, eventHandle));
         WaitForSingleObject(eventHandle, INFINITE);
         CloseHandle(eventHandle);
     }
@@ -166,55 +174,50 @@ void LandAndWaveApp::Draw(const GameTimer& timer)
 
     if (isWireFrame_ == true)
     {
-        ThrowIfFailed(commandList_->Reset(cmdListAlloc.Get(), psos_["opaque_wireframe"].Get()));
+        ThrowIfFailed(_commandList->Reset(cmdListAlloc.Get(), psos_["opaque_wireframe"].Get()));
     }
     else
     {
-        ThrowIfFailed(commandList_->Reset(cmdListAlloc.Get(), psos_["opaque"].Get()));
+        ThrowIfFailed(_commandList->Reset(cmdListAlloc.Get(), psos_["opaque"].Get()));
     }
 
-    commandList_->RSSetViewports(1, &screenViewport_);
-    commandList_->RSSetScissorRects(1, &scissorRect_);
+    _commandList->RSSetViewports(1, &_screenViewport);
+    _commandList->RSSetScissorRects(1, &_scissorRect);
 
-    commandList_->ResourceBarrier(1, 
-        &CD3DX12_RESOURCE_BARRIER::Transition(CurrentBackBuffer(),
-            D3D12_RESOURCE_STATE_PRESENT,
-            D3D12_RESOURCE_STATE_RENDER_TARGET));
+    CD3DX12_RESOURCE_BARRIER barrierPresentToRenderTarget = CD3DX12_RESOURCE_BARRIER::Transition(CurrentBackBuffer(),
+        D3D12_RESOURCE_STATE_PRESENT,
+        D3D12_RESOURCE_STATE_RENDER_TARGET);
+    _commandList->ResourceBarrier(1, &barrierPresentToRenderTarget);
 
-    commandList_->ClearRenderTargetView(CurrentBackBufferView(),
-        DirectX::Colors::LightSteelBlue,
-        0, 
-        nullptr);
-    commandList_->ClearDepthStencilView(DepthStencilView(),
-        D3D12_CLEAR_FLAG_DEPTH | D3D12_CLEAR_FLAG_STENCIL, 
-        1.0f, 
-        0,
-        0,
-        nullptr);
+    D3D12_CPU_DESCRIPTOR_HANDLE currentBackBufferView = CurrentBackBufferView();
+    D3D12_CPU_DESCRIPTOR_HANDLE depthStencilView = DepthStencilView();
 
-    commandList_->OMSetRenderTargets(1, &CurrentBackBufferView(), true, &DepthStencilView());
-    commandList_->SetGraphicsRootSignature(rootSignature_.Get());
+    _commandList->ClearRenderTargetView(currentBackBufferView, DirectX::Colors::LightSteelBlue, 0, nullptr);
+    _commandList->ClearDepthStencilView(depthStencilView, D3D12_CLEAR_FLAG_DEPTH | D3D12_CLEAR_FLAG_STENCIL, 1.0f, 0, 0, nullptr);
+
+    _commandList->OMSetRenderTargets(1, &currentBackBufferView, true, &depthStencilView);
+    _commandList->SetGraphicsRootSignature(rootSignature_.Get());
 
     auto passCBuffer = pCurFrameResource_->passCBuffer->Resource();
-    commandList_->SetGraphicsRootConstantBufferView(1, passCBuffer->GetGPUVirtualAddress());
+    _commandList->SetGraphicsRootConstantBufferView(1, passCBuffer->GetGPUVirtualAddress());
     
-    DrawRenderItem(commandList_.Get(), renderItemLayer_[static_cast<int> (RenderLayer::Opaque)]);
+    DrawRenderItem(_commandList.Get(), renderItemLayer_[static_cast<int> (RenderLayer::Opaque)]);
 
-    commandList_->ResourceBarrier(1, 
-        &CD3DX12_RESOURCE_BARRIER::Transition(CurrentBackBuffer(),
-            D3D12_RESOURCE_STATE_RENDER_TARGET,
-            D3D12_RESOURCE_STATE_PRESENT));
+    CD3DX12_RESOURCE_BARRIER barrierRenderTargetToPresent = CD3DX12_RESOURCE_BARRIER::Transition(CurrentBackBuffer(),
+        D3D12_RESOURCE_STATE_RENDER_TARGET,
+        D3D12_RESOURCE_STATE_PRESENT);
+    _commandList->ResourceBarrier(1, &barrierRenderTargetToPresent);
     
-    ThrowIfFailed(commandList_->Close());
+    ThrowIfFailed(_commandList->Close());
 
-    ID3D12CommandList* cmdsLists[] = {commandList_.Get()};
-    commandQueue_->ExecuteCommandLists(_countof(cmdsLists), cmdsLists);
+    ID3D12CommandList* cmdsLists[] = {_commandList.Get()};
+    _commandQueue->ExecuteCommandLists(_countof(cmdsLists), cmdsLists);
 
-    ThrowIfFailed(swapChain_->Present(0, 0));
-    currBackBuffer_ = (currBackBuffer_ + 1) % swapChainbufferCount;
+    ThrowIfFailed(_swapChain->Present(0, 0));
+    currBackBuffer_ = (currBackBuffer_ + 1) % SwapChainbufferCount;
 
-    pCurFrameResource_->fence = ++currentFence_;
-    commandQueue_->Signal(fence_.Get(), currentFence_);
+    pCurFrameResource_->fence = ++_currentFence;
+    _commandQueue->Signal(_fence.Get(), _currentFence);
 }
 
 void LandAndWaveApp::OnMouseDown(WPARAM btnState, int x, int y)
@@ -223,7 +226,7 @@ void LandAndWaveApp::OnMouseDown(WPARAM btnState, int x, int y)
     lastMousePos_.x = x;
     lastMousePos_.y = y;
 
-    SetCapture(hMainWnd_);
+    SetCapture(_hMainWnd);
 }
 
 void LandAndWaveApp::OnMouseUp(WPARAM btnState, int x, int y)
@@ -316,11 +319,15 @@ void LandAndWaveApp::UpdateMainPassCBuffer(const GameTimer& timer)
 
     DirectX::XMMATRIX view = DirectX::XMLoadFloat4x4(&view_);
     DirectX::XMMATRIX proj = DirectX::XMLoadFloat4x4(&proj_);
-
     DirectX::XMMATRIX viewProj = DirectX::XMMatrixMultiply(view, proj);
-    DirectX::XMMATRIX invView = DirectX::XMMatrixInverse(&DirectX::XMMatrixDeterminant(view), view);
-    DirectX::XMMATRIX invProj = DirectX::XMMatrixInverse(&DirectX::XMMatrixDeterminant(proj), proj);
-    DirectX::XMMATRIX invViewProj = DirectX::XMMatrixInverse(&DirectX::XMMatrixDeterminant(viewProj), viewProj);
+
+    DirectX::XMVECTOR viewDeterminant = DirectX::XMMatrixDeterminant(view);
+    DirectX::XMVECTOR projDeterminant = DirectX::XMMatrixDeterminant(proj);
+    DirectX::XMVECTOR viewProjDeterminant = DirectX::XMMatrixDeterminant(viewProj);
+
+    DirectX::XMMATRIX invView = DirectX::XMMatrixInverse(&viewDeterminant, view);
+    DirectX::XMMATRIX invProj = DirectX::XMMatrixInverse(&projDeterminant, proj);
+    DirectX::XMMATRIX invViewProj = DirectX::XMMatrixInverse(&viewProjDeterminant, viewProj);
 
     DirectX::XMStoreFloat4x4(&mainPassCBuffer_.view, DirectX::XMMatrixTranspose(view));
     DirectX::XMStoreFloat4x4(&mainPassCBuffer_.viewInv, DirectX::XMMatrixTranspose(invView));
@@ -330,8 +337,8 @@ void LandAndWaveApp::UpdateMainPassCBuffer(const GameTimer& timer)
     DirectX::XMStoreFloat4x4(&mainPassCBuffer_.viewProjInv, DirectX::XMMatrixTranspose(invViewProj));
 
     mainPassCBuffer_.eyePosWorld = eyePosition_;
-    mainPassCBuffer_.renderTargetSize = DirectX::XMFLOAT2((float) clientWidth_, (float) clientHeight_);
-    mainPassCBuffer_.renderTargetSizeInv = DirectX::XMFLOAT2( 1.0f / clientWidth_, 1.0f / clientHeight_);
+    mainPassCBuffer_.renderTargetSize = DirectX::XMFLOAT2((float) _clientWidth, (float) _clientHeight);
+    mainPassCBuffer_.renderTargetSizeInv = DirectX::XMFLOAT2( 1.0f / _clientWidth, 1.0f / _clientHeight);
     mainPassCBuffer_.zNear = 1.0f;
     mainPassCBuffer_.zFar = 1000.0f;
     mainPassCBuffer_.totalTime = timer.TotalTime();
@@ -399,10 +406,10 @@ void LandAndWaveApp::BuildRootSignature(void)
     }
     
     ThrowIfFailed(hr);
-    ThrowIfFailed(d3dDevice_->CreateRootSignature(0,
+    ThrowIfFailed(_d3dDevice->CreateRootSignature(0,
         serializedRootSig->GetBufferPointer(),
         serializedRootSig->GetBufferSize(),
-        IID_PPV_ARGS(&rootSignature_)));
+        IID_PPV_ARGS(rootSignature_.GetAddressOf())));
 }
 
 void LandAndWaveApp::BuildShaderAndInputLayout(void)
@@ -465,14 +472,14 @@ void LandAndWaveApp::BuildLandGeometry(void)
     ThrowIfFailed(D3DCreateBlob(ibByteSize, &geometry->indexBufferCPU));
     CopyMemory(geometry->indexBufferCPU->GetBufferPointer(), indices.data(), ibByteSize);
 
-    geometry->vertexBufferGPU = D3DUtil::CreataDefaultBuffer(d3dDevice_.Get(), 
-        commandList_.Get(),
+    geometry->vertexBufferGPU = D3DUtil::CreataDefaultBuffer(_d3dDevice.Get(), 
+        _commandList.Get(),
         vertices.data(),
         vbByteSize,
         geometry->vertexBufferUploader);
     
-    geometry->indexBufferGPU = D3DUtil::CreataDefaultBuffer(d3dDevice_.Get(), 
-        commandList_.Get(),
+    geometry->indexBufferGPU = D3DUtil::CreataDefaultBuffer(_d3dDevice.Get(), 
+        _commandList.Get(),
         indices.data(),
         ibByteSize,
         geometry->indexBufferUploader);
@@ -504,13 +511,13 @@ void LandAndWaveApp::BuildWavesGeometry(void)
     {
         for (int colidx = 0; colidx < col - 1; ++colidx)
         {
-            indices[k] = rowidx * col + colidx;
-            indices[k + 1] = rowidx * col + colidx + 1;
-            indices[k + 2] = (rowidx + 1) * col + colidx;
+            indices[k] = static_cast<uint16_t>(rowidx * col + colidx);
+            indices[k + 1] = static_cast<uint16_t>(rowidx * col + colidx + 1);
+            indices[k + 2] = static_cast<uint16_t>((rowidx + 1) * col + colidx);
 
-            indices[k + 3] = (rowidx + 1) * col + colidx;
-            indices[k + 4] = rowidx * col + colidx + 1;
-            indices[k + 5] = (rowidx + 1) * col + colidx + 1;
+            indices[k + 3] = static_cast<uint16_t>((rowidx + 1) * col + colidx);
+            indices[k + 4] = static_cast<uint16_t>(rowidx * col + colidx + 1);
+            indices[k + 5] = static_cast<uint16_t>((rowidx + 1) * col + colidx + 1);
             
             k += 6;
         }
@@ -528,8 +535,8 @@ void LandAndWaveApp::BuildWavesGeometry(void)
     ThrowIfFailed(D3DCreateBlob(ibByteSize, &geometry->indexBufferCPU));
     CopyMemory(geometry->indexBufferCPU->GetBufferPointer(), indices.data(), ibByteSize);
 
-    geometry->indexBufferGPU = D3DUtil::CreataDefaultBuffer(d3dDevice_.Get(), 
-        commandList_.Get(),
+    geometry->indexBufferGPU = D3DUtil::CreataDefaultBuffer(_d3dDevice.Get(), 
+        _commandList.Get(),
         indices.data(),
         ibByteSize,
         geometry->indexBufferUploader);
@@ -579,10 +586,10 @@ void LandAndWaveApp::BuildRenderItem(void)
 
 void LandAndWaveApp::BuildFrameResource(void)
 {
-    for (int idx = 0; idx < numFrameResourceCh07; ++idx)
+    for (int idx = 0; idx < NumFrameResourceCh07; ++idx)
     {
         frameResources_.push_back(
-            std::make_unique<FrameResourceCh07LandWave> (d3dDevice_.Get(), 
+            std::make_unique<FrameResourceCh07LandWave> (_d3dDevice.Get(), 
                 1, 
                 static_cast<UINT> (allRenderItems_.size()), 
                 waves_->VertexCount()));
@@ -612,16 +619,16 @@ void LandAndWaveApp::BuildPSO(void)
     opaquePsoDesc.SampleMask = UINT_MAX;
     opaquePsoDesc.PrimitiveTopologyType = D3D12_PRIMITIVE_TOPOLOGY_TYPE_TRIANGLE;
     opaquePsoDesc.NumRenderTargets = 1;
-    opaquePsoDesc.RTVFormats[0] = backBufferFormat_;
-    opaquePsoDesc.SampleDesc.Count = (msaaState4x_ == true) ? (4) : (1);
-    opaquePsoDesc.SampleDesc.Quality = (msaaState4x_ == true) ? (msaaQuality4x_ - 1) : (0);
-    opaquePsoDesc.DSVFormat = depthStencilFormat_;
+    opaquePsoDesc.RTVFormats[0] = _backBufferFormat;
+    opaquePsoDesc.SampleDesc.Count = (_msaaState4x == true) ? (4) : (1);
+    opaquePsoDesc.SampleDesc.Quality = (_msaaState4x == true) ? (_msaaQuality4x - 1) : (0);
+    opaquePsoDesc.DSVFormat = _depthStencilFormat;
 
-    ThrowIfFailed(d3dDevice_->CreateGraphicsPipelineState(&opaquePsoDesc, IID_PPV_ARGS(&psos_["opaque"])));
+    ThrowIfFailed(_d3dDevice->CreateGraphicsPipelineState(&opaquePsoDesc, IID_PPV_ARGS(&psos_["opaque"])));
 
     D3D12_GRAPHICS_PIPELINE_STATE_DESC opaqueWireframePsoDesc = opaquePsoDesc;
     opaqueWireframePsoDesc.RasterizerState.FillMode = D3D12_FILL_MODE_WIREFRAME;
-    ThrowIfFailed(d3dDevice_->CreateGraphicsPipelineState(&opaqueWireframePsoDesc, IID_PPV_ARGS(&psos_["opaque_wireframe"])));
+    ThrowIfFailed(_d3dDevice->CreateGraphicsPipelineState(&opaqueWireframePsoDesc, IID_PPV_ARGS(&psos_["opaque_wireframe"])));
 }
 
 void LandAndWaveApp::DrawRenderItem(ID3D12GraphicsCommandList* pCmdList, const std::vector<RenderItemCh07*>& renderItems)
@@ -632,8 +639,11 @@ void LandAndWaveApp::DrawRenderItem(ID3D12GraphicsCommandList* pCmdList, const s
     {
         auto renderItem = renderItems[idx];
 
-        pCmdList->IASetVertexBuffers(0, 1, &renderItem->geometry->VertexBufferView());
-        pCmdList->IASetIndexBuffer(&renderItem->geometry->IndexBufferView());
+        D3D12_VERTEX_BUFFER_VIEW vertexBufferView = renderItem->geometry->VertexBufferView();
+        D3D12_INDEX_BUFFER_VIEW indexBufferView = renderItem->geometry->IndexBufferView();
+
+        pCmdList->IASetVertexBuffers(0, 1, &vertexBufferView);
+        pCmdList->IASetIndexBuffer(&indexBufferView);
         pCmdList->IASetPrimitiveTopology(renderItem->primitiveType);
 
         D3D12_GPU_VIRTUAL_ADDRESS objCBufferAddress = objectCBuffer->GetGPUVirtualAddress();

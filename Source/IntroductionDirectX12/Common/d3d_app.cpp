@@ -33,7 +33,7 @@ D3DApp::D3DApp(void)
 
 D3DApp::~D3DApp(void)
 {
-    if (d3dDevice_ != nullptr)
+    if (_d3dDevice != nullptr)
     {
         FlushCommandQueue();
     }
@@ -41,29 +41,29 @@ D3DApp::~D3DApp(void)
 
 HINSTANCE D3DApp::AppInst(void) const
 {
-    return hAppInst_;
+    return _hAppInst;
 }
 
 HWND D3DApp::MainWnd(void) const
 {
-    return hMainWnd_;
+    return _hMainWnd;
 }
 
 float D3DApp::AspectRatio(void) const
 {
-    return static_cast<float> (clientWidth_) / clientHeight_;
+    return static_cast<float> (_clientWidth) / _clientHeight;
 }
 
 bool D3DApp::Get4xMsaaState(void) const
 {
-    return msaaState4x_;
+    return _msaaState4x;
 }
 
 void D3DApp::Set4xMsaaState(bool value)
 {
-    if (msaaState4x_ != value)
+    if (_msaaState4x != value)
     {
-        msaaState4x_ = value;
+        _msaaState4x = value;
 
         CreateSwapChain();
         OnResize();
@@ -74,7 +74,7 @@ int D3DApp::Run(void)
 {
     MSG msg = {0};
 
-    timer_.Reset();
+    _timer.Reset();
 
     while (msg.message != WM_QUIT)
     {
@@ -85,17 +85,17 @@ int D3DApp::Run(void)
         }
         else
         {
-            timer_.Tick();
+            _timer.Tick();
 
-            if (appPaused_ == true)
+            if (_appPaused == true)
             {
                 Sleep(100);
             }
             else
             {
                 CalculateFrameStats();
-                Update(timer_);
-                Draw(timer_);
+                Update(_timer);
+                Draw(_timer);
             }
         }
     }
@@ -105,7 +105,7 @@ int D3DApp::Run(void)
 
 bool D3DApp::Initialize(HINSTANCE hInstance)
 {
-    hAppInst_ = hInstance;
+    _hAppInst = hInstance;
 
     if (InitMainWindow() == false)
     {
@@ -130,50 +130,50 @@ LRESULT D3DApp::MsgProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
         {
             if (LOWORD(wParam) == WA_INACTIVE)
             {
-                appPaused_ = true;
-                timer_.Stop();
+                _appPaused = true;
+                _timer.Stop();
             }
             else
             {
-                appPaused_ = false;
-                timer_.Start();
+                _appPaused = false;
+                _timer.Start();
             }
         }
         break;
         case WM_SIZE:
         {
-            clientWidth_ = LOWORD(lParam);
-            clientHeight_ = HIWORD(lParam);
-            if (d3dDevice_ != nullptr)
+            _clientWidth = LOWORD(lParam);
+            _clientHeight = HIWORD(lParam);
+            if (_d3dDevice != nullptr)
             {
                 if (wParam == SIZE_MINIMIZED)
                 {
-                    appPaused_ = true;
-                    mininized_ = true;
-                    maximized_ = false;
+                    _appPaused = true;
+                    _mininized = true;
+                    _maximized = false;
                 }
                 else if (wParam == SIZE_MAXIMIZED)
                 {
-                    appPaused_ = false;
-                    mininized_ = false;
-                    maximized_ = true;
+                    _appPaused = false;
+                    _mininized = false;
+                    _maximized = true;
                     OnResize();
                 }
                 else if (wParam == SIZE_RESTORED)
                 {
-                    if (mininized_ == true)
+                    if (_mininized == true)
                     {
-                        appPaused_ = false;
-                        mininized_ = false;
+                        _appPaused = false;
+                        _mininized = false;
                         OnResize();
                     }
-                    else if (maximized_ == true)
+                    else if (_maximized == true)
                     {
-                        appPaused_ = false;
-                        maximized_ = false;
+                        _appPaused = false;
+                        _maximized = false;
                         OnResize();
                     }
-                    else if (resizing_ == true)
+                    else if (_resizing == true)
                     {
                     }
                     else
@@ -187,17 +187,17 @@ LRESULT D3DApp::MsgProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
         break;
         case WM_ENTERSIZEMOVE:
         {
-            appPaused_ = true;
-            resizing_ = true;
-            timer_.Stop();
+            _appPaused = true;
+            _resizing = true;
+            _timer.Stop();
             return 0;
         }
         break;
         case WM_EXITSIZEMOVE:
         {
-            appPaused_ = false;
-            resizing_ = false;
-            timer_.Start();
+            _appPaused = false;
+            _resizing = false;
+            _timer.Start();
             OnResize();
             return 0;
         }
@@ -247,7 +247,7 @@ LRESULT D3DApp::MsgProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
             }
             else if (wParam == VK_F2)
             {
-                Set4xMsaaState(!msaaState4x_);
+                Set4xMsaaState(!_msaaState4x);
             }
         }
         break;
@@ -259,12 +259,12 @@ LRESULT D3DApp::MsgProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 void D3DApp::CreateRtvAndDsvDescriptorHeaps(void)
 {
     D3D12_DESCRIPTOR_HEAP_DESC rtvHeapDesc;
-    rtvHeapDesc.NumDescriptors = swapChainbufferCount;
+    rtvHeapDesc.NumDescriptors = SwapChainbufferCount;
     rtvHeapDesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_RTV;
     rtvHeapDesc.Flags = D3D12_DESCRIPTOR_HEAP_FLAG_NONE;
     rtvHeapDesc.NodeMask = 0;
 
-    ThrowIfFailed(d3dDevice_->CreateDescriptorHeap(&rtvHeapDesc, IID_PPV_ARGS(rtvHeap_.GetAddressOf())));
+    ThrowIfFailed(_d3dDevice->CreateDescriptorHeap(&rtvHeapDesc, IID_PPV_ARGS(_rtvHeap.GetAddressOf())));
 
     D3D12_DESCRIPTOR_HEAP_DESC dsvHeapDesc;
     dsvHeapDesc.NumDescriptors = 1;
@@ -272,92 +272,94 @@ void D3DApp::CreateRtvAndDsvDescriptorHeaps(void)
     dsvHeapDesc.Flags = D3D12_DESCRIPTOR_HEAP_FLAG_NONE;
     dsvHeapDesc.NodeMask = 0;
     
-    ThrowIfFailed(d3dDevice_->CreateDescriptorHeap(&dsvHeapDesc, IID_PPV_ARGS(dsvHeap_.GetAddressOf())));
+    ThrowIfFailed(_d3dDevice->CreateDescriptorHeap(&dsvHeapDesc, IID_PPV_ARGS(_dsvHeap.GetAddressOf())));
 }
 
 void D3DApp::OnResize(void)
 {
-    assert(d3dDevice_ != nullptr);
-    assert(swapChain_ != nullptr);
-    assert(commandListAlloc_ != nullptr);
+    assert(_d3dDevice != nullptr);
+    assert(_swapChain != nullptr);
+    assert(_commandListAlloc != nullptr);
     
     FlushCommandQueue();
     
-    ThrowIfFailed(commandList_->Reset(commandListAlloc_.Get(), nullptr));
+    ThrowIfFailed(_commandList->Reset(_commandListAlloc.Get(), nullptr));
 
-    for (int i = 0; i < swapChainbufferCount; ++i)
+    for (int i = 0; i < SwapChainbufferCount; ++i)
     {
-        swapChainBuffer_[i].Reset();
+        _swapChainBuffer[i].Reset();
     }
-    depthStencilBuffer_.Reset();
+    _depthStencilBuffer.Reset();
 
-    ThrowIfFailed(swapChain_->ResizeBuffers(swapChainbufferCount, 
-        clientWidth_,
-        clientHeight_,
-        backBufferFormat_,
+    ThrowIfFailed(_swapChain->ResizeBuffers(SwapChainbufferCount, 
+        _clientWidth,
+        _clientHeight,
+        _backBufferFormat,
         DXGI_SWAP_CHAIN_FLAG_ALLOW_MODE_SWITCH));
 
     currBackBuffer_ = 0;
 
-    CD3DX12_CPU_DESCRIPTOR_HANDLE rtvHeapHandle(rtvHeap_->GetCPUDescriptorHandleForHeapStart());
-    for (UINT i = 0; i < swapChainbufferCount; ++i)
+    CD3DX12_CPU_DESCRIPTOR_HANDLE rtvHeapHandle(_rtvHeap->GetCPUDescriptorHandleForHeapStart());
+    for (UINT i = 0; i < SwapChainbufferCount; ++i)
     {
-        ThrowIfFailed(swapChain_->GetBuffer(i, IID_PPV_ARGS(&swapChainBuffer_[i])));
-        d3dDevice_->CreateRenderTargetView(swapChainBuffer_[i].Get(), nullptr, rtvHeapHandle);
-        rtvHeapHandle.Offset(1, rtvDescriptorSize_);
+        ThrowIfFailed(_swapChain->GetBuffer(i, IID_PPV_ARGS(&_swapChainBuffer[i])));
+        _d3dDevice->CreateRenderTargetView(_swapChainBuffer[i].Get(), nullptr, rtvHeapHandle);
+        rtvHeapHandle.Offset(1, _rtvDescriptorSize);
     }
 
     D3D12_RESOURCE_DESC depthStencilDesc;
     depthStencilDesc.Dimension = D3D12_RESOURCE_DIMENSION_TEXTURE2D;
     depthStencilDesc.Alignment = 0;
-    depthStencilDesc.Width = clientWidth_;
-    depthStencilDesc.Height = clientHeight_;
+    depthStencilDesc.Width = _clientWidth;
+    depthStencilDesc.Height = _clientHeight;
     depthStencilDesc.DepthOrArraySize = 1;
     depthStencilDesc.MipLevels = 1;
     depthStencilDesc.Format = DXGI_FORMAT_R24G8_TYPELESS;
-    depthStencilDesc.SampleDesc.Count = msaaState4x_ ? 4 : 1;
-    depthStencilDesc.SampleDesc.Quality = msaaState4x_ ? (msaaQuality4x_ - 1) : 0;
+    depthStencilDesc.SampleDesc.Count = _msaaState4x ? 4 : 1;
+    depthStencilDesc.SampleDesc.Quality = _msaaState4x ? (_msaaQuality4x - 1) : 0;
     depthStencilDesc.Layout = D3D12_TEXTURE_LAYOUT_UNKNOWN;
     depthStencilDesc.Flags = D3D12_RESOURCE_FLAG_ALLOW_DEPTH_STENCIL;
 
     D3D12_CLEAR_VALUE optClear;
-    optClear.Format = depthStencilFormat_;
+    optClear.Format = _depthStencilFormat;
     optClear.DepthStencil.Depth = 1.0f;
     optClear.DepthStencil.Stencil = 0;
-    ThrowIfFailed(d3dDevice_->CreateCommittedResource(
-        &CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_DEFAULT),
+
+    CD3DX12_HEAP_PROPERTIES heapProptertyDeafult = CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_DEFAULT);
+    ThrowIfFailed(_d3dDevice->CreateCommittedResource(
+        &heapProptertyDeafult,
         D3D12_HEAP_FLAG_NONE,
         &depthStencilDesc,
         D3D12_RESOURCE_STATE_COMMON,
         &optClear,
-        IID_PPV_ARGS(depthStencilBuffer_.GetAddressOf())));
+        IID_PPV_ARGS(_depthStencilBuffer.GetAddressOf())));
 
     D3D12_DEPTH_STENCIL_VIEW_DESC dsvDesc;
     dsvDesc.Flags = D3D12_DSV_FLAG_NONE;
     dsvDesc.ViewDimension = D3D12_DSV_DIMENSION_TEXTURE2D;
-    dsvDesc.Format = depthStencilFormat_;
+    dsvDesc.Format = _depthStencilFormat;
     dsvDesc.Texture2D.MipSlice = 0;
-    d3dDevice_->CreateDepthStencilView(depthStencilBuffer_.Get(), &dsvDesc, DepthStencilView());
+    _d3dDevice->CreateDepthStencilView(_depthStencilBuffer.Get(), &dsvDesc, DepthStencilView());
 
-    commandList_->ResourceBarrier(1, 
-        &CD3DX12_RESOURCE_BARRIER::Transition(depthStencilBuffer_.Get(),
-            D3D12_RESOURCE_STATE_COMMON,
-            D3D12_RESOURCE_STATE_DEPTH_WRITE));
+    CD3DX12_RESOURCE_BARRIER barrierCommonToDepthWrite = CD3DX12_RESOURCE_BARRIER::Transition(_depthStencilBuffer.Get(),
+        D3D12_RESOURCE_STATE_COMMON,
+        D3D12_RESOURCE_STATE_DEPTH_WRITE);
+    _commandList->ResourceBarrier(1, &barrierCommonToDepthWrite);
 
-    ThrowIfFailed(commandList_->Close());
-    ID3D12CommandList* cmdsLists[] = {commandList_.Get()};
-    commandQueue_->ExecuteCommandLists(_countof(cmdsLists), cmdsLists);
+    ThrowIfFailed(_commandList->Close());
+    ID3D12CommandList* cmdsLists[] = {_commandList.Get()};
+    _commandQueue->ExecuteCommandLists(_countof(cmdsLists), cmdsLists);
 
     FlushCommandQueue();
 
-    screenViewport_.TopLeftX = 0;
-    screenViewport_.TopLeftY = 0;
-    screenViewport_.Width = static_cast<float> (clientWidth_);
-    screenViewport_.Height = static_cast<float> (clientHeight_);
-    screenViewport_.MinDepth = 0.0f;
-    screenViewport_.MaxDepth = 1.0f;
+    _screenViewport.TopLeftX = 0;
+    _screenViewport.TopLeftY = 0;
+    _screenViewport.Width = static_cast<float> (_clientWidth);
+    _screenViewport.Height = static_cast<float> (_clientHeight);
+    _screenViewport.MinDepth = 0.0f;
+    _screenViewport.MaxDepth = 1.0f;
 
-    scissorRect_ = {0, 0, clientWidth_, clientHeight_};
+    _scissorRect = {0, 0, _clientWidth, _clientHeight};
 }
 
 void D3DApp::OnMouseDown(WPARAM btnState, int x, int y)
@@ -388,7 +390,7 @@ bool D3DApp::InitMainWindow(void)
     wc.lpfnWndProc = MainWndProc;
     wc.cbClsExtra = 0;
     wc.cbWndExtra = 0;
-    wc.hInstance = hAppInst_;
+    wc.hInstance = _hAppInst;
     wc.hIcon = LoadIcon(0, IDI_APPLICATION);
     wc.hCursor = LoadCursor(0, IDC_ARROW);
     wc.hbrBackground = (HBRUSH) GetStockObject(NULL_BRUSH);
@@ -401,13 +403,13 @@ bool D3DApp::InitMainWindow(void)
         return false;
     }
 
-    RECT rect = {0, 0, clientWidth_, clientHeight_};
+    RECT rect = {0, 0, _clientWidth, _clientHeight};
     AdjustWindowRect(&rect, WS_OVERLAPPEDWINDOW, false);
     int width = rect.right - rect.left;
     int height = rect.bottom - rect.top;
 
-    hMainWnd_ = CreateWindow("MainWindow", 
-        mainWndCaption_.c_str(),
+    _hMainWnd = CreateWindow("MainWindow", 
+        _mainWndCaption.c_str(),
         WS_OVERLAPPEDWINDOW,
         CW_USEDEFAULT,
         CW_USEDEFAULT,
@@ -415,11 +417,17 @@ bool D3DApp::InitMainWindow(void)
         height,
         nullptr, 
         nullptr, 
-        hAppInst_,
+        _hAppInst,
         nullptr);
 
-    ShowWindow(hMainWnd_, SW_SHOW);
-    UpdateWindow(hMainWnd_);
+    if (!_hMainWnd)
+    {
+        MessageBox(0, "CreateWindow Failed.", nullptr, MB_OK);
+        return false;
+    }
+
+    ShowWindow(_hMainWnd, SW_SHOW);
+    UpdateWindow(_hMainWnd);
 
     return true;
 }
@@ -432,39 +440,39 @@ bool D3DApp::InitDirect3D(void)
     debugController->EnableDebugLayer();
 #endif /**/
 
-    ThrowIfFailed(CreateDXGIFactory(IID_PPV_ARGS(&dxgiFactory_)));
+    ThrowIfFailed(CreateDXGIFactory(IID_PPV_ARGS(&_dxgiFactory)));
 
     HRESULT hardwareResult = D3D12CreateDevice(nullptr, 
         D3D_FEATURE_LEVEL_11_0,
-        IID_PPV_ARGS(&d3dDevice_));
+        IID_PPV_ARGS(&_d3dDevice));
 
      if (FAILED(hardwareResult))
      {
         Microsoft::WRL::ComPtr<IDXGIAdapter> pWrapAdapter;
-        ThrowIfFailed(dxgiFactory_->EnumWarpAdapter(IID_PPV_ARGS(&pWrapAdapter)));
+        ThrowIfFailed(_dxgiFactory->EnumWarpAdapter(IID_PPV_ARGS(&pWrapAdapter)));
 
         ThrowIfFailed(D3D12CreateDevice(pWrapAdapter.Get(), 
             D3D_FEATURE_LEVEL_11_0,
-            IID_PPV_ARGS(&d3dDevice_)));
+            IID_PPV_ARGS(&_d3dDevice)));
      }
 
-     ThrowIfFailed(d3dDevice_->CreateFence(0, D3D12_FENCE_FLAG_NONE, IID_PPV_ARGS(&fence_)));
+     ThrowIfFailed(_d3dDevice->CreateFence(0, D3D12_FENCE_FLAG_NONE, IID_PPV_ARGS(&_fence)));
 
-     rtvDescriptorSize_ = d3dDevice_->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_RTV);
-     dsvDescriptorSize_ = d3dDevice_->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_DSV);
-     cbvSrvDescriptorSize_ = d3dDevice_->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
+     _rtvDescriptorSize = _d3dDevice->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_RTV);
+     _dsvDescriptorSize = _d3dDevice->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_DSV);
+     _cbvSrvDescriptorSize = _d3dDevice->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
      
      D3D12_FEATURE_DATA_MULTISAMPLE_QUALITY_LEVELS msQualiyLevels;
-     msQualiyLevels.Format = backBufferFormat_;
+     msQualiyLevels.Format = _backBufferFormat;
      msQualiyLevels.SampleCount = 4;
      msQualiyLevels.Flags = D3D12_MULTISAMPLE_QUALITY_LEVELS_FLAG_NONE;
      msQualiyLevels.NumQualityLevels = 0;
-     ThrowIfFailed(d3dDevice_->CheckFeatureSupport(D3D12_FEATURE_MULTISAMPLE_QUALITY_LEVELS,
+     ThrowIfFailed(_d3dDevice->CheckFeatureSupport(D3D12_FEATURE_MULTISAMPLE_QUALITY_LEVELS,
         &msQualiyLevels,
         sizeof(msQualiyLevels)));
 
-    msaaQuality4x_ = msQualiyLevels.NumQualityLevels;
-    assert(msaaQuality4x_ > 0 && "Unexpected MSAA quality level.");
+    _msaaQuality4x = msQualiyLevels.NumQualityLevels;
+    assert(_msaaQuality4x > 0 && "Unexpected MSAA quality level.");
 
 #if defined(DEBUG) || defined(_DEBUG)
     LogAdapters();
@@ -483,58 +491,59 @@ void D3DApp::CreateCommandObjects(void)
     queueDesc.Type = D3D12_COMMAND_LIST_TYPE_DIRECT;
     queueDesc.Flags = D3D12_COMMAND_QUEUE_FLAG_NONE;
        
-    ThrowIfFailed(d3dDevice_->CreateCommandQueue(&queueDesc, IID_PPV_ARGS(&commandQueue_)));
+    ThrowIfFailed(_d3dDevice->CreateCommandQueue(&queueDesc, IID_PPV_ARGS(&_commandQueue)));
 
-    ThrowIfFailed(d3dDevice_->CreateCommandAllocator(D3D12_COMMAND_LIST_TYPE_DIRECT,
-        IID_PPV_ARGS(commandListAlloc_.GetAddressOf())));
+    ThrowIfFailed(_d3dDevice->CreateCommandAllocator(D3D12_COMMAND_LIST_TYPE_DIRECT,
+        IID_PPV_ARGS(_commandListAlloc.GetAddressOf())));
 
-    ThrowIfFailed(d3dDevice_->CreateCommandList(0,
+    ThrowIfFailed(_d3dDevice->CreateCommandList(0,
         D3D12_COMMAND_LIST_TYPE_DIRECT,
-        commandListAlloc_.Get(),
+        _commandListAlloc.Get(),
         nullptr,
-        IID_PPV_ARGS(commandList_.GetAddressOf())));
+        IID_PPV_ARGS(_commandList.GetAddressOf())));
 
-    commandList_->Close();
+    _commandList->Close();
 }
 
 void D3DApp::CreateSwapChain(void)
 {
-    swapChain_.Reset();
+    _swapChain.Reset();
 
     DXGI_SWAP_CHAIN_DESC sd;
-    sd.BufferDesc.Width = clientWidth_;
-    sd.BufferDesc.Height = clientHeight_;
+    sd.BufferDesc.Width = _clientWidth;
+    sd.BufferDesc.Height = _clientHeight;
     sd.BufferDesc.RefreshRate.Numerator = 60;
     sd.BufferDesc.RefreshRate.Denominator = 1;
-    sd.BufferDesc.Format = backBufferFormat_;
+    sd.BufferDesc.Format = _backBufferFormat;
+    sd.BufferDesc.ScanlineOrdering = DXGI_MODE_SCANLINE_ORDER_UNSPECIFIED;
     sd.BufferDesc.Scaling = DXGI_MODE_SCALING_UNSPECIFIED;
-    sd.SampleDesc.Count = msaaState4x_ ? 4 : 1;
-    sd.SampleDesc.Quality = msaaState4x_ ? (msaaQuality4x_ - 1) : 0;
+    sd.SampleDesc.Count = _msaaState4x ? 4 : 1;
+    sd.SampleDesc.Quality = _msaaState4x ? (_msaaQuality4x - 1) : 0;
     sd.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;
-    sd.BufferCount = swapChainbufferCount;
-    sd.OutputWindow = hMainWnd_;
+    sd.BufferCount = SwapChainbufferCount;
+    sd.OutputWindow = _hMainWnd;
     sd.Windowed = true;
     sd.SwapEffect = DXGI_SWAP_EFFECT_FLIP_DISCARD;
     sd.Flags = DXGI_SWAP_CHAIN_FLAG_ALLOW_MODE_SWITCH;
 
-    ThrowIfFailed(dxgiFactory_->CreateSwapChain(commandQueue_.Get(),
+    ThrowIfFailed(_dxgiFactory->CreateSwapChain(_commandQueue.Get(),
         &sd,
-        swapChain_.GetAddressOf()));
+        _swapChain.GetAddressOf()));
 }
 
 void D3DApp::FlushCommandQueue(void)
 {
-    ++currentFence_;
-    ThrowIfFailed(commandQueue_->Signal(fence_.Get(), currentFence_));
+    ++_currentFence;
+    ThrowIfFailed(_commandQueue->Signal(_fence.Get(), _currentFence));
 
-    if (fence_->GetCompletedValue() < currentFence_)
+    if (_fence->GetCompletedValue() < _currentFence)
     {
         HANDLE eventHandle = CreateEventEx(nullptr,
             false, 
             false, 
             EVENT_ALL_ACCESS);
         
-        ThrowIfFailed(fence_->SetEventOnCompletion(currentFence_, eventHandle));
+        ThrowIfFailed(_fence->SetEventOnCompletion(_currentFence, eventHandle));
         WaitForSingleObject(eventHandle, INFINITE);
         CloseHandle(eventHandle);
     }
@@ -542,19 +551,19 @@ void D3DApp::FlushCommandQueue(void)
 
 ID3D12Resource* D3DApp::CurrentBackBuffer(void) const
 {
-    return swapChainBuffer_[currBackBuffer_].Get();
+    return _swapChainBuffer[currBackBuffer_].Get();
 }
 
 D3D12_CPU_DESCRIPTOR_HANDLE D3DApp::CurrentBackBufferView(void) const
 {
-    return CD3DX12_CPU_DESCRIPTOR_HANDLE(rtvHeap_->GetCPUDescriptorHandleForHeapStart(),
+    return CD3DX12_CPU_DESCRIPTOR_HANDLE(_rtvHeap->GetCPUDescriptorHandleForHeapStart(),
         currBackBuffer_,
-        rtvDescriptorSize_);
+        _rtvDescriptorSize);
 }
 
 D3D12_CPU_DESCRIPTOR_HANDLE D3DApp::DepthStencilView(void) const
 {
-    return dsvHeap_->GetCPUDescriptorHandleForHeapStart();
+    return _dsvHeap->GetCPUDescriptorHandleForHeapStart();
 }
 
 void D3DApp::CalculateFrameStats(void)
@@ -564,18 +573,18 @@ void D3DApp::CalculateFrameStats(void)
 
     ++frameCount;
 
-    if ((timer_.TotalTime() - timeElapsed) >= 1.0f)
+    if ((_timer.TotalTime() - timeElapsed) >= 1.0f)
     {
         float fps = (float) frameCount;
         float mspf = 1000.0f / fps;
 
         std::string fpsStr = std::to_string(fps);
         std::string mspfStr = std::to_string(mspf);
-        std::string windowText = mainWndCaption_
+        std::string windowText = _mainWndCaption
             + " fps : " + fpsStr
             + " mspf : " + mspfStr;
 
-        SetWindowText(hMainWnd_, windowText.c_str());
+        SetWindowText(_hMainWnd, windowText.c_str());
 
         frameCount = 0;
         timeElapsed += 1.0f;
@@ -587,7 +596,7 @@ void D3DApp::LogAdapters(void)
     UINT i = 0;
     IDXGIAdapter* adapter = nullptr;
     std::vector<IDXGIAdapter*> adapterList;
-    while (dxgiFactory_->EnumAdapters(i, &adapter) != DXGI_ERROR_NOT_FOUND)
+    while (_dxgiFactory->EnumAdapters(i, &adapter) != DXGI_ERROR_NOT_FOUND)
     {
         DXGI_ADAPTER_DESC desc;
         adapter->GetDesc(&desc);

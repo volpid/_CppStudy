@@ -462,16 +462,16 @@ bool D3DApp::InitDirect3D(void)
      _dsvDescriptorSize = _d3dDevice->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_DSV);
      _cbvSrvDescriptorSize = _d3dDevice->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
      
-     D3D12_FEATURE_DATA_MULTISAMPLE_QUALITY_LEVELS msQualiyLevels;
-     msQualiyLevels.Format = _backBufferFormat;
-     msQualiyLevels.SampleCount = 4;
-     msQualiyLevels.Flags = D3D12_MULTISAMPLE_QUALITY_LEVELS_FLAG_NONE;
-     msQualiyLevels.NumQualityLevels = 0;
+     D3D12_FEATURE_DATA_MULTISAMPLE_QUALITY_LEVELS msQualityLevels;
+     msQualityLevels.Format = _backBufferFormat;
+     msQualityLevels.SampleCount = 4;
+     msQualityLevels.Flags = D3D12_MULTISAMPLE_QUALITY_LEVELS_FLAG_NONE;
+     msQualityLevels.NumQualityLevels = 0;
      ThrowIfFailed(_d3dDevice->CheckFeatureSupport(D3D12_FEATURE_MULTISAMPLE_QUALITY_LEVELS,
-        &msQualiyLevels,
-        sizeof(msQualiyLevels)));
+        &msQualityLevels,
+        sizeof(msQualityLevels)));
 
-    _msaaQuality4x = msQualiyLevels.NumQualityLevels;
+    _msaaQuality4x = msQualityLevels.NumQualityLevels;
     assert(_msaaQuality4x > 0 && "Unexpected MSAA quality level.");
 
 #if defined(DEBUG) || defined(_DEBUG)

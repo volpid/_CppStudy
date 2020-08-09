@@ -18,7 +18,7 @@ private:
     virtual void Draw(const GameTimer& timer) override;
 };
 
-//InitDirect3DApp appInstance;
+InitDirect3DApp appInstance;
 
 //----------------------------------------------------------------
 bool InitDirect3DApp::Initialize(HINSTANCE hInstance)

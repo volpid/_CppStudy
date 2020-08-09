@@ -25,8 +25,8 @@ public:
     virtual bool Initialize(HINSTANCE hInstance) override;
 
 //    virtual void OnResize(void) override;
-//    virtual void Update(const GameTimer& timer) override;
-//    virtual void Draw(const GameTimer& timer) override;
+    virtual void Update(const GameTimer& timer) override;
+    virtual void Draw(const GameTimer& timer) override;
 //
 //    virtual void OnMouseDown(WPARAM btnState, int x, int y) override;
 //    virtual void OnMouseUp(WPARAM btnState, int x, int y) override;
@@ -84,7 +84,7 @@ private:
     //POINT lastMousePos_;
 };
 
-LitColumnsApp appInstance;
+//LitColumnsApp appInstance;
 
 //----------------------------------------------------------------
 LitColumnsApp::LitColumnsApp(void)
@@ -137,8 +137,8 @@ bool LitColumnsApp::Initialize(HINSTANCE hInstance)
 //    DirectX::XMStoreFloat4x4(&proj_, proj);
 //}
 //
-//void LitColumnsApp::Update(const GameTimer& timer)
-//{
+void LitColumnsApp::Update(const GameTimer& timer)
+{
 //    OnKeyboardInput(timer);
 //    UpdateCamera(timer);
 //
@@ -155,10 +155,10 @@ bool LitColumnsApp::Initialize(HINSTANCE hInstance)
 //
 //    UpdateObjectCBuffer(timer);
 //    UpdateMainPassCBuffer(timer);
-//}
+}
 //
-//void LitColumnsApp::Draw(const GameTimer& timer)
-//{
+void LitColumnsApp::Draw(const GameTimer& timer)
+{
 //    _Unreferenced_parameter_(timer);
 //
 //    auto cmdListAlloc = pCurFrameResource_->cmdlistAlloc;
@@ -216,7 +216,7 @@ bool LitColumnsApp::Initialize(HINSTANCE hInstance)
 //
 //    pCurFrameResource_->fence = ++currentFence_;
 //    commandQueue_->Signal(fence_.Get(), currentFence_);
-//}
+}
 //
 //void LitColumnsApp::OnMouseDown(WPARAM btnState, int x, int y)
 //{

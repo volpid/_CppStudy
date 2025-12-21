@@ -39,7 +39,7 @@ using mass1 = mpl::vector<mpl::int_<1>, mpl::int_<0>, mpl::int_<0>, mpl::int_<0>
 
 using mass = mpl::vector_c<int, 1, 0, 0, 0, 0, 0, 0>; 
 using length = mpl::vector_c<int, 0, 1, 0, 0, 0, 0, 0>;
-using time = mpl::vector_c<int, 0, 0, 1, 0, 0, 0, 0>;
+//using time = mpl::vector_c<int, 0, 0, 1, 0, 0, 0, 0>;
 using charge = mpl::vector_c<int, 0, 0, 0, 1, 0, 0, 0>;
 using temperature = mpl::vector_c<int, 0, 0, 0, 0, 1, 0, 0>;
 using intensity = mpl::vector_c<int, 0, 0, 0, 0, 0, 1, 0>;

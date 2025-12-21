@@ -3,7 +3,7 @@
 #define __DISPLAY__H__
 
 #include <glew/glew.h>
-#include <SDL2/SDL.h>
+#include <SDL3/SDL.h>
 #include <string>
 
 class Display

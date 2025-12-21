@@ -1,13 +1,14 @@
 
 #include "display.h"
 #include <iostream>
+#include <SDL3/SDL.h>
 
 //---------------------------------------------------------------------------
 // define - Display
 //---------------------------------------------------------------------------
 Display::Display(int width, int height, std::string& title)
 {
-    SDL_Init(SDL_INIT_EVERYTHING);
+    SDL_Init(SDL_INIT_VIDEO);
 
     SDL_GL_SetAttribute(SDL_GL_RED_SIZE, 8);
     SDL_GL_SetAttribute(SDL_GL_GREEN_SIZE, 8);
@@ -18,8 +19,6 @@ Display::Display(int width, int height, std::string& title)
     SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
 
     pWindow_ = SDL_CreateWindow(title.c_str(),
-        SDL_WINDOWPOS_CENTERED,
-        SDL_WINDOWPOS_CENTERED,
         width, 
         height,
         SDL_WINDOW_OPENGL);
@@ -38,7 +37,7 @@ Display::Display(int width, int height, std::string& title)
 
 Display::~Display(void)
 {
-    SDL_GL_DeleteContext(pOpenGLContext_);
+    SDL_GL_DestroyContext(pOpenGLContext_);
     SDL_DestroyWindow(pWindow_);
     SDL_Quit();
 }

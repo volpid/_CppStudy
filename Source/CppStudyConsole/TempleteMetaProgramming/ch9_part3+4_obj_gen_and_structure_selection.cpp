@@ -131,7 +131,7 @@ class storage<_F, false, _G, true> : public _G
 {
 public:
     storage(const _F& _f, const _G& _g)
-        : _G(g), f(_f)
+        : _G(_g), f(_f)
     {}
 
     const _F& get_f(void) const {return f;}

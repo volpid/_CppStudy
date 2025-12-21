@@ -33,8 +33,7 @@ Microsoft::WRL::ComPtr<ID3D12Resource> D3DUtil::CreataDefaultBuffer(ID3D12Device
         IID_PPV_ARGS(uploadBuffer.GetAddressOf())));
 
     D3D12_SUBRESOURCE_DATA subResourceData = {};
-    subResourceData.pData = pInitData;
-    //nanpid
+    subResourceData.pData = pInitData;    
     subResourceData.RowPitch = byteSize;
     subResourceData.SlicePitch = subResourceData.RowPitch;
 
@@ -62,8 +61,7 @@ Microsoft::WRL::ComPtr<ID3DBlob> D3DUtil::CompileShader(const std::string& filen
 #if defined(DEBUG) || defined(_DEBUG)
     compileFlags = D3DCOMPILE_DEBUG | D3DCOMPILE_SKIP_OPTIMIZATION;
 #endif /**/
-
-    //nanpid fix codecvt
+    
     std::wstring wfilename;
     wfilename.assign(filename.begin(), filename.end());        
     

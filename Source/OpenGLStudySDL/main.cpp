@@ -6,9 +6,13 @@
 #include <string>
 
 /*import library*/
-#pragma comment(lib, "SDL2.lib")
-#pragma comment(lib, "SDL2main.lib")
+#ifdef _DEBUG
+#pragma comment(lib, "glew32d.lib")
+#else
 #pragma comment(lib, "glew32.lib")
+#endif
+
+#pragma comment(lib, "SDL3.lib")
 #pragma comment(lib, "OpenGL32.lib")
 
 RenderProxy* RenderProxy::intance = nullptr;
@@ -24,7 +28,7 @@ int main(int argc, char** argv)
     {
         while (SDL_PollEvent(&e))
         {
-            if (e.type == SDL_QUIT)
+            if (e.type == SDL_EVENT_QUIT)
             {
                 display.SetClosed();
             }

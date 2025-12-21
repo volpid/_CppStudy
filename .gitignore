@@ -5,7 +5,7 @@ Include/staticlib
 Include/dynamiclib
 Include/glew
 Include/glm
-Include/sdl2
+Include/sdl3
 
 #folder
 .vs/

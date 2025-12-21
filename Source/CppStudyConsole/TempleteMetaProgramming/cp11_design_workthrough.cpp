@@ -15,6 +15,8 @@ namespace mpl = boost::mpl;
 //-------------------------------------------------------------------------------------------------
 /*FSM*/
 
+template <typename _Table, typename _Event> struct generate_dispatcher;
+
 template <typename _Derived>
 class stats_machine 
 {
@@ -54,7 +56,7 @@ public:
     template <typename _Event>
     int process_event(const _Event& evt)
     {
-        using dispatcher = typename generate_dispatcher<typename _Derived::transition_table, _Event>::type;
+        using dispatcher = generate_dispatcher<typename _Derived::transition_table, _Event>::type;
 
         this->state = dispatcher::dispatch(
             *(static_cast<_Derived*> (this)),

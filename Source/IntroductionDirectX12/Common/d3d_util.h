@@ -4,6 +4,8 @@
 
 #include "d3dx_12.h"
 
+#include "math_helper.h"
+
 #include <string>
 #include <unordered_map>
 #include <wrl/client.h>
@@ -82,6 +84,28 @@ struct MeshGeometry
         vertexBufferUploader = nullptr;
         indexBufferUploader = nullptr;
     }
+};
+
+//----------------------------------------------------------------
+// Material
+//----------------------------------------------------------------
+const int NumGlobalFrameResource = 3;
+
+struct Material
+{
+    std::string name;
+    
+    int matCBIndex = -1;
+    int diffuseSrvHeapIndex = -1;
+    int normalSrvHeapIndex = -1;
+    int numFramesDirty = NumGlobalFrameResource;
+
+    DirectX::XMFLOAT4 diffuseAlbedo = {1.0f, 1.0f, 1.0f, 1.0f};
+    DirectX::XMFLOAT3 frensnelR0 = {0.01f, 0.01f, 0.01f};
+    float roughness = 0.25f;
+    DirectX::XMFLOAT4X4 matTransform = MathHelper::Indentity4x4();
+    
+    Material(void) = default;
 };
 
 //----------------------------------------------------------------

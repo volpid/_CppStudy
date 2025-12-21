@@ -435,10 +435,10 @@ inline UINT64 UpdateSubresource(_In_ ID3D12GraphicsCommandList* pCmdList,
     _In_range_(0, D3D12_REQ_SUBRESOURCES) UINT firstSubresource,
     _In_range_(0, D3D12_REQ_SUBRESOURCES - firstSubresource) UINT numSubresouce,
     UINT64 requiredSize,
-    _In_range_(numSubresouce) const D3D12_PLACED_SUBRESOURCE_FOOTPRINT* pLayouts,
-    _In_range_(numSubresouce) const UINT* pNumRows,
-    _In_range_(numSubresouce) const UINT64* pRowSizeInBytes,
-    _In_range_(numSubresouce) const D3D12_SUBRESOURCE_DATA* pSrcData)
+    _In_range_(numSubresouce, numSubresouce) const D3D12_PLACED_SUBRESOURCE_FOOTPRINT* pLayouts,
+    _In_range_(numSubresouce, numSubresouce) const UINT* pNumRows,
+    _In_range_(numSubresouce, numSubresouce) const UINT64* pRowSizeInBytes,
+    _In_range_(numSubresouce, numSubresouce) const D3D12_SUBRESOURCE_DATA* pSrcData)
 {
     D3D12_RESOURCE_DESC intermediateDesc = pIntermediate->GetDesc();
     D3D12_RESOURCE_DESC destinationDesc = pDestinationResource->GetDesc();
@@ -506,7 +506,7 @@ inline UINT64 UpdateSubresource(_In_ ID3D12GraphicsCommandList* pCmdList,
     UINT64 itermediateOffset,
     _In_range_(0, D3D12_REQ_SUBRESOURCES) UINT firstSubresource,
     _In_range_(0, D3D12_REQ_SUBRESOURCES - firstSubresource) UINT numSubresource,
-    _In_range_(numSubresource) D3D12_SUBRESOURCE_DATA* pSrcData)
+    _In_range_(numSubresource, numSubresource) D3D12_SUBRESOURCE_DATA* pSrcData)
 {
     UINT64 requiredSize = 0;
     UINT64 memToAlloc = static_cast<UINT64> (sizeof(D3D12_PLACED_SUBRESOURCE_FOOTPRINT) + sizeof(UINT) + sizeof(UINT64)) * numSubresource;
@@ -544,7 +544,7 @@ inline UINT64 UpdateSubresource(_In_ ID3D12GraphicsCommandList* pCmdList,
     UINT64 itermediateOffset,
     _In_range_(0, D3D12_REQ_SUBRESOURCES) UINT firstSubresource,
     _In_range_(1, D3D12_REQ_SUBRESOURCES - firstSubresource) UINT numSubresource,
-    _In_range_(numSubresource) D3D12_SUBRESOURCE_DATA* pSrcData)
+    _In_range_(numSubresource, numSubresource) D3D12_SUBRESOURCE_DATA* pSrcData)
 {
     UINT64 requiredSize = 0;
     D3D12_PLACED_SUBRESOURCE_FOOTPRINT layouts[_MaxSubresource];

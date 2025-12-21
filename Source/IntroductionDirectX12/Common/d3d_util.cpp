@@ -17,37 +17,41 @@ Microsoft::WRL::ComPtr<ID3D12Resource> D3DUtil::CreataDefaultBuffer(ID3D12Device
     UINT64 byteSize,
     Microsoft::WRL::ComPtr<ID3D12Resource>& uploadBuffer)
 {
-    Microsoft::WRL::ComPtr<ID3D12Resource> defaultBuffer;
-    ThrowIfFailed(pDevice->CreateCommittedResource(&CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_DEFAULT),
+    Microsoft::WRL::ComPtr<ID3D12Resource> defaultBuffer;    
+    CD3DX12_HEAP_PROPERTIES heapPropertyDefault = CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_DEFAULT);
+    CD3DX12_RESOURCE_DESC resourceDescDefault = CD3DX12_RESOURCE_DESC::Buffer(byteSize);
+    ThrowIfFailed(pDevice->CreateCommittedResource(&heapPropertyDefault,
         D3D12_HEAP_FLAG_NONE,
-        &CD3DX12_RESOURCE_DESC::Buffer(byteSize),
+        &resourceDescDefault,
         D3D12_RESOURCE_STATE_COMMON,
         nullptr,
         IID_PPV_ARGS(defaultBuffer.GetAddressOf())));
 
-    ThrowIfFailed(pDevice->CreateCommittedResource(&CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_UPLOAD),
+    CD3DX12_HEAP_PROPERTIES heapPropertyUpload = CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_UPLOAD);
+    CD3DX12_RESOURCE_DESC resourceDescUpload = CD3DX12_RESOURCE_DESC::Buffer(byteSize);
+    ThrowIfFailed(pDevice->CreateCommittedResource(&heapPropertyUpload,
         D3D12_HEAP_FLAG_NONE,
-        &CD3DX12_RESOURCE_DESC::Buffer(byteSize),
+        &resourceDescUpload,
         D3D12_RESOURCE_STATE_GENERIC_READ,
         nullptr,
         IID_PPV_ARGS(uploadBuffer.GetAddressOf())));
 
     D3D12_SUBRESOURCE_DATA subResourceData = {};
-    subResourceData.pData = pInitData;    
-    subResourceData.RowPitch = byteSize;
+    subResourceData.pData = pInitData;
+    subResourceData.RowPitch = static_cast<LONG_PTR>(byteSize);
     subResourceData.SlicePitch = subResourceData.RowPitch;
 
-    pCmdList->ResourceBarrier(1, 
-        &CD3DX12_RESOURCE_BARRIER::Transition(defaultBuffer.Get(),
-            D3D12_RESOURCE_STATE_COMMON, 
-            D3D12_RESOURCE_STATE_COPY_DEST));
+    CD3DX12_RESOURCE_BARRIER barrierCommontToCopyDest = CD3DX12_RESOURCE_BARRIER::Transition(defaultBuffer.Get(), 
+        D3D12_RESOURCE_STATE_COMMON, 
+        D3D12_RESOURCE_STATE_COPY_DEST);
+    pCmdList->ResourceBarrier(1, &barrierCommontToCopyDest);
 
     UpdateSubresource<1>(pCmdList, defaultBuffer.Get(), uploadBuffer.Get(), 0, 0, 1, &subResourceData);
 
-    pCmdList->ResourceBarrier(1, 
-        &CD3DX12_RESOURCE_BARRIER::Transition(defaultBuffer.Get(),
-            D3D12_RESOURCE_STATE_COPY_DEST, 
-            D3D12_RESOURCE_STATE_GENERIC_READ));
+    CD3DX12_RESOURCE_BARRIER barrierCopyDescToGenericRead = CD3DX12_RESOURCE_BARRIER::Transition(defaultBuffer.Get(),
+        D3D12_RESOURCE_STATE_COPY_DEST, 
+        D3D12_RESOURCE_STATE_GENERIC_READ);
+    pCmdList->ResourceBarrier(1, &barrierCopyDescToGenericRead);
 
     return defaultBuffer;
 }
@@ -61,7 +65,8 @@ Microsoft::WRL::ComPtr<ID3DBlob> D3DUtil::CompileShader(const std::string& filen
 #if defined(DEBUG) || defined(_DEBUG)
     compileFlags = D3DCOMPILE_DEBUG | D3DCOMPILE_SKIP_OPTIMIZATION;
 #endif /**/
-    
+
+    //nanpid fix codecvt
     std::wstring wfilename;
     wfilename.assign(filename.begin(), filename.end());        
     

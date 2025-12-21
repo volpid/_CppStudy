@@ -1,0 +1,83 @@
+
+#include "ch08_LightingUtil.txt"
+
+cbuffer cbPerObject : register(b0)
+{
+    float4x4 gWorld;
+};
+
+cbuffer cbMaterial : register(b1)
+{
+    float4 gDiffuseAlbedo;
+	float3 gFresnelR0;
+	float gRoughness;
+	float4x4 gMatTransform;
+};
+
+cbuffer cbPass : register(b2)
+{
+	float4x4 gView;
+	float4x4 gInvView;
+	float4x4 gProj;
+	float4x4 gInvProj;
+	float4x4 gViewProj;
+	float4x4 gInvViewProj;
+	float3 gEyePosW;
+	float cbPerObjectPad1;
+	float2 gRenderTargetSize;
+	float2 gInvRenderTargetSize;
+	float gNearZ;
+	float gFarZ;
+	float gTotalTime;
+	float gDeltaTime;
+	float4 gAmbientLight;
+	Light gLight[MaxLights];
+};
+
+struct VertexIn
+{
+    float3 positionL : POSITION;
+    float3 normalL : NORMAL;
+};
+
+struct VertexOut
+{
+    float4 positionH : SV_POSITION;
+	float3 positionW : POSITION;
+    float3 normalW : NORMAL
+};
+
+struct PixelOut
+{
+	float4 color : SV_Target;
+};
+
+VertexOut vs_main(VertexIn vin)
+{
+    VertexOut vout = (VertexOut) 0.0f;
+
+	float4 posW = mul(float4(vin.positionL, 1.0f), gWorld);
+	vout.positionW = posW.xyz;
+
+	vout.normalW = mul(vin.normalL, (float3x3) gWorld);
+	vout.positionH = mul(posW, gViewProj);
+    return vout;
+}
+
+PixelOut ps_main(VertexOut pin)
+{
+	pin.normalW = normalize(pin.normalW);
+
+	float3 toEyeW = normalize(gEyePosW - pin.positionW);
+	float4 ambient = gAmbientLight * gDiffuseAlbedo;
+
+	const float shininess = 1.0f - gRoughness;
+	Material mat = {gDiffuseAlbedo, gFresnelR0, shininess};
+	float3 shadowFactor = 1.0f;
+	
+	float4 directLight = ComputeLighting(gLights, mat, pin.positionW, pin.positionW, toEyeW, shadowFactor);	
+	float4 litColor = ambient + directLight;
+	litColor.a = gDiffuseAlbedo.a;
+
+	return litColor;
+}

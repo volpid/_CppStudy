@@ -53,7 +53,7 @@ struct FrameResourceCh07Shape
     std::unique_ptr<UplaodBuffer<PassConstantCh07>> passCBuffer = nullptr;
     std::unique_ptr<UplaodBuffer<ObjectConstantCh07>> objectCBuffer = nullptr;
 
-    UINT fence = 0;
+    UINT64 fence = 0;
 
     FrameResourceCh07Shape(ID3D12Device* pDevice, UINT passCount, UINT objectCount);
     ~FrameResourceCh07Shape(void);
@@ -70,7 +70,7 @@ struct FrameResourceCh07LandWave
     std::unique_ptr<UplaodBuffer<ObjectConstantCh07>> objectCBuffer = nullptr;
     std::unique_ptr<UplaodBuffer<VertexCh07>> waveVBuffer = nullptr;
 
-    UINT fence = 0;
+    UINT64 fence = 0;
 
     FrameResourceCh07LandWave(ID3D12Device* pDevice, UINT passCount, UINT objectCount, UINT waveVertCount);
     ~FrameResourceCh07LandWave(void);
@@ -83,12 +83,12 @@ struct FrameResourceCh07LandWave
 //----------------------------------------------------------------
 // RenderItem
 //----------------------------------------------------------------
-const int numFrameResourceCh07 = 3;
+const int NumFrameResourceCh07 = NumGlobalFrameResource;
 
 struct RenderItemCh07
 {
     DirectX::XMFLOAT4X4 world = MathHelper::Indentity4x4();
-    int numFrameDirty = numFrameResourceCh07;
+    int numFrameDirty = NumFrameResourceCh07;
     int objCBufferIndex = -1;    
     MeshGeometry* geometry = nullptr;
     D3D12_PRIMITIVE_TOPOLOGY primitiveType = D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST;

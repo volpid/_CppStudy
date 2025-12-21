@@ -30,13 +30,13 @@ DirectX::XMFLOAT4X4 MathHelper::Indentity4x4(void)
 
 float MathHelper::RandF(void)
 {
-    return distributionReal(engine);
+    return static_cast<float>(distributionReal(engine));
 }
 
 float MathHelper::RandF(float a, float b)
 {
     std::uniform_real_distribution<> distributionRealWithCoef(a, b);
-    return distributionRealWithCoef(engine);
+    return static_cast<float>(distributionRealWithCoef(engine));
 }
 
 int MathHelper::Rand(int a, int b)

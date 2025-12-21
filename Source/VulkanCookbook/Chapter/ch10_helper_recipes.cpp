@@ -134,7 +134,7 @@ bool Cookbook::LoadTextureDataFromFile(const char* filename,
     {
         *imageHeight = height;
     }
-    if (imageHeight != nullptr)
+    if (imageNumComponenets != nullptr)
     {
         *imageNumComponenets = numComponent;
     }

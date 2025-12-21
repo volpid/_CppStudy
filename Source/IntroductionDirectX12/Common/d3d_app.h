@@ -22,7 +22,7 @@ public:
 
 protected:
     static D3DApp* d3dApp;
-    static constexpr int swapChainbufferCount = 2;
+    static constexpr int SwapChainbufferCount = 2;
 
 protected:
     D3DApp(void);    
@@ -72,52 +72,52 @@ protected:
     void LogOutputDisplayModes(IDXGIOutput* output, DXGI_FORMAT format);
 
 protected:
-    HINSTANCE hAppInst_ = nullptr;
-    HWND hMainWnd_ = nullptr;
+    HINSTANCE _hAppInst = nullptr;
+    HWND _hMainWnd = nullptr;
 
-    bool appPaused_ = false;
-    bool mininized_ = false;
-    bool maximized_ = false;
-    bool resizing_ = false;
-    bool fullScreenState_ = false;
+    bool _appPaused = false;
+    bool _mininized = false;
+    bool _maximized = false;
+    bool _resizing = false;
+    bool _fullScreenState = false;
 
-    bool msaaState4x_ = false;
-    UINT msaaQuality4x_ = 0;
+    bool _msaaState4x = false;
+    UINT _msaaQuality4x = 0;
 
-    GameTimer timer_;
+    GameTimer _timer;
 
-    Microsoft::WRL::ComPtr<IDXGIFactory4> dxgiFactory_;
-    Microsoft::WRL::ComPtr<IDXGISwapChain> swapChain_;
-    Microsoft::WRL::ComPtr<ID3D12Device> d3dDevice_;
+    Microsoft::WRL::ComPtr<IDXGIFactory4> _dxgiFactory;
+    Microsoft::WRL::ComPtr<IDXGISwapChain> _swapChain;
+    Microsoft::WRL::ComPtr<ID3D12Device> _d3dDevice;
 
-    Microsoft::WRL::ComPtr<ID3D12Fence> fence_;
-    UINT64 currentFence_ = 0;
+    Microsoft::WRL::ComPtr<ID3D12Fence> _fence;
+    UINT64 _currentFence = 0;
 
-    Microsoft::WRL::ComPtr<ID3D12CommandQueue> commandQueue_;
-    Microsoft::WRL::ComPtr<ID3D12CommandAllocator> commandListAlloc_;
-    Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList> commandList_;
+    Microsoft::WRL::ComPtr<ID3D12CommandQueue> _commandQueue;
+    Microsoft::WRL::ComPtr<ID3D12CommandAllocator> _commandListAlloc;
+    Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList> _commandList;
 
     int currBackBuffer_ = 0;
 
-    Microsoft::WRL::ComPtr<ID3D12Resource> swapChainBuffer_[swapChainbufferCount];
-    Microsoft::WRL::ComPtr<ID3D12Resource> depthStencilBuffer_;
-    Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> rtvHeap_;
-    Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> dsvHeap_;
+    Microsoft::WRL::ComPtr<ID3D12Resource> _swapChainBuffer[SwapChainbufferCount];
+    Microsoft::WRL::ComPtr<ID3D12Resource> _depthStencilBuffer;
+    Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> _rtvHeap;
+    Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> _dsvHeap;
 
-    D3D12_VIEWPORT screenViewport_;
-    D3D12_RECT scissorRect_;
+    D3D12_VIEWPORT _screenViewport;
+    D3D12_RECT _scissorRect;
 
-    UINT rtvDescriptorSize_ = 0;
-    UINT dsvDescriptorSize_ = 0;
-    UINT cbvSrvDescriptorSize_ = 0;
+    UINT _rtvDescriptorSize = 0;
+    UINT _dsvDescriptorSize = 0;
+    UINT _cbvSrvDescriptorSize = 0;
 
-    std::string mainWndCaption_ = "d3d App";
-    D3D_DRIVER_TYPE d3dDriverType_ = D3D_DRIVER_TYPE_HARDWARE;
-    DXGI_FORMAT backBufferFormat_ = DXGI_FORMAT_R8G8B8A8_UNORM;
-    DXGI_FORMAT depthStencilFormat_ = DXGI_FORMAT_D24_UNORM_S8_UINT;
+    std::string _mainWndCaption = "d3d App";
+    D3D_DRIVER_TYPE _d3dDriverType = D3D_DRIVER_TYPE_HARDWARE;
+    DXGI_FORMAT _backBufferFormat = DXGI_FORMAT_R8G8B8A8_UNORM;
+    DXGI_FORMAT _depthStencilFormat = DXGI_FORMAT_D24_UNORM_S8_UINT;
     
-    int clientWidth_ = 800;
-    int clientHeight_ = 600;
+    int _clientWidth = 800;
+    int _clientHeight = 600;
 };
 
 #endif /*__D3D_APP__H__*/

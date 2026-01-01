@@ -7,3 +7,5 @@ mklink /d glew "..\_ExternlLibrary\glew-2.2.0\include\GL\"
 mklink /d glm "..\_ExternlLibrary\glm-master\glm"
 mklink /d sdl3 "..\_ExternlLibrary\SDL-main\include\SDL3"
 
+mklink /d glfw "..\_ExternlLibrary\glfw-3.4\include\GLFW"
+mklink /d gl3w "..\_ExternlLibrary\gl3w-master\include"

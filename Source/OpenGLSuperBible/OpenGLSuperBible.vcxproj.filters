@@ -27,12 +27,21 @@
     <ClCompile Include="Example\Chapter5_SpinnyCube.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Example\Chapter5_AlienRain.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Book\sb6ktx.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Book\vmath.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Book\sb6.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Book\sb6ktx.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -178,7 +178,7 @@ public:
                 vec4 color;
             } fs_in;
 
-            layout(location = 0) out vec4 color;
+            layout (location = 0) out vec4 color;
 
             void main()
             {
@@ -248,4 +248,4 @@ private:
     vmath::mat4 proj_matrix;
 };
 
-DECLARE_MAIN(Chapter5_SpinnyCube);
+//DECLARE_MAIN(Chapter5_SpinnyCube);

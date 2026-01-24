@@ -141,14 +141,34 @@
   <ItemGroup>
     <ClCompile Include="Book\gl3w.c" />
     <ClCompile Include="Book\sb6ktx.cpp" />
+    <ClCompile Include="Book\sb6object.cpp" />
+    <ClCompile Include="Book\sb6shader.cpp" />
     <ClCompile Include="Example\Chapter5_AlienRain.cpp" />
     <ClCompile Include="Example\Chapter5_SpinnyCube.cpp" />
+    <ClCompile Include="Example\Chapter7_ClipDistance.cpp" />
+    <ClCompile Include="Example\Chapter7_Grass.cpp" />
+    <ClCompile Include="Example\Chapter7_Instancing.cpp" />
+    <ClCompile Include="Example\Chapter7_MultidrawIndirect.cpp" />
+    <ClCompile Include="Example\Chapter7_SpringMass.cpp" />
+    <ClCompile Include="Example\Chapter8_GSCulling.cpp" />
+    <ClCompile Include="Example\Chapter8_GSLayered.cpp" />
+    <ClCompile Include="Example\Chapter8_GSQuads.cpp" />
+    <ClCompile Include="Example\Chapter8_GSTessellate.cpp" />
+    <ClCompile Include="Example\Chapter8_TessellatedCube.cpp" />
+    <ClCompile Include="Example\Chapter8_TessellatedGSTri.cpp" />
+    <ClCompile Include="Example\Chapter8_TessellatedQuad.cpp" />
+    <ClCompile Include="Example\Chapter8_TessellatedTri.cpp" />
+    <ClCompile Include="Example\Chapter8_TessSubDivModes.cpp" />
     <ClCompile Include="Example\SimpleTest.cpp" />
+    <ClCompile Include="Example\Template.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Book\object.h" />
     <ClInclude Include="Book\sb6.h" />
     <ClInclude Include="Book\sb6ktx.h" />
+    <ClInclude Include="Book\sb6mfile.h" />
+    <ClInclude Include="Book\shader.h" />
     <ClInclude Include="Book\vmath.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -246,4 +246,4 @@ private:
     float droplet_fall_speed[256] = {};
 };
 
-DECLARE_MAIN(Chapter5_AlienRain);
+//DECLARE_MAIN(Chapter5_AlienRain);

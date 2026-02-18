@@ -7,7 +7,7 @@
 
 #include <math.h>
 
-class Chapter8_GSLayered : public sb6::application
+class Chapter9_GSLayered : public sb6::application
 {
 public:
     GLuint program_gslayers = 0;
@@ -26,7 +26,7 @@ public:
     bool wireframeMode;
 
 public:
-    Chapter8_GSLayered()
+    Chapter9_GSLayered()
     {
         wireframeMode = false;
     }
@@ -201,4 +201,4 @@ public:
     }
 };
 
-DECLARE_MAIN(Chapter8_GSLayered);
+//DECLARE_MAIN(Chapter9_GSLayered);

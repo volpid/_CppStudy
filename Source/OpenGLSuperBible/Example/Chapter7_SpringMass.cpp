@@ -21,7 +21,7 @@ enum
     POINT_X = 50,
     POINT_Y = 50,
     POINT_TOTAL = POINT_X * POINT_Y,
-    CONNECTION_TOTAL = (POINT_X - 1) * POINT_Y + (POINT_Y - 1) * POINT_X, //nanpid?
+    CONNECTION_TOTAL = (POINT_X - 1) * POINT_Y + (POINT_Y - 1) * POINT_X,
 };
 
 class Chapter7_ClipDistance : public sb6::application

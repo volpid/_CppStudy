@@ -69,19 +69,97 @@
     <ClCompile Include="Example\Chapter8_TessSubDivModes.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Example\Chapter8_GSQuads.cpp">
+    <ClCompile Include="Example\Chapter8_GsQuads.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Example\Chapter8_TessellatedGSTri.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Example\Chapter8_GSTessellate.cpp">
+    <ClCompile Include="Example\Chapter8_GsTessellate.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Example\Chapter8_GSCulling.cpp">
+    <ClCompile Include="Example\Chapter8_GsCulling.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Example\Chapter8_GSLayered.cpp">
+    <ClCompile Include="Example\Chapter9_GSLayered.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Example\Chapter9_MultiScissor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Example\Chapter9_BlendMatrix.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Example\Chapter9_BasicFbo.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Example\Chapter9_MsaaNative.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Example\Chapter9_SampleShading.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Example\Chapter9_HdrTonemap.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Example\Chapter9_HdrBloom.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Example\Chapter9_HdrExposure.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Example\Chapter9_Starfield.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Example\Chapter9_ShapedPoints.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Example\Chapter9_Bumpmapping.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Example\Chapter10_Prefixsum.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Example\Chapter10_Prefixsum2d.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Example\Chapter10_Dof.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Example\Chapter10_CsFlocking.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Example\Chapter12_Rimlight.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Example\Chapter12_EnvmapSphere.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Example\Chapter12_Equirectangular.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Example\Chapter12_CubemapEnv.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Example\Chapter12_Prepixelgloss.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Example\Chapter12_Shadowmapping.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Example\Chapter12_Dispmap.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Example\Chapter12_DeferredShading.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Example\Chapter12_SSAO.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Example\Chapter12_Julia.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Example\Chapter12_Raytracer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

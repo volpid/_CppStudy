@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.36811.4
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CppStudyStaticLibrary", "Source\CppStudyLibrary\cpp_study_lib.vcxproj", "{572ECD0D-4074-4F12-ACB2-6AA5C03265BD}"
 EndProject
@@ -13,9 +13,11 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CppStudyDll", "Source\CppSt
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CppStudyWindowsApp", "Source\CppStudyWindowApp\cpp_study_windows_app.vcxproj", "{75D14981-4828-4044-81E4-7B38FC1740C4}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "vulkan_cookbook", "Source\VulkanCookbook\vulkan_cookbook.vcxproj", "{C8074644-E2E9-4235-939F-5A7CD6B96789}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "VulkanCookbook", "Source\VulkanCookbook\vulkan_cookbook.vcxproj", "{C8074644-E2E9-4235-939F-5A7CD6B96789}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "IntroductionDirectX12", "Source\IntroductionDirectX12\introduction_direct12.vcxproj", "{5647570B-BD2E-4A39-8DA3-264E882C48EC}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "OpenGLSuperBible", "Source\OpenGLSuperBible\OpenGLSuperBible.vcxproj", "{748EB5BE-8031-4CBC-865D-C7D81BDB5514}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -81,8 +83,19 @@ Global
 		{5647570B-BD2E-4A39-8DA3-264E882C48EC}.Release|x64.Build.0 = Release|x64
 		{5647570B-BD2E-4A39-8DA3-264E882C48EC}.Release|x86.ActiveCfg = Release|Win32
 		{5647570B-BD2E-4A39-8DA3-264E882C48EC}.Release|x86.Build.0 = Release|Win32
+		{748EB5BE-8031-4CBC-865D-C7D81BDB5514}.Debug|x64.ActiveCfg = Debug|x64
+		{748EB5BE-8031-4CBC-865D-C7D81BDB5514}.Debug|x64.Build.0 = Debug|x64
+		{748EB5BE-8031-4CBC-865D-C7D81BDB5514}.Debug|x86.ActiveCfg = Debug|Win32
+		{748EB5BE-8031-4CBC-865D-C7D81BDB5514}.Debug|x86.Build.0 = Debug|Win32
+		{748EB5BE-8031-4CBC-865D-C7D81BDB5514}.Release|x64.ActiveCfg = Release|x64
+		{748EB5BE-8031-4CBC-865D-C7D81BDB5514}.Release|x64.Build.0 = Release|x64
+		{748EB5BE-8031-4CBC-865D-C7D81BDB5514}.Release|x86.ActiveCfg = Release|Win32
+		{748EB5BE-8031-4CBC-865D-C7D81BDB5514}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {4F5C1F4C-CFEB-4C4F-8928-5797AF90581B}
 	EndGlobalSection
 EndGlobal

@@ -165,7 +165,7 @@ struct generate_dispatcher
 struct play {};
 struct open_close {};
 struct cd_detected {cd_detected(...) {}};
-struct pause {};
+struct paused {};
 struct stop {};
 
 class Player : public stats_machine<Player>
@@ -204,7 +204,7 @@ private:
     {
         cout << "void stop_playback(const stop&)" << endl;
     }
-    void puase_playback(const pause&)
+    void puase_playback(const paused&)
     {
         cout << "void puase_playback(const pause&)" << endl;
     }
@@ -227,7 +227,7 @@ private:
             row<Empty,      open_close,     Open,       &P::open_drawer>,
             row<Empty,      cd_detected,    Stopped,    &P::store_cd_info>,
             row<Playing,    stop,           Stopped,    &P::stop_playback>,
-            row<Playing,    pause,          Paused,     &P::puase_playback>,
+            row<Playing,    paused,          Paused,     &P::puase_playback>,
             row<Playing,    open_close,     Open,       &P::stop_and_open>,
             row<Paused,     play,           Playing,    &P::resume_playbakc>,
             row<Paused,     stop,           Stopped,    &P::stop_playback>,
@@ -249,7 +249,7 @@ static int _main(int argc, char** argv)
     cout << "cur state : " << state << endl;
     state = p.process_event(play());
     cout << "cur state : " << state << endl;
-    state = p.process_event(pause());
+    state = p.process_event(paused());
     cout << "cur state : " << state << endl;
     state = p.process_event(play());
     cout << "cur state : " << state << endl;

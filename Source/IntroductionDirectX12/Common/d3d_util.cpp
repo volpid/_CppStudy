@@ -66,7 +66,6 @@ Microsoft::WRL::ComPtr<ID3DBlob> D3DUtil::CompileShader(const std::string& filen
     compileFlags = D3DCOMPILE_DEBUG | D3DCOMPILE_SKIP_OPTIMIZATION;
 #endif /**/
 
-    //nanpid fix codecvt
     std::wstring wfilename;
     wfilename.assign(filename.begin(), filename.end());        
     
